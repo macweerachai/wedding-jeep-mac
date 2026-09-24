@@ -8,10 +8,13 @@
   --gold: #b8915e;
   --gold-light: #d5b693;
   --gold-wash: #f6f0e8;
-  --bg: #fffdfc;
+  --bg: #fffaf9;
   --card: #ffffff;
-  --line: #eadbd3;
-  --rose-wash: #fbf5f3;
+  --line: #f0d9de;
+  --rose-wash: #fdf1f3;
+  --pink: #d98fa0;
+  --pink-light: #f3c9d3;
+  --pink-wash: #fbeaee;
   --ok: #2e704f;
   --bad: #a33c3a;
   --shadow: 0 18px 48px rgba(82, 51, 63, .075), 0 2px 8px rgba(82, 51, 63, .035);
@@ -29,8 +32,8 @@ body {
   margin: 0;
   color: var(--ink);
   background:
-    radial-gradient(ellipse at 0% 12%, rgba(213, 182, 147, .12), transparent 24rem),
-    radial-gradient(ellipse at 100% 84%, rgba(142, 104, 115, .085), transparent 28rem),
+    radial-gradient(ellipse at 0% 12%, rgba(217, 143, 160, .14), transparent 24rem),
+    radial-gradient(ellipse at 100% 84%, rgba(184, 145, 94, .1), transparent 28rem),
     var(--bg);
   font: 16px/1.75 "Sarabun", "Noto Sans Thai", Tahoma, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -61,6 +64,20 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .site-shell { width: min(100% - 32px, 620px); margin: 0 auto; padding: 28px 0 52px; }
 .page-heading { position: relative; padding: 20px 12px 26px; text-align: center; }
 .compact-heading { padding-top: 16px; padding-bottom: 23px; }
+.floral-deco {
+  position: absolute;
+  z-index: -1;
+  width: 128px;
+  height: 168px;
+  background: url('floral-corner.png') no-repeat center / contain;
+  opacity: .9;
+  pointer-events: none;
+}
+.floral-tl { top: -20px; left: -14px; }
+.floral-br { right: -14px; bottom: -18px; transform: rotate(180deg); }
+@media (max-width: 420px) {
+  .floral-deco { width: 90px; height: 118px; }
+}
 .monogram {
   display: inline-flex;
   align-items: center;
@@ -110,8 +127,8 @@ h2 { margin: 0; color: var(--ink-soft); font-size: 20px; font-weight: 600; line-
   box-shadow: var(--shadow);
 }
 .event-card { padding: 27px 23px 24px; text-align: center; }
-.card-ornament { position: absolute; top: -42px; right: -43px; width: 112px; height: 112px; border: 1px solid rgba(184, 145, 94, .2); border-radius: 50%; }
-.card-ornament::after { position: absolute; inset: 9px; border: 1px solid rgba(184, 145, 94, .14); border-radius: 50%; content: ""; }
+.card-ornament { position: absolute; top: -42px; right: -43px; width: 112px; height: 112px; border: 1px solid rgba(217, 143, 160, .28); border-radius: 50%; }
+.card-ornament::after { position: absolute; inset: 9px; border: 1px solid rgba(184, 145, 94, .16); border-radius: 50%; content: ""; }
 .date-display { margin-top: 8px; color: var(--ink); font-family: 'Instrument Serif', serif; font-size: 22px; font-weight: 400; letter-spacing: .04em; line-height: 1.5; }
 .gold-rule { display: flex; align-items: center; gap: 10px; width: 126px; margin: 17px auto; color: var(--gold); }
 .gold-rule::before, .gold-rule::after { height: 1px; flex: 1; background: var(--gold-light); content: ""; }
@@ -126,6 +143,12 @@ h2 { margin: 0; color: var(--ink-soft); font-size: 20px; font-weight: 600; line-
 .schedule-list .row span:last-child { flex: 1; font-size: 14px; text-align: right; }
 .map-link { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; margin-top: 13px; padding: 0 17px; border: 1px solid var(--gold-light); border-radius: 999px; color: var(--ink-soft); font-size: 14px; text-decoration: none; transition: background .2s, border-color .2s; }
 .map-link:hover { border-color: var(--gold); background: var(--gold-wash); }
+
+.dress-card { margin-top: 25px; text-align: center; }
+.dress-card h2 { font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 22px; }
+.swatch-row { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 16px; }
+.swatch { position: relative; display: inline-block; width: 36px; height: 36px; border-radius: 50%; background: var(--sw); box-shadow: 0 3px 8px rgba(82, 51, 63, .16), inset 0 0 0 1px rgba(255, 255, 255, .5); }
+.swatch-label { margin-top: 12px; color: var(--soft); font-size: 12.5px; letter-spacing: .02em; }
 
 .status-section { margin-top: 29px; }
 .section-heading { margin: 0 2px 10px; }
