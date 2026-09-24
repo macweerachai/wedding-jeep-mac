@@ -62,7 +62,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 }
 
 .site-shell { width: min(100% - 32px, 620px); margin: 0 auto; padding: 28px 0 52px; }
-.page-heading { position: relative; padding: 20px 12px 26px; text-align: center; }
+.page-heading { position: relative; padding: 20px 12px 26px; isolation: isolate; text-align: center; }
 .compact-heading { padding-top: 16px; padding-bottom: 23px; }
 .floral-deco {
   position: absolute;
