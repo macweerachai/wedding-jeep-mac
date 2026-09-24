@@ -3,36 +3,37 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ค้นหาที่นั่ง · Jeep & Mac</title>
+<title data-i18n="t_seat">ค้นหาที่นั่ง · Jeep & Mac</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <main class="site-shell search-page">
   <header class="page-heading compact-heading">
-    <a class="back-link" href="index.html">← กลับหน้าแรก</a>
+    <a class="back-link" href="index.html" data-i18n="back">← กลับหน้าแรก</a>
     <span class="floral-deco floral-tl" aria-hidden="true"></span><span class="floral-deco floral-br" aria-hidden="true"></span>
     <div class="monogram" aria-label="อักษรย่อบ่าวสาว WW"><img src="ww-monogram.png" alt="WW monogram"></div>
-    <p class="eyebrow">พบกันที่งาน</p>
-    <h1>ค้นหาที่นั่งของคุณ</h1>
-    <p class="muted">พิมพ์ชื่อหรือชื่อเล่นเพื่อค้นหาเลขโต๊ะของคุณในงาน</p>
+    <p class="eyebrow" data-i18n="s_eyebrow">พบกันที่งาน</p>
+    <h1 data-i18n="s_h1">ค้นหาที่นั่งของคุณ</h1>
+    <p class="muted" data-i18n="s_desc">พิมพ์ชื่อหรือชื่อเล่นเพื่อค้นหาเลขโต๊ะของคุณในงาน</p>
   </header>
 
   <section class="card form-card search-card">
-    <div class="card-topline"><span class="step-number">01</span><span>ค้นหาชื่อในรายชื่อแขก</span></div>
-    <label for="q">ชื่อ หรือ ชื่อเล่น</label>
-    <input id="q" type="text" autocomplete="off" placeholder="เช่น สมชาย หรือ ชาย">
-    <button id="searchBtn">ค้นหา</button>
+    <div class="card-topline"><span class="step-number">01</span><span data-i18n="s_step1">ค้นหาชื่อในรายชื่อแขก</span></div>
+    <label for="q" data-i18n="s_label">ชื่อ หรือ ชื่อเล่น</label>
+    <input id="q" type="text" autocomplete="off" placeholder="เช่น สมชาย หรือ ชาย" data-i18n-ph="s_ph">
+    <button id="searchBtn" data-i18n="s_btn">ค้นหา</button>
   </section>
 
   <section id="results" class="search-results" aria-live="polite"></section>
 
   <nav class="nav">
-    <a href="index.html">← กลับหน้าแรก</a>
-    <a href="rsvp.html">ตอบรับคำเชิญ</a>
+    <a href="index.html" data-i18n="back">← กลับหน้าแรก</a>
+    <a href="rsvp.html" data-i18n="nav_rsvp">ตอบรับคำเชิญ</a>
   </nav>
 </main>
 
 <script src="config.js"></script>
+<script src="i18n.js"></script>
 <script src="shared.js"></script>
 <script>
 (function () {
@@ -44,16 +45,16 @@
     var q = input.value.trim();
     results.innerHTML = '';
     if (q.length < 2) {
-      results.innerHTML = '<div class="msg err">กรุณาพิมพ์อย่างน้อย 2 ตัวอักษร</div>';
+      results.innerHTML = '<div class="msg err">' + t('s_min') + '</div>';
       return;
     }
     btn.disabled = true;
     WED.call('GET', 'findSeat', { q: q }).then(function (r) {
       btn.disabled = false;
-      if (!r.ok) { results.innerHTML = '<div class="msg err">เชื่อมต่อไม่ได้ ลองอีกครั้ง</div>'; return; }
+      if (!r.ok) { results.innerHTML = '<div class="msg err">' + t('conn_err') + '</div>'; return; }
       var list = r.data.results;
       if (!list.length) {
-        results.innerHTML = '<div class="msg err">ไม่พบชื่อนี้ในรายชื่อผู้ยืนยันเข้าร่วมงาน</div>';
+        results.innerHTML = '<div class="msg err">' + t('s_none') + '</div>';
         return;
       }
       list.forEach(function (p) {
@@ -61,7 +62,7 @@
         div.className = 'card';
         div.innerHTML =
           '<div class="row"><b>' + p.name + (p.nickname ? ' (' + p.nickname + ')' : '') + '</b>' +
-          '<span class="pill">โต๊ะ ' + (p.table_no || '-') + '</span></div>';
+          '<span class="pill">' + t('s_table', {n: p.table_no || '-'}) + '</span></div>';
         results.appendChild(div);
       });
     });

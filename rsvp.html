@@ -3,63 +3,64 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ตอบรับคำเชิญ · Jeep & Mac</title>
+<title data-i18n="t_rsvp">ตอบรับคำเชิญ · Jeep & Mac</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <main class="site-shell form-page">
   <header class="page-heading compact-heading">
-    <a class="back-link" href="index.html">← กลับหน้าแรก</a>
+    <a class="back-link" href="index.html" data-i18n="back">← กลับหน้าแรก</a>
     <span class="floral-deco floral-tl" aria-hidden="true"></span><span class="floral-deco floral-br" aria-hidden="true"></span>
     <div class="monogram" aria-label="อักษรย่อบ่าวสาว WW"><img src="ww-monogram.png" alt="WW monogram"></div>
-    <p class="eyebrow">ขอเรียนเชิญ</p>
-    <h1>ตอบรับคำเชิญ</h1>
-    <p class="muted">กรอกรหัสคำเชิญที่ระบุในการ์ด/ข้อความเชิญ เพื่อยืนยันการเข้าร่วมงาน</p>
+    <p class="eyebrow" data-i18n="r_eyebrow">ขอเรียนเชิญ</p>
+    <h1 data-i18n="r_h1">ตอบรับคำเชิญ</h1>
+    <p class="muted" data-i18n="r_desc">กรอกรหัสคำเชิญที่ระบุในการ์ด/ข้อความเชิญ เพื่อยืนยันการเข้าร่วมงาน</p>
   </header>
 
   <section class="card form-card lookup-card">
-    <div class="card-topline"><span class="step-number">01</span><span>ยืนยันคำเชิญ</span></div>
-    <label for="code">รหัสคำเชิญ (Party Code)</label>
-    <input id="code" type="text" inputmode="text" autocomplete="off" placeholder="เช่น ABC123">
-    <button id="lookupBtn">ค้นหา</button>
+    <div class="card-topline"><span class="step-number">01</span><span data-i18n="r_step1">ยืนยันคำเชิญ</span></div>
+    <label for="code" data-i18n="r_code">รหัสคำเชิญ (Party Code)</label>
+    <input id="code" type="text" inputmode="text" autocomplete="off" placeholder="เช่น ABC123" data-i18n-ph="r_code_ph">
+    <button id="lookupBtn" data-i18n="r_lookup">ค้นหา</button>
     <div id="lookupMsg" aria-live="polite"></div>
   </section>
 
   <section id="formSection" class="rsvp-form-section" style="display:none">
     <h2 id="primaryName"></h2>
     <div class="card seat-limit-card">
-      <span class="muted">จำนวนที่นั่งสูงสุด</span><b id="maxGuests"></b>
+      <span class="muted" data-i18n="r_max">จำนวนที่นั่งสูงสุด</span><b id="maxGuests"></b>
     </div>
 
     <div class="card form-card attendance-card">
-      <div class="card-topline"><span class="step-number">02</span><span>แจ้งจำนวนผู้ร่วมงาน</span></div>
-      <label for="attending">จะเข้าร่วมงานหรือไม่</label>
+      <div class="card-topline"><span class="step-number">02</span><span data-i18n="r_step2">แจ้งจำนวนผู้ร่วมงาน</span></div>
+      <label for="attending" data-i18n="r_attending">จะเข้าร่วมงานหรือไม่</label>
       <select id="attending">
-        <option value="yes">มาร่วมงานแน่นอน</option>
-        <option value="no">ไม่สามารถมาได้</option>
+        <option value="yes" data-i18n="r_yes">มาร่วมงานแน่นอน</option>
+        <option value="no" data-i18n="r_no">ไม่สามารถมาได้</option>
       </select>
 
       <div id="peopleSection">
-        <label class="people-label">รายชื่อผู้ที่จะเข้าร่วม</label>
+        <label class="people-label" data-i18n="r_people">รายชื่อผู้ที่จะเข้าร่วม</label>
         <div id="peopleList"></div>
-        <button id="addPersonBtn" class="secondary small add-person-button">+ เพิ่มรายชื่อ</button>
+        <button id="addPersonBtn" class="secondary small add-person-button" data-i18n="r_add">+ เพิ่มรายชื่อ</button>
       </div>
 
-      <label for="phone">เบอร์โทรติดต่อ (สำหรับติดต่อกลับเท่านั้น)</label>
+      <label for="phone" data-i18n="r_phone">เบอร์โทรติดต่อ (สำหรับติดต่อกลับเท่านั้น)</label>
       <input id="phone" type="tel" inputmode="tel" placeholder="08x-xxx-xxxx">
 
-      <button id="submitBtn">ยืนยันการตอบรับ</button>
+      <button id="submitBtn" data-i18n="r_submit">ยืนยันการตอบรับ</button>
       <div id="submitMsg" aria-live="polite"></div>
     </div>
   </section>
 
   <nav class="nav">
-    <a href="index.html">← กลับหน้าแรก</a>
-    <a href="seat.html">ค้นหาที่นั่ง</a>
+    <a href="index.html" data-i18n="back">← กลับหน้าแรก</a>
+    <a href="seat.html" data-i18n="nav_seat">ค้นหาที่นั่ง</a>
   </nav>
 </main>
 
 <script src="config.js"></script>
+<script src="i18n.js"></script>
 <script src="shared.js"></script>
 <script>
 (function () {
@@ -80,10 +81,10 @@
     var div = document.createElement('div');
     div.className = 'people-item';
     div.innerHTML =
-      '<label>ชื่อ-นามสกุล</label><input class="p-name" value="' + (data.name || '') + '">' +
-      '<label>ชื่อเล่น</label><input class="p-nickname" value="' + (data.nickname || '') + '">' +
-      '<label>อาหาร/แพ้อาหาร (ถ้ามี)</label><input class="p-dietary" value="' + (data.dietary || '') + '">' +
-      '<button type="button" class="remove">ลบรายชื่อนี้</button>';
+      '<label>' + t('r_pname') + '</label><input class="p-name" value="' + (data.name || '') + '">' +
+      '<label>' + t('r_pnick') + '</label><input class="p-nickname" value="' + (data.nickname || '') + '">' +
+      '<label>' + t('r_pdiet') + '</label><input class="p-dietary" value="' + (data.dietary || '') + '">' +
+      '<button type="button" class="remove">' + t('r_remove') + '</button>';
     div.querySelector('.remove').addEventListener('click', function () {
       div.remove();
     });
@@ -92,7 +93,7 @@
 
   document.getElementById('addPersonBtn').addEventListener('click', function () {
     if (peopleList.children.length >= maxGuests) {
-      alert('เกินจำนวนที่นั่งสูงสุด (' + maxGuests + ' ที่)');
+      alert(t('r_over', {n: maxGuests}));
       return;
     }
     addPersonRow();
@@ -109,13 +110,13 @@
     setMsg(lookupMsg, '', '');
     WED.call('GET', 'findParty', { code: code }).then(function (r) {
       lookupBtn.disabled = false;
-      if (!r.ok) { setMsg(lookupMsg, 'เชื่อมต่อไม่ได้ ลองอีกครั้ง', 'err'); return; }
-      if (!r.data.found) { setMsg(lookupMsg, 'ไม่พบรหัสคำเชิญนี้ ตรวจสอบอีกครั้งหรือติดต่อแม็ค', 'err'); return; }
+      if (!r.ok) { setMsg(lookupMsg, t('conn_err'), 'err'); return; }
+      if (!r.data.found) { setMsg(lookupMsg, t('r_notfound'), 'err'); return; }
 
       partyId = code;
       maxGuests = r.data.max_guests;
-      document.getElementById('primaryName').textContent = 'สวัสดีครับ/ค่ะ คุณ' + r.data.primary_name;
-      document.getElementById('maxGuests').textContent = maxGuests + ' ที่นั่ง';
+      document.getElementById('primaryName').textContent = t('r_hello', {name: r.data.primary_name});
+      document.getElementById('maxGuests').textContent = t('r_seats', {n: maxGuests});
       peopleList.innerHTML = '';
       if (r.data.rsvp_status === 'attending' && r.data.people.length) {
         attendingSel.value = 'yes';
@@ -138,14 +139,14 @@
       var rows = peopleList.querySelectorAll('.people-item');
       for (var i = 0; i < rows.length; i++) {
         var name = rows[i].querySelector('.p-name').value.trim();
-        if (!name) { alert('กรุณากรอกชื่อให้ครบทุกคน'); return; }
+        if (!name) { alert(t('r_fillall')); return; }
         people.push({
           name: name,
           nickname: rows[i].querySelector('.p-nickname').value.trim(),
           dietary: rows[i].querySelector('.p-dietary').value.trim()
         });
       }
-      if (!people.length) { alert('กรุณาเพิ่มรายชื่ออย่างน้อย 1 คน'); return; }
+      if (!people.length) { alert(t('r_needone')); return; }
     }
     var btn = document.getElementById('submitBtn');
     btn.disabled = true;
@@ -160,13 +161,13 @@
       btn.disabled = false;
       var el = document.getElementById('submitMsg');
       if (!r.ok) {
-        var msg = r.error === 'rsvp_closed' ? 'ขณะนี้ปิดรับการตอบรับแล้ว'
-          : r.error === 'exceeds_max_guests' ? 'จำนวนรายชื่อเกินที่นั่งที่กำหนด (' + (r.data && r.data.max_guests) + ' ที่)'
-          : 'ส่งไม่สำเร็จ ลองอีกครั้ง';
+        var msg = r.error === 'rsvp_closed' ? t('r_closed')
+          : r.error === 'exceeds_max_guests' ? t('r_exceeds', {n: r.data && r.data.max_guests})
+          : t('r_fail');
         setMsg(el, msg, 'err');
         return;
       }
-      setMsg(el, 'บันทึกการตอบรับเรียบร้อยแล้ว ขอบคุณครับ/ค่ะ 🙏', 'ok');
+      setMsg(el, t('r_ok'), 'ok');
     });
   });
 })();
