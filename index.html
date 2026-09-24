@@ -120,6 +120,26 @@
     <p class="note" data-i18n="dress_note">ขอความกรุณาร่วมแต่งกายในโทนสีข้างต้น เพื่อให้ภาพความทรงจำของวันนี้งดงามไปด้วยกัน</p>
   </section>
 
+  <!-- ===== GALLERY ===== -->
+  <section class="section gallery-block reveal" id="gallery">
+    <div class="section-head">
+      <p class="kicker-en">Shared Memories</p>
+      <h2 data-i18n="gallery_h">แบ่งปันความทรงจำ</h2>
+    </div>
+    <p class="muted gallery-desc" data-i18n="gallery_desc">ร่วมเก็บภาพความประทับใจในวันของเราไว้ด้วยกัน</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" id="galleryUploadBtn" href="#" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <span data-i18n="gallery_upload_btn">เพิ่มรูปของคุณ</span>
+      </a>
+      <a class="btn btn-ghost" id="galleryViewBtn" href="#" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="9" cy="10" r="1.6" fill="currentColor" stroke="none"/><path d="m5.5 17 4.5-5 3.5 3.5 2-2 3 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        <span data-i18n="gallery_view_btn">ชมภาพจากทุกคน</span>
+      </a>
+    </div>
+    <p class="note gallery-note" data-i18n="gallery_note">การเพิ่มรูปต้องลงชื่อเข้าใช้บัญชี Google แต่ผู้ที่มีลิงก์สามารถเปิดชมอัลบั้มได้</p>
+  </section>
+
   <!-- ===== RSVP ===== -->
   <section class="section rsvp-block reveal">
     <div class="section-head">
@@ -176,15 +196,25 @@
       pill.textContent = t('st_err');
       pill.classList.add('closed');
       msg.textContent = t('st_err_msg');
-      return;
-    }
-    if (r.data.rsvp_open) {
+    } else if (r.data.rsvp_open) {
       pill.textContent = t('st_open');
       msg.textContent = t('st_open_msg');
     } else {
       pill.textContent = t('st_closed');
       pill.classList.add('closed');
       msg.textContent = t('st_closed_msg');
+    }
+
+    /* Gallery — same Google Photos album for viewing and adding photos;
+       hide the section entirely if no URL has been set in the Config sheet yet */
+    var gallerySection = document.getElementById('gallery');
+    var uploadUrl = r.ok && (r.data.gallery_upload_url || r.data.gallery_view_url);
+    var viewUrl = r.ok && (r.data.gallery_view_url || r.data.gallery_upload_url);
+    if (uploadUrl && viewUrl) {
+      document.getElementById('galleryUploadBtn').href = uploadUrl;
+      document.getElementById('galleryViewBtn').href = viewUrl;
+    } else {
+      gallerySection.style.display = 'none';
     }
   });
 })();
