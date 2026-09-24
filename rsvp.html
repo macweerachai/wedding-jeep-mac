@@ -7,49 +7,55 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<main>
-  <div class="monogram">RSVP</div>
-  <h1>ตอบรับคำเชิญ</h1>
-  <p class="muted">กรอกรหัสคำเชิญที่ระบุในการ์ด/ข้อความเชิญ เพื่อยืนยันการเข้าร่วมงาน</p>
+<main class="site-shell form-page">
+  <header class="page-heading compact-heading">
+    <a class="back-link" href="index.html">← กลับหน้าแรก</a>
+    <div class="monogram" aria-label="อักษรย่อบ่าวสาว WW"><img src="ww-monogram.png" alt="WW monogram"></div>
+    <p class="eyebrow">ขอเรียนเชิญ</p>
+    <h1>ตอบรับคำเชิญ</h1>
+    <p class="muted">กรอกรหัสคำเชิญที่ระบุในการ์ด/ข้อความเชิญ เพื่อยืนยันการเข้าร่วมงาน</p>
+  </header>
 
-  <div class="card">
+  <section class="card form-card lookup-card">
+    <div class="card-topline"><span class="step-number">01</span><span>ยืนยันคำเชิญ</span></div>
     <label for="code">รหัสคำเชิญ (Party Code)</label>
     <input id="code" type="text" inputmode="text" autocomplete="off" placeholder="เช่น ABC123">
     <button id="lookupBtn">ค้นหา</button>
-    <div id="lookupMsg"></div>
-  </div>
+    <div id="lookupMsg" aria-live="polite"></div>
+  </section>
 
-  <div id="formSection" style="display:none">
+  <section id="formSection" class="rsvp-form-section" style="display:none">
     <h2 id="primaryName"></h2>
-    <div class="card">
-      <div class="row"><span class="muted">จำนวนที่นั่งสูงสุด</span><b id="maxGuests"></b></div>
+    <div class="card seat-limit-card">
+      <span class="muted">จำนวนที่นั่งสูงสุด</span><b id="maxGuests"></b>
     </div>
 
-    <h2>จะเข้าร่วมงานหรือไม่</h2>
-    <div class="card">
+    <div class="card form-card attendance-card">
+      <div class="card-topline"><span class="step-number">02</span><span>แจ้งจำนวนผู้ร่วมงาน</span></div>
+      <label for="attending">จะเข้าร่วมงานหรือไม่</label>
       <select id="attending">
         <option value="yes">มาร่วมงานแน่นอน ✅</option>
         <option value="no">ไม่สามารถมาได้ 🙏</option>
       </select>
 
       <div id="peopleSection">
-        <label style="margin-top:20px">รายชื่อผู้ที่จะเข้าร่วม</label>
+        <label class="people-label">รายชื่อผู้ที่จะเข้าร่วม</label>
         <div id="peopleList"></div>
-        <button id="addPersonBtn" class="secondary small" style="margin-top:10px">+ เพิ่มรายชื่อ</button>
+        <button id="addPersonBtn" class="secondary small add-person-button">+ เพิ่มรายชื่อ</button>
       </div>
 
       <label for="phone">เบอร์โทรติดต่อ (สำหรับติดต่อกลับเท่านั้น)</label>
       <input id="phone" type="tel" inputmode="tel" placeholder="08x-xxx-xxxx">
 
       <button id="submitBtn">ยืนยันการตอบรับ</button>
-      <div id="submitMsg"></div>
+      <div id="submitMsg" aria-live="polite"></div>
     </div>
-  </div>
+  </section>
 
-  <div class="nav">
+  <nav class="nav">
     <a href="index.html">← กลับหน้าแรก</a>
     <a href="seat.html">🔎 ค้นหาที่นั่ง</a>
-  </div>
+  </nav>
 </main>
 
 <script src="config.js"></script>

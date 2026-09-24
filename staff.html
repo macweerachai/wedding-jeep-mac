@@ -17,28 +17,35 @@
 </style>
 </head>
 <body>
-<main>
-  <div class="monogram">STAFF</div>
-  <h1>หน้าทีมงาน · เช็คอินแขก</h1>
+<main class="site-shell staff-page">
+  <header class="page-heading compact-heading">
+    <a class="back-link" href="index.html">← กลับหน้าแรก</a>
+    <div class="monogram" aria-label="อักษรย่อบ่าวสาว WW"><img src="ww-monogram.png" alt="WW monogram"></div>
+    <p class="eyebrow">สำหรับเจ้าหน้าที่</p>
+    <h1>หน้าทีมงาน · เช็คอินแขก</h1>
+  </header>
 
-  <div id="pinGate" class="card">
+  <section id="pinGate" class="card form-card access-card">
+    <div class="card-topline"><span class="step-number">01</span><span>เข้าสู่ระบบทีมงาน</span></div>
     <label for="pin">กรอกรหัส PIN ทีมงาน</label>
     <input id="pin" type="password" inputmode="numeric" autocomplete="off">
     <button id="pinBtn">เข้าสู่ระบบ</button>
-    <div id="pinMsg"></div>
-  </div>
+    <div id="pinMsg" aria-live="polite"></div>
+  </section>
 
-  <div id="staffArea" style="display:none">
-    <div id="syncBar"></div>
-    <label for="search">ค้นหาชื่อแขก</label>
-    <input id="search" type="text" autocomplete="off" placeholder="พิมพ์ชื่อหรือชื่อเล่น">
-    <div id="list"></div>
-    <button id="refreshBtn" class="secondary" style="margin-top:16px">รีเฟรชรายชื่อจากเซิร์ฟเวอร์</button>
-  </div>
+  <section id="staffArea" class="staff-area" style="display:none">
+    <div class="staff-search card form-card">
+      <div id="syncBar"></div>
+      <label for="search">ค้นหาชื่อแขก</label>
+      <input id="search" type="text" autocomplete="off" placeholder="พิมพ์ชื่อหรือชื่อเล่น">
+    </div>
+    <div id="list" class="guest-list"></div>
+    <button id="refreshBtn" class="secondary refresh-button">รีเฟรชรายชื่อจากเซิร์ฟเวอร์</button>
+  </section>
 
-  <div class="nav">
+  <nav class="nav">
     <a href="index.html">← กลับหน้าแรก</a>
-  </div>
+  </nav>
 </main>
 
 <script src="config.js"></script>

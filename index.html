@@ -7,29 +7,42 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<main>
-  <div class="monogram">W · W</div>
-  <h1 id="coupleTitle">Jeep &amp; Mac</h1>
-  <p class="muted">ขอเชิญร่วมเป็นเกียรติในงานมงคลสมรส</p>
+<main class="site-shell home-page">
+  <header class="page-heading">
+    <div class="monogram" aria-label="อักษรย่อบ่าวสาว WW"><img src="ww-monogram.png" alt="WW monogram"></div>
+    <p class="eyebrow">ยินดีต้อนรับ</p>
+    <h1 id="coupleTitle">Jeep &amp; Mac</h1>
+    <p class="tagline-en">Two W's, One Forever</p>
+    <p class="tagline">สอง W หนึ่งรักตลอดไป</p>
+    <p class="intro muted" style="margin-top:10px">ขอเชิญร่วมเป็นเกียรติในงานมงคลสมรส</p>
+  </header>
 
-  <div class="card">
-    <div class="row"><b id="dateText"></b></div>
-    <div class="row" style="margin-top:6px"><span id="venueName"></span></div>
-    <div class="muted" id="venueRoom" style="margin-top:2px"></div>
-    <div id="schedule" style="margin-top:12px"></div>
-    <a id="mapLink" href="#" target="_blank" rel="noopener" style="display:inline-block;margin-top:12px;font-size:14px;color:var(--gold)">📍 ดูแผนที่</a>
-  </div>
+  <section class="card event-card" aria-label="รายละเอียดงานแต่งงาน">
+    <div class="card-ornament" aria-hidden="true"></div>
+    <p class="section-kicker">มีความยินดีเรียนเชิญท่านร่วมเป็นเกียรติ ในพิธีมงคลสมรสและงานเลี้ยงฉลอง ระหว่าง</p>
+    <p class="date-display" style="font-size:19px;margin-bottom:0">วันเพ็ญ เก่งกล้า (จิ๊บ) <span class="tagline-en" style="font-size:16px">&amp;</span> วีระชัย จิตสุวรรณทยา (แม็ค)</p>
+    <div class="gold-rule" aria-hidden="true"><span></span></div>
+    <p class="section-kicker">วันแห่งความทรงจำ</p>
+    <div class="date-display" id="dateText"></div>
+    <div class="gold-rule" aria-hidden="true"><span></span></div>
+    <div class="venue-title" id="venueName"></div>
+    <div class="muted venue-room" id="venueRoom"></div>
+    <div class="schedule-list" id="schedule"></div>
+    <a class="map-link" id="mapLink" href="#" target="_blank" rel="noopener">📍 ดูแผนที่</a>
+  </section>
 
-  <h2>สถานะการตอบรับ</h2>
-  <div class="card">
-    <span class="pill" id="rsvpPill">กำลังตรวจสอบ…</span>
-    <p class="muted" id="rsvpMsg" style="margin-top:10px"></p>
-  </div>
+  <section class="status-section">
+    <div class="section-heading"><span class="section-kicker">กำหนดการตอบรับ</span><h2>สถานะการตอบรับ</h2></div>
+    <div class="card status-card">
+      <span class="pill" id="rsvpPill">กำลังตรวจสอบ…</span>
+      <p class="muted status-message" id="rsvpMsg"></p>
+    </div>
+  </section>
 
-  <div class="nav">
-    <a href="rsvp.html">✉️ ตอบรับคำเชิญ (RSVP)</a>
+  <nav class="nav action-nav" aria-label="เมนูหลัก">
+    <a class="nav-primary" href="rsvp.html">✉️ ตอบรับคำเชิญ (RSVP)</a>
     <a href="seat.html">🔎 ค้นหาที่นั่ง</a>
-  </div>
+  </nav>
 
   <footer>ระบบจัดการแขกงานแต่ง · Jeep &amp; Mac 2027</footer>
 </main>

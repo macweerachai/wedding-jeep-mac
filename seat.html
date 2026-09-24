@@ -7,23 +7,28 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<main>
-  <div class="monogram">SEAT</div>
-  <h1>ค้นหาที่นั่งของคุณ</h1>
-  <p class="muted">พิมพ์ชื่อหรือชื่อเล่นเพื่อค้นหาเลขโต๊ะของคุณในงาน</p>
+<main class="site-shell search-page">
+  <header class="page-heading compact-heading">
+    <a class="back-link" href="index.html">← กลับหน้าแรก</a>
+    <div class="monogram" aria-label="อักษรย่อบ่าวสาว WW"><img src="ww-monogram.png" alt="WW monogram"></div>
+    <p class="eyebrow">พบกันที่งาน</p>
+    <h1>ค้นหาที่นั่งของคุณ</h1>
+    <p class="muted">พิมพ์ชื่อหรือชื่อเล่นเพื่อค้นหาเลขโต๊ะของคุณในงาน</p>
+  </header>
 
-  <div class="card">
+  <section class="card form-card search-card">
+    <div class="card-topline"><span class="step-number">01</span><span>ค้นหาชื่อในรายชื่อแขก</span></div>
     <label for="q">ชื่อ หรือ ชื่อเล่น</label>
     <input id="q" type="text" autocomplete="off" placeholder="เช่น สมชาย หรือ ชาย">
     <button id="searchBtn">ค้นหา</button>
-  </div>
+  </section>
 
-  <div id="results"></div>
+  <section id="results" class="search-results" aria-live="polite"></section>
 
-  <div class="nav">
+  <nav class="nav">
     <a href="index.html">← กลับหน้าแรก</a>
     <a href="rsvp.html">✉️ ตอบรับคำเชิญ</a>
-  </div>
+  </nav>
 </main>
 
 <script src="config.js"></script>
