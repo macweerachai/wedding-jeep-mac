@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ตอบรับคำเชิญ · Jeep & Mac</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <div class="monogram">RSVP</div>
+  <h1>ตอบรับคำเชิญ</h1>
+  <p class="muted">กรอกรหัสคำเชิญที่ระบุในการ์ด/ข้อความเชิญ เพื่อยืนยันการเข้าร่วมงาน</p>
+
+  <div class="card">
+    <label for="code">รหัสคำเชิญ (Party Code)</label>
+    <input id="code" type="text" inputmode="text" autocomplete="off" placeholder="เช่น ABC123">
+    <button id="lookupBtn">ค้นหา</button>
+    <div id="lookupMsg"></div>
+  </div>
+
+  <div id="formSection" style="display:none">
+    <h2 id="primaryName"></h2>
+    <div class="card">
+      <div class="row"><span class="muted">จำนวนที่นั่งสูงสุด</span><b id="maxGuests"></b></div>
+    </div>
+
+    <h2>จะเข้าร่วมงานหรือไม่</h2>
+    <div class="card">
+      <select id="attending">
+        <option value="yes">มาร่วมงานแน่นอน ✅</option>
+        <option value="no">ไม่สามารถมาได้ 🙏</option>
+      </select>
+
+      <div id="peopleSection">
+        <label style="margin-top:20px">รายชื่อผู้ที่จะเข้าร่วม</label>
+        <div id="peopleList"></div>
+        <button id="addPersonBtn" class="secondary small" style="margin-top:10px">+ เพิ่มรายชื่อ</button>
+      </div>
+
+      <label for="phone">เบอร์โทรติดต่อ (สำหรับติดต่อกลับเท่านั้น)</label>
+      <input id="phone" type="tel" inputmode="tel" placeholder="08x-xxx-xxxx">
+
+      <button id="submitBtn">ยืนยันการตอบรับ</button>
+      <div id="submitMsg"></div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <a href="index.html">← กลับหน้าแรก</a>
+    <a href="seat.html">🔎 ค้นหาที่นั่ง</a>
+  </div>
+</main>
+
+<script src="config.js"></script>
+<script src="shared.js"></script>
+<script>
+(function () {
+  var partyId = null, maxGuests = 0;
+  var lookupBtn = document.getElementById('lookupBtn');
+  var lookupMsg = document.getElementById('lookupMsg');
+  var formSection = document.getElementById('formSection');
+  var peopleList = document.getElementById('peopleList');
+  var attendingSel = document.getElementById('attending');
+  var peopleSection = document.getElementById('peopleSection');
+
+  function setMsg(el, text, kind) {
+    el.innerHTML = text ? '<div class="msg ' + kind + '">' + text + '</div>' : '';
+  }
+
+  function addPersonRow(data) {
+    data = data || {};
+    var div = document.createElement('div');
+    div.className = 'people-item';
+    div.innerHTML =
+      '<label>ชื่อ-นามสกุล</label><input class="p-name" value="' + (data.name || '') + '">' +
+      '<label>ชื่อเล่น</label><input class="p-nickname" value="' + (data.nickname || '') + '">' +
+      '<label>อาหาร/แพ้อาหาร (ถ้ามี)</label><input class="p-dietary" value="' + (data.dietary || '') + '">' +
+      '<button type="button" class="remove">ลบรายชื่อนี้</button>';
+    div.querySelector('.remove').addEventListener('click', function () {
+      div.remove();
+    });
+    peopleList.appendChild(div);
+  }
+
+  document.getElementById('addPersonBtn').addEventListener('click', function () {
+    if (peopleList.children.length >= maxGuests) {
+      alert('เกินจำนวนที่นั่งสูงสุด (' + maxGuests + ' ที่)');
+      return;
+    }
+    addPersonRow();
+  });
+
+  attendingSel.addEventListener('change', function () {
+    peopleSection.style.display = attendingSel.value === 'yes' ? '' : 'none';
+  });
+
+  lookupBtn.addEventListener('click', function () {
+    var code = document.getElementById('code').value.trim();
+    if (!code) return;
+    lookupBtn.disabled = true;
+    setMsg(lookupMsg, '', '');
+    WED.call('GET', 'findParty', { code: code }).then(function (r) {
+      lookupBtn.disabled = false;
+      if (!r.ok) { setMsg(lookupMsg, 'เชื่อมต่อไม่ได้ ลองอีกครั้ง', 'err'); return; }
+      if (!r.data.found) { setMsg(lookupMsg, 'ไม่พบรหัสคำเชิญนี้ ตรวจสอบอีกครั้งหรือติดต่อแม็ค', 'err'); return; }
+
+      partyId = code;
+      maxGuests = r.data.max_guests;
+      document.getElementById('primaryName').textContent = 'สวัสดีครับ/ค่ะ คุณ' + r.data.primary_name;
+      document.getElementById('maxGuests').textContent = maxGuests + ' ที่นั่ง';
+      peopleList.innerHTML = '';
+      if (r.data.rsvp_status === 'attending' && r.data.people.length) {
+        attendingSel.value = 'yes';
+        r.data.people.forEach(addPersonRow);
+      } else if (r.data.rsvp_status === 'not_attending') {
+        attendingSel.value = 'no';
+        peopleSection.style.display = 'none';
+      } else {
+        attendingSel.value = 'yes';
+        addPersonRow();
+      }
+      formSection.style.display = '';
+    });
+  });
+
+  document.getElementById('submitBtn').addEventListener('click', function () {
+    var attending = attendingSel.value;
+    var people = [];
+    if (attending === 'yes') {
+      var rows = peopleList.querySelectorAll('.people-item');
+      for (var i = 0; i < rows.length; i++) {
+        var name = rows[i].querySelector('.p-name').value.trim();
+        if (!name) { alert('กรุณากรอกชื่อให้ครบทุกคน'); return; }
+        people.push({
+          name: name,
+          nickname: rows[i].querySelector('.p-nickname').value.trim(),
+          dietary: rows[i].querySelector('.p-dietary').value.trim()
+        });
+      }
+      if (!people.length) { alert('กรุณาเพิ่มรายชื่ออย่างน้อย 1 คน'); return; }
+    }
+    var btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    setMsg(document.getElementById('submitMsg'), '', '');
+    WED.call('POST', 'rsvp', {
+      idempotency_key: WED.newKey(),
+      party_code: partyId,
+      attending: attending,
+      phone: document.getElementById('phone').value.trim(),
+      people: people
+    }).then(function (r) {
+      btn.disabled = false;
+      var el = document.getElementById('submitMsg');
+      if (!r.ok) {
+        var msg = r.error === 'rsvp_closed' ? 'ขณะนี้ปิดรับการตอบรับแล้ว'
+          : r.error === 'exceeds_max_guests' ? 'จำนวนรายชื่อเกินที่นั่งที่กำหนด (' + (r.data && r.data.max_guests) + ' ที่)'
+          : 'ส่งไม่สำเร็จ ลองอีกครั้ง';
+        setMsg(el, msg, 'err');
+        return;
+      }
+      setMsg(el, 'บันทึกการตอบรับเรียบร้อยแล้ว ขอบคุณครับ/ค่ะ 🙏', 'ok');
+    });
+  });
+})();
+</script>
+</body>
+</html>

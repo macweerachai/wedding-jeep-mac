@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jeep & Mac · งานแต่งงาน</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <div class="monogram">W · W</div>
+  <h1 id="coupleTitle">Jeep &amp; Mac</h1>
+  <p class="muted">ขอเชิญร่วมเป็นเกียรติในงานมงคลสมรส</p>
+
+  <div class="card">
+    <div class="row"><b id="dateText"></b></div>
+    <div class="row" style="margin-top:6px"><span id="venueName"></span></div>
+    <div class="muted" id="venueRoom" style="margin-top:2px"></div>
+    <div id="schedule" style="margin-top:12px"></div>
+    <a id="mapLink" href="#" target="_blank" rel="noopener" style="display:inline-block;margin-top:12px;font-size:14px;color:var(--gold)">📍 ดูแผนที่</a>
+  </div>
+
+  <h2>สถานะการตอบรับ</h2>
+  <div class="card">
+    <span class="pill" id="rsvpPill">กำลังตรวจสอบ…</span>
+    <p class="muted" id="rsvpMsg" style="margin-top:10px"></p>
+  </div>
+
+  <div class="nav">
+    <a href="rsvp.html">✉️ ตอบรับคำเชิญ (RSVP)</a>
+    <a href="seat.html">🔎 ค้นหาที่นั่ง</a>
+  </div>
+
+  <footer>ระบบจัดการแขกงานแต่ง · Jeep &amp; Mac 2027</footer>
+</main>
+
+<script src="config.js"></script>
+<script src="shared.js"></script>
+<script>
+(function () {
+  var E = window.WED_CONFIG.EVENT;
+  document.getElementById('coupleTitle').textContent = E.coupleTitle;
+  document.getElementById('dateText').textContent = E.dateText;
+  document.getElementById('venueName').textContent = E.venueName;
+  document.getElementById('venueRoom').textContent = E.venueRoom;
+  document.getElementById('mapLink').href = E.venueMapUrl;
+  var sch = document.getElementById('schedule');
+  E.schedule.forEach(function (s) {
+    var d = document.createElement('div');
+    d.className = 'row';
+    d.style.marginTop = '4px';
+    d.innerHTML = '<span class="muted">' + s.time + '</span><span>' + s.label + '</span>';
+    sch.appendChild(d);
+  });
+
+  WED.call('GET', 'config').then(function (r) {
+    var pill = document.getElementById('rsvpPill');
+    var msg = document.getElementById('rsvpMsg');
+    if (!r.ok) {
+      pill.textContent = 'เชื่อมต่อไม่ได้';
+      pill.classList.add('closed');
+      msg.textContent = 'ลองรีเฟรชหน้านี้อีกครั้ง หรือติดต่อแม็คโดยตรง';
+      return;
+    }
+    if (r.data.rsvp_open) {
+      pill.textContent = 'เปิดรับ RSVP อยู่';
+      msg.textContent = 'กดปุ่ม "ตอบรับคำเชิญ" ด้านล่างเพื่อยืนยันการเข้าร่วมงาน';
+    } else {
+      pill.textContent = 'ปิดรับ RSVP แล้ว';
+      pill.classList.add('closed');
+      msg.textContent = 'หากมีการเปลี่ยนแปลง กรุณาติดต่อแม็คโดยตรง';
+    }
+  });
+})();
+</script>
+</body>
+</html>

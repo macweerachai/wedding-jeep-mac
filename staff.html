@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>ทีมงานเช็คอิน · Jeep & Mac</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .list-item { display:flex; justify-content:space-between; align-items:center; gap:10px; padding:12px; border:1px solid var(--line); border-radius:10px; margin-top:8px; background:#fff; }
+  .list-item.done { background:#F3FBF6; }
+  .list-item .info { flex:1; min-width:0; }
+  .list-item .name { font-weight:600; }
+  .list-item .sub { font-size:12px; color:var(--soft); }
+  .badge-queue { background:#FFF4E5; color:#9A6700; }
+  #syncBar { position:sticky; top:0; background:#FFF4E5; color:#9A6700; padding:8px 12px; border-radius:8px; font-size:13px; display:none; margin-bottom:10px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="monogram">STAFF</div>
+  <h1>หน้าทีมงาน · เช็คอินแขก</h1>
+
+  <div id="pinGate" class="card">
+    <label for="pin">กรอกรหัส PIN ทีมงาน</label>
+    <input id="pin" type="password" inputmode="numeric" autocomplete="off">
+    <button id="pinBtn">เข้าสู่ระบบ</button>
+    <div id="pinMsg"></div>
+  </div>
+
+  <div id="staffArea" style="display:none">
+    <div id="syncBar"></div>
+    <label for="search">ค้นหาชื่อแขก</label>
+    <input id="search" type="text" autocomplete="off" placeholder="พิมพ์ชื่อหรือชื่อเล่น">
+    <div id="list"></div>
+    <button id="refreshBtn" class="secondary" style="margin-top:16px">รีเฟรชรายชื่อจากเซิร์ฟเวอร์</button>
+  </div>
+
+  <div class="nav">
+    <a href="index.html">← กลับหน้าแรก</a>
+  </div>
+</main>
+
+<script src="config.js"></script>
+<script src="shared.js"></script>
+<script>
+(function () {
+  'use strict';
+  var LS_PIN = 'wed_staff_pin';
+  var LS_PEOPLE = 'wed_staff_people_cache';
+  var LS_QUEUE = 'wed_staff_queue'; // [{person_id, action, device, ts}]
+
+  var pin = localStorage.getItem(LS_PIN) || '';
+  var people = [];
+  try { people = JSON.parse(localStorage.getItem(LS_PEOPLE) || '[]'); } catch (e) { people = []; }
+
+  var pinGate = document.getElementById('pinGate');
+  var staffArea = document.getElementById('staffArea');
+  var listEl = document.getElementById('list');
+  var syncBar = document.getElementById('syncBar');
+  var deviceId = (function () {
+    var id = localStorage.getItem('wed_device_id');
+    if (!id) { id = 'staff-' + Math.random().toString(36).slice(2, 8); localStorage.setItem('wed_device_id', id); }
+    return id;
+  })();
+
+  function getQueue() { try { return JSON.parse(localStorage.getItem(LS_QUEUE) || '[]'); } catch (e) { return []; } }
+  function setQueue(q) { localStorage.setItem(LS_QUEUE, JSON.stringify(q)); }
+
+  function setMsg(el, text, kind) {
+    el.innerHTML = text ? '<div class="msg ' + kind + '">' + text + '</div>' : '';
+  }
+
+  function enterStaffArea() {
+    pinGate.style.display = 'none';
+    staffArea.style.display = '';
+    render();
+    syncQueue();
+    refreshFromServer(true);
+  }
+
+  document.getElementById('pinBtn').addEventListener('click', function () {
+    var val = document.getElementById('pin').value.trim();
+    if (!val) return;
+    pin = val;
+    document.getElementById('pinBtn').disabled = true;
+    WED.call('GET', 'staffList', { pin: pin }).then(function (r) {
+      document.getElementById('pinBtn').disabled = false;
+      if (!r.ok) {
+        var m = r.error === 'pin_locked' ? 'PIN ถูกล็อกชั่วคราวจากการกรอกผิดหลายครั้ง รอสักครู่แล้วลองใหม่'
+          : r.error === 'bad_pin' ? 'PIN ไม่ถูกต้อง'
+          : 'เชื่อมต่อไม่ได้ ลองอีกครั้ง';
+        setMsg(document.getElementById('pinMsg'), m, 'err');
+        return;
+      }
+      localStorage.setItem(LS_PIN, pin);
+      people = r.data.people;
+      localStorage.setItem(LS_PEOPLE, JSON.stringify(people));
+      enterStaffArea();
+    });
+  });
+
+  if (pin) {
+    // มี PIN ที่เคยใช้ได้ผลไว้แล้ว เข้าหน้าทีมงานได้เลย (ใช้ cache ก่อน แล้วซิงก์ทีหลัง)
+    enterStaffArea();
+  }
+
+  function render() {
+    var q = (document.getElementById('search').value || '').trim().toLowerCase().replace(/\s+/g, '');
+    var queue = getQueue();
+    var pendingIds = {};
+    queue.forEach(function (item) { pendingIds[item.person_id] = item.action; });
+
+    listEl.innerHTML = '';
+    var shown = people.filter(function (p) {
+      if (!q) return true;
+      var hay = (p.name + ' ' + p.nickname).toLowerCase().replace(/\s+/g, '');
+      return hay.indexOf(q) !== -1;
+    }).slice(0, 60);
+
+    if (!shown.length) {
+      listEl.innerHTML = '<p class="muted" style="margin-top:12px">ไม่พบรายชื่อ</p>';
+      return;
+    }
+
+    shown.forEach(function (p) {
+      var pendingAction = pendingIds[p.person_id];
+      var effectiveCheckedIn = pendingAction ? pendingAction === 'checkin' : p.checked_in;
+      var div = document.createElement('div');
+      div.className = 'list-item' + (effectiveCheckedIn ? ' done' : '');
+      div.innerHTML =
+        '<div class="info"><div class="name">' + p.name + (p.nickname ? ' (' + p.nickname + ')' : '') + '</div>' +
+        '<div class="sub">โต๊ะ ' + (p.table_no || '-') + (pendingAction ? ' · <span style="color:#9A6700">รอซิงก์…</span>' : '') + '</div></div>' +
+        '<button class="small ' + (effectiveCheckedIn ? 'secondary' : '') + '" data-id="' + p.person_id + '" data-action="' + (effectiveCheckedIn ? 'undoCheckin' : 'checkin') + '">' +
+        (effectiveCheckedIn ? 'ยกเลิก' : 'เช็คอิน') + '</button>';
+      listEl.appendChild(div);
+    });
+
+    listEl.querySelectorAll('button[data-id]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var personId = btn.getAttribute('data-id');
+        var action = btn.getAttribute('data-action');
+        queueAction(personId, action);
+      });
+    });
+  }
+
+  function queueAction(personId, action) {
+    var queue = getQueue().filter(function (item) { return item.person_id !== personId; });
+    queue.push({ person_id: personId, action: action, device: deviceId, ts: Date.now() });
+    setQueue(queue);
+    render();
+    syncQueue();
+  }
+
+  function syncQueue() {
+    var queue = getQueue();
+    if (!queue.length) { syncBar.style.display = 'none'; return; }
+    syncBar.style.display = '';
+    syncBar.textContent = 'กำลังซิงก์ ' + queue.length + ' รายการ…';
+
+    var item = queue[0];
+    WED.call('POST', item.action, { pin: pin, person_id: item.person_id, device: item.device }).then(function (r) {
+      if (r.ok || r.error === 'person_not_found') {
+        // สำเร็จ หรือ error ที่ retry ไปก็ไม่มีทางสำเร็จ -> เอาออกจากคิว
+        var remain = getQueue().filter(function (x) { return !(x.person_id === item.person_id && x.ts === item.ts); });
+        setQueue(remain);
+        if (remain.length) { syncQueue(); } else { syncBar.style.display = 'none'; refreshFromServer(false); }
+      } else {
+        // pin ผิด/ถูกล็อก/busy -> หยุดรอ retry รอบถัดไป ไม่ลบออกจากคิว
+        syncBar.textContent = 'ซิงก์ไม่สำเร็จ (' + (r.error || 'error') + ') จะลองใหม่อัตโนมัติ';
+      }
+    });
+  }
+
+  function refreshFromServer(silent) {
+    WED.call('GET', 'staffList', { pin: pin }).then(function (r) {
+      if (!r.ok) {
+        if (!silent) alert('รีเฟรชไม่สำเร็จ: ' + (r.error || 'error'));
+        return;
+      }
+      people = r.data.people;
+      localStorage.setItem(LS_PEOPLE, JSON.stringify(people));
+      render();
+    });
+  }
+
+  document.getElementById('search').addEventListener('input', render);
+  document.getElementById('refreshBtn').addEventListener('click', function () { refreshFromServer(false); });
+
+  window.addEventListener('online', syncQueue);
+  setInterval(syncQueue, 15000); // เผื่อกรณี event online ไม่ทำงานบางเบราว์เซอร์
+})();
+</script>
+</body>
+</html>
