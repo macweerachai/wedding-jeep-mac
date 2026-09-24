@@ -2,65 +2,153 @@
 <html lang="th">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Jeep & Mac · งานแต่งงาน</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#fbf3f1">
+<title>Jeep & Mac · งานแต่งงาน 19.02.2027</title>
+<meta name="description" content="ขอเชิญร่วมเป็นเกียรติในพิธีมงคลสมรส วันเพ็ญ & วีระชัย วันศุกร์ที่ 19 กุมภาพันธ์ 2570 ณ ริมธารา พระราม 3">
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
-<main class="site-shell home-page">
-  <header class="page-heading">
-    <span class="floral-deco floral-tl" aria-hidden="true"></span>
-    <span class="floral-deco floral-br" aria-hidden="true"></span>
-    <div class="monogram" aria-label="อักษรย่อบ่าวสาว WW"><img src="ww-monogram.png" alt="WW monogram"></div>
-    <p class="eyebrow">ยินดีต้อนรับ</p>
-    <h1 id="coupleTitle">Jeep &amp; Mac</h1>
-    <p class="tagline-en">Two W's, One Forever</p>
-    <p class="tagline">สอง W หนึ่งรักตลอดไป</p>
-    <p class="intro muted" style="margin-top:10px">ขอเชิญร่วมเป็นเกียรติในงานมงคลสมรส</p>
-  </header>
+<body class="home">
 
-  <section class="card event-card" aria-label="รายละเอียดงานแต่งงาน">
-    <div class="card-ornament" aria-hidden="true"></div>
-    <p class="section-kicker">มีความยินดีเรียนเชิญท่านร่วมเป็นเกียรติ ในพิธีมงคลสมรสและงานเลี้ยงฉลอง ระหว่าง</p>
-    <p class="date-display" style="font-size:19px;margin-bottom:0">วันเพ็ญ เก่งกล้า (จิ๊บ) <span class="tagline-en" style="font-size:16px">&amp;</span> วีระชัย จิตสุวรรณทยา (แม็ค)</p>
-    <div class="gold-rule" aria-hidden="true"><span></span></div>
-    <p class="section-kicker">วันแห่งความทรงจำ</p>
-    <div class="date-display" id="dateText"></div>
-    <div class="gold-rule" aria-hidden="true"><span></span></div>
-    <div class="venue-title" id="venueName"></div>
-    <div class="muted venue-room" id="venueRoom"></div>
-    <div class="schedule-list" id="schedule"></div>
-    <a class="map-link" id="mapLink" href="#" target="_blank" rel="noopener">📍 ดูแผนที่</a>
-  </section>
-
-  <section class="card dress-card" aria-label="โทนสีการแต่งกาย">
-    <p class="section-kicker">Dress Code</p>
-    <h2>โทนสีการแต่งกาย</h2>
-    <p class="muted" style="margin-top:8px">ขอเชิญร่วมงานในโทนสี ชมพูอ่อน · ครีม · น้ำตาล · ทอง</p>
-    <div class="swatch-row" aria-hidden="true">
-      <span class="swatch" style="--sw:#f3c9d3"></span>
-      <span class="swatch" style="--sw:#f3ead9"></span>
-      <span class="swatch" style="--sw:#a9785a"></span>
-      <span class="swatch" style="--sw:#c9a24a"></span>
+<!-- ===== HERO ===== -->
+<header class="hero">
+  <div class="hero-frame" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <img class="hero-mono" src="ww-monogram.png" alt="WW monogram" width="96" height="96">
+    <p class="kicker-en">The Wedding of</p>
+    <h1 class="hero-names">
+      <span>Wanpen</span>
+      <span class="amp">&amp;</span>
+      <span>Weerachai</span>
+    </h1>
+    <p class="hero-th">จิ๊บ &amp; แม็ค</p>
+    <div class="hero-date">
+      <span>ศุกร์</span>
+      <b>19 · 02 · 2027</b>
+      <span>16:00 น.</span>
     </div>
-    <p class="swatch-label">ชมพูอ่อน · ครีม · น้ำตาล · ทอง</p>
+    <p class="hero-venue">ริมธารา Rimtara พระราม 3</p>
+
+    <div class="countdown" id="countdown" aria-label="นับถอยหลังสู่วันงาน">
+      <div><b id="cdD">--</b><span>วัน</span></div>
+      <div><b id="cdH">--</b><span>ชั่วโมง</span></div>
+      <div><b id="cdM">--</b><span>นาที</span></div>
+      <div><b id="cdS">--</b><span>วินาที</span></div>
+    </div>
+
+    <a class="btn btn-primary hero-cta" href="rsvp.html">ตอบรับคำเชิญ</a>
+  </div>
+  <a class="scroll-cue" href="#invite" aria-label="เลื่อนลงดูรายละเอียด">
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</header>
+
+<main class="page">
+
+  <!-- ===== INVITATION ===== -->
+  <section class="section invite reveal" id="invite">
+    <p class="kicker-en">Two W's, One Forever</p>
+    <p class="invite-lead">สอง W หนึ่งรักตลอดไป</p>
+    <div class="ornament" aria-hidden="true"><span></span></div>
+    <p class="invite-text">มีความยินดีเรียนเชิญท่านร่วมเป็นเกียรติ<br>ในพิธีมงคลสมรสและงานเลี้ยงฉลอง ระหว่าง</p>
+
+    <div class="couple">
+      <div class="person">
+        <p class="person-role">เจ้าสาว</p>
+        <p class="person-name">วันเพ็ญ เก่งกล้า</p>
+        <p class="person-nick">(จิ๊บ)</p>
+        <p class="person-parent">บุตรีของ คุณเปรม เก่งกล้า</p>
+      </div>
+      <div class="couple-amp" aria-hidden="true">&amp;</div>
+      <div class="person">
+        <p class="person-role">เจ้าบ่าว</p>
+        <p class="person-name">วีระชัย จิตสุวรรณทยา</p>
+        <p class="person-nick">(แม็ค)</p>
+        <p class="person-parent">บุตรของ คุณโสภา จิตสุวรรณทยา</p>
+      </div>
+    </div>
+    <h1 id="coupleTitle" class="visually-hidden">Jeep &amp; Mac</h1>
   </section>
 
-  <section class="status-section">
-    <div class="section-heading"><span class="section-kicker">กำหนดการตอบรับ</span><h2>สถานะการตอบรับ</h2></div>
-    <div class="card status-card">
+  <!-- ===== WHEN & WHERE ===== -->
+  <section class="section reveal">
+    <div class="section-head">
+      <p class="kicker-en">When &amp; Where</p>
+      <h2>วันและสถานที่</h2>
+    </div>
+
+    <div class="info-grid">
+      <article class="info-card">
+        <svg class="info-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+        <p class="info-label">วันงาน</p>
+        <p class="info-value" id="dateText"></p>
+      </article>
+      <article class="info-card">
+        <svg class="info-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+        <p class="info-label">สถานที่</p>
+        <p class="info-value" id="venueName"></p>
+        <p class="info-sub" id="venueRoom"></p>
+        <a class="btn btn-ghost btn-sm" id="mapLink" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M9 4 3.5 6v14L9 18l6 2 5.5-2V4L15 6 9 4zM9 4v14M15 6v14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          เปิด Google Maps
+        </a>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== TIMELINE ===== -->
+  <section class="section reveal">
+    <div class="section-head">
+      <p class="kicker-en">Schedule</p>
+      <h2>กำหนดการ</h2>
+    </div>
+    <div class="timeline" id="schedule"></div>
+  </section>
+
+  <!-- ===== DRESS CODE ===== -->
+  <section class="section reveal">
+    <div class="section-head">
+      <p class="kicker-en">Dress Code</p>
+      <h2>โทนสีการแต่งกาย</h2>
+    </div>
+    <div class="swatches">
+      <figure><span style="--sw:#f3c9d3"></span><figcaption>ชมพูอ่อน</figcaption></figure>
+      <figure><span style="--sw:#f3ead9"></span><figcaption>ครีม</figcaption></figure>
+      <figure><span style="--sw:#a9785a"></span><figcaption>น้ำตาล</figcaption></figure>
+      <figure><span style="--sw:#c9a24a"></span><figcaption>ทอง</figcaption></figure>
+    </div>
+    <p class="note">ขอความกรุณาร่วมแต่งกายในโทนสีข้างต้น เพื่อให้ภาพความทรงจำของวันนี้งดงามไปด้วยกัน</p>
+  </section>
+
+  <!-- ===== RSVP ===== -->
+  <section class="section rsvp-block reveal">
+    <div class="section-head">
+      <p class="kicker-en">RSVP</p>
+      <h2>ตอบรับคำเชิญ</h2>
+    </div>
+    <div class="status">
       <span class="pill" id="rsvpPill">กำลังตรวจสอบ…</span>
-      <p class="muted status-message" id="rsvpMsg"></p>
+      <p class="status-msg" id="rsvpMsg"></p>
+    </div>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="rsvp.html">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m3.5 7 8.5 6 8.5-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        ตอบรับคำเชิญ
+      </a>
+      <a class="btn btn-ghost" href="seat.html">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        ค้นหาที่นั่ง
+      </a>
     </div>
   </section>
 
-  <nav class="nav action-nav" aria-label="เมนูหลัก">
-    <a class="nav-primary" href="rsvp.html">✉️ ตอบรับคำเชิญ (RSVP)</a>
-    <a href="seat.html">🔎 ค้นหาที่นั่ง</a>
-  </nav>
-
-  <footer>ระบบจัดการแขกงานแต่ง · Jeep &amp; Mac 2027</footer>
 </main>
+
+<footer class="site-footer">
+  <img src="ww-monogram.png" alt="" width="56" height="56">
+  <p class="kicker-en">Wanpen &amp; Weerachai · 19.02.2027</p>
+  <p class="footer-th">ขอบคุณที่มาร่วมเป็นส่วนหนึ่งของความทรงจำ</p>
+</footer>
 
 <script src="config.js"></script>
 <script src="shared.js"></script>
@@ -76,7 +164,6 @@
   E.schedule.forEach(function (s) {
     var d = document.createElement('div');
     d.className = 'row';
-    d.style.marginTop = '4px';
     d.innerHTML = '<span class="muted">' + s.time + '</span><span>' + s.label + '</span>';
     sch.appendChild(d);
   });
@@ -99,6 +186,34 @@
       msg.textContent = 'หากมีการเปลี่ยนแปลง กรุณาติดต่อแม็คโดยตรง';
     }
   });
+})();
+
+/* Countdown to 19 Feb 2027 16:00 (Bangkok) */
+(function () {
+  var target = new Date('2027-02-19T16:00:00+07:00').getTime();
+  var el = { d: document.getElementById('cdD'), h: document.getElementById('cdH'), m: document.getElementById('cdM'), s: document.getElementById('cdS') };
+  function pad(n) { return n < 10 ? '0' + n : '' + n; }
+  function tick() {
+    var diff = Math.max(0, target - Date.now());
+    var s = Math.floor(diff / 1000);
+    el.d.textContent = Math.floor(s / 86400);
+    el.h.textContent = pad(Math.floor(s % 86400 / 3600));
+    el.m.textContent = pad(Math.floor(s % 3600 / 60));
+    el.s.textContent = pad(s % 60);
+    if (diff === 0) { document.getElementById('countdown').classList.add('done'); return; }
+    setTimeout(tick, 1000);
+  }
+  tick();
+})();
+
+/* Reveal on scroll */
+(function () {
+  var items = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) { items.forEach(function (i) { i.classList.add('in'); }); return; }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  items.forEach(function (i) { io.observe(i); });
 })();
 </script>
 </body>
