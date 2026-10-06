@@ -414,3 +414,8 @@ h2{font-weight:600}
 /* lightbox: รูปเดียว (ผังโต๊ะ) ไม่ต้องมีปุ่มก่อนหน้า/ถัดไป */
 .lb.single .lb-prev,.lb.single .lb-next,.lb.single .lb-count{display:none}
 .lb.plan img{background:#fff;border-radius:12px;padding:6px;max-height:86svh;max-width:94vw;object-fit:contain}
+.invite .invite-lead{display:none}
+.invite > .kicker-en{font-size:14px;margin-bottom:0}
+/* ชื่อในการ์ดเชิญ: กลับเป็น Bride/Groom ตัวเขียนสีทอง + WANPEN/WEERACHAI ตัวพิมพ์ใหญ่ (Jost) */
+.p-script{font-size:clamp(34px,9vw,42px);color:var(--gold-s)}
+.p-en{margin:6px 0 0;font-family:'Jost',var(--sans);font-weight:500;font-size:clamp(14.5px,4vw,17px);line-height:1.6;letter-spacing:.18em;color:var(--ink)}

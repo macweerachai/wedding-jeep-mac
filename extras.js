@@ -412,7 +412,7 @@
   }
 
   /* ===== ชื่อบ่าวสาว: ตัวเขียน (Bride / Groom) + ชื่ออังกฤษตัวพิมพ์ใหญ่ + ชื่อเต็ม ===== */
-  var NAMES = { bride: { label: 'Bride', en: 'Wanpen' }, groom: { label: 'Groom', en: 'Weerachai' } };
+  var NAMES = { bride: { label: 'Bride', en: 'WANPEN' }, groom: { label: 'Groom', en: 'WEERACHAI' } };
   var persons = document.querySelectorAll('.couple .person');
   ['bride', 'groom'].forEach(function (k, i) {
     var pp = persons[i]; if (!pp) return;
