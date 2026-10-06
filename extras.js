@@ -18,7 +18,7 @@
     ]
   };
   var PLACEHOLDER_COUNT = { prewedding: 5, venue: 3 };
-  var MAP_QUERY = 'Rimtara Rama 3 Bangkok'; // คำค้นของ Google Maps (ถ้าหมุดเพี้ยน เปลี่ยนเป็นชื่อ/ที่อยู่เต็ม หรือพิกัด เช่น '13.7,100.5')
+  var MAP_QUERY = 'ริมธารา Rimtara พระราม 3'; // คำค้นของ Google Maps (ถ้าหมุดเพี้ยน เปลี่ยนเป็นชื่อ/ที่อยู่เต็ม หรือพิกัด เช่น '13.7,100.5')
   /* ======================================================= */
 
   var L = window.WED_LANG || 'th';
@@ -222,7 +222,7 @@
       '<div class="section-head"><p class="kicker-en">The Venue</p><h2></h2></div>' +
       '<p class="venue-room"></p>' +
       '<div class="venue-map"><iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen ' +
-      'src="https://www.google.com/maps?q=' + q + '&hl=' + (L === 'ja' ? 'ja' : (L === 'en' ? 'en' : 'th')) + '&z=16&output=embed"></iframe></div>' +
+      'src="https://www.google.com/maps?q=' + q + '&hl=' + (L === 'ja' ? 'ja' : (L === 'en' ? 'en' : 'th')) + '&z=17&output=embed"></iframe></div>' +
       '<p class="venue-addr"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span></span></p>' +
       '<a class="btn btn-ghost venue-dir" target="_blank" rel="noopener"></a>';
     ms.querySelector('h2').textContent = E.venueName || '';
