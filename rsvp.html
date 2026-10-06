@@ -5,58 +5,59 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title data-i18n="t_rsvp">ตอบรับคำเชิญ · Jeep & Mac</title>
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="extras.css">
 </head>
 <body>
 <main class="site-shell form-page">
-  <header class="page-heading compact-heading">
-    <a class="back-link" href="index.html" data-i18n="back">← กลับหน้าแรก</a>
-    <span class="floral-deco floral-tl" aria-hidden="true"></span><span class="floral-deco floral-br" aria-hidden="true"></span>
-    <div class="monogram" aria-label="อักษรย่อบ่าวสาว WW"><img src="ww-monogram.png" alt="WW monogram"></div>
-    <p class="eyebrow" data-i18n="r_eyebrow">ขอเรียนเชิญ</p>
-    <h1 data-i18n="r_h1">ตอบรับคำเชิญ</h1>
-    <p class="muted" data-i18n="r_desc">กรอกรหัสคำเชิญที่ระบุในการ์ด/ข้อความเชิญ เพื่อยืนยันการเข้าร่วมงาน</p>
-  </header>
+<header class="page-heading compact-heading">
+<a class="back-link" href="index.html" data-i18n="back">← กลับหน้าแรก</a>
+<span class="floral-deco floral-tl" aria-hidden="true"></span><span class="floral-deco floral-br" aria-hidden="true"></span>
+<div class="monogram" aria-label="อักษรย่อบ่าวสาว WW"><img src="ww-monogram.png" alt="WW monogram"></div>
+<p class="eyebrow" data-i18n="r_eyebrow">ขอเรียนเชิญ</p>
+<h1 data-i18n="r_h1">ตอบรับคำเชิญ</h1>
+<p class="muted" data-i18n="r_desc">กรอกรหัสคำเชิญที่ระบุในการ์ด/ข้อความเชิญ เพื่อยืนยันการเข้าร่วมงาน</p>
+</header>
 
-  <section class="card form-card lookup-card">
-    <div class="card-topline"><span class="step-number">01</span><span data-i18n="r_step1">ยืนยันคำเชิญ</span></div>
-    <label for="code" data-i18n="r_code">รหัสคำเชิญ (Party Code)</label>
-    <input id="code" type="text" inputmode="text" autocomplete="off" placeholder="เช่น ABC123" data-i18n-ph="r_code_ph">
-    <button id="lookupBtn" data-i18n="r_lookup">ค้นหา</button>
-    <div id="lookupMsg" aria-live="polite"></div>
-  </section>
+<section class="card form-card lookup-card">
+<div class="card-topline"><span class="step-number">01</span><span data-i18n="r_step1">ยืนยันคำเชิญ</span></div>
+<label for="code" data-i18n="r_code">รหัสคำเชิญ (Party Code)</label>
+<input id="code" type="text" inputmode="text" autocomplete="off" placeholder="เช่น ABC123" data-i18n-ph="r_code_ph">
+<button id="lookupBtn" data-i18n="r_lookup">ค้นหา</button>
+<div id="lookupMsg" aria-live="polite"></div>
+</section>
 
-  <section id="formSection" class="rsvp-form-section" style="display:none">
-    <h2 id="primaryName"></h2>
-    <div class="card seat-limit-card">
-      <span class="muted" data-i18n="r_max">จำนวนที่นั่งสูงสุด</span><b id="maxGuests"></b>
-    </div>
+<section id="formSection" class="rsvp-form-section" style="display:none">
+<h2 id="primaryName"></h2>
+<div class="card seat-limit-card">
+<span class="muted" data-i18n="r_max">จำนวนที่นั่งสูงสุด</span><b id="maxGuests"></b>
+</div>
 
-    <div class="card form-card attendance-card">
-      <div class="card-topline"><span class="step-number">02</span><span data-i18n="r_step2">แจ้งจำนวนผู้ร่วมงาน</span></div>
-      <label for="attending" data-i18n="r_attending">จะเข้าร่วมงานหรือไม่</label>
-      <select id="attending">
-        <option value="yes" data-i18n="r_yes">มาร่วมงานแน่นอน</option>
-        <option value="no" data-i18n="r_no">ไม่สามารถมาได้</option>
-      </select>
+<div class="card form-card attendance-card">
+<div class="card-topline"><span class="step-number">02</span><span data-i18n="r_step2">แจ้งจำนวนผู้ร่วมงาน</span></div>
+<label for="attending" data-i18n="r_attending">จะเข้าร่วมงานหรือไม่</label>
+<select id="attending">
+<option value="yes" data-i18n="r_yes">มาร่วมงานแน่นอน</option>
+<option value="no" data-i18n="r_no">ไม่สามารถมาได้</option>
+</select>
 
-      <div id="peopleSection">
-        <label class="people-label" data-i18n="r_people">รายชื่อผู้ที่จะเข้าร่วม</label>
-        <div id="peopleList"></div>
-        <button id="addPersonBtn" class="secondary small add-person-button" data-i18n="r_add">+ เพิ่มรายชื่อ</button>
-      </div>
+<div id="peopleSection">
+<label class="people-label" data-i18n="r_people">รายชื่อผู้ที่จะเข้าร่วม</label>
+<div id="peopleList"></div>
+<button id="addPersonBtn" class="secondary small add-person-button" data-i18n="r_add">+ เพิ่มรายชื่อ</button>
+</div>
 
-      <label for="phone" data-i18n="r_phone">เบอร์โทรติดต่อ (สำหรับติดต่อกลับเท่านั้น)</label>
-      <input id="phone" type="tel" inputmode="tel" placeholder="08x-xxx-xxxx">
+<label for="phone" data-i18n="r_phone">เบอร์โทรติดต่อ (สำหรับติดต่อกลับเท่านั้น)</label>
+<input id="phone" type="tel" inputmode="tel" placeholder="08x-xxx-xxxx">
 
-      <button id="submitBtn" data-i18n="r_submit">ยืนยันการตอบรับ</button>
-      <div id="submitMsg" aria-live="polite"></div>
-    </div>
-  </section>
+<button id="submitBtn" data-i18n="r_submit">ยืนยันการตอบรับ</button>
+<div id="submitMsg" aria-live="polite"></div>
+</div>
+</section>
 
-  <nav class="nav">
-    <a href="index.html" data-i18n="back">← กลับหน้าแรก</a>
-    <a href="seat.html" data-i18n="nav_seat">ค้นหาที่นั่ง</a>
-  </nav>
+<nav class="nav">
+<a href="index.html" data-i18n="back">← กลับหน้าแรก</a>
+<a href="seat.html" data-i18n="nav_seat">ค้นหาที่นั่ง</a>
+</nav>
 </main>
 
 <script src="config.js"></script>
@@ -64,113 +65,114 @@
 <script src="shared.js"></script>
 <script>
 (function () {
-  var partyId = null, maxGuests = 0;
-  var lookupBtn = document.getElementById('lookupBtn');
-  var lookupMsg = document.getElementById('lookupMsg');
-  var formSection = document.getElementById('formSection');
-  var peopleList = document.getElementById('peopleList');
-  var attendingSel = document.getElementById('attending');
-  var peopleSection = document.getElementById('peopleSection');
+var partyId = null, maxGuests = 0;
+var lookupBtn = document.getElementById('lookupBtn');
+var lookupMsg = document.getElementById('lookupMsg');
+var formSection = document.getElementById('formSection');
+var peopleList = document.getElementById('peopleList');
+var attendingSel = document.getElementById('attending');
+var peopleSection = document.getElementById('peopleSection');
 
-  function setMsg(el, text, kind) {
-    el.innerHTML = text ? '<div class="msg ' + kind + '">' + text + '</div>' : '';
-  }
+function setMsg(el, text, kind) {
+el.innerHTML = text ? '<div class="msg ' + kind + '">' + text + '</div>' : '';
+}
 
-  function addPersonRow(data) {
-    data = data || {};
-    var div = document.createElement('div');
-    div.className = 'people-item';
-    div.innerHTML =
-      '<label>' + t('r_pname') + '</label><input class="p-name" value="' + (data.name || '') + '">' +
-      '<label>' + t('r_pnick') + '</label><input class="p-nickname" value="' + (data.nickname || '') + '">' +
-      '<label>' + t('r_pdiet') + '</label><input class="p-dietary" value="' + (data.dietary || '') + '">' +
-      '<button type="button" class="remove">' + t('r_remove') + '</button>';
-    div.querySelector('.remove').addEventListener('click', function () {
-      div.remove();
-    });
-    peopleList.appendChild(div);
-  }
+function addPersonRow(data) {
+data = data || {};
+var div = document.createElement('div');
+div.className = 'people-item';
+div.innerHTML =
+'<label>' + t('r_pname') + '</label><input class="p-name" value="' + (data.name || '') + '">' +
+'<label>' + t('r_pnick') + '</label><input class="p-nickname" value="' + (data.nickname || '') + '">' +
+'<label>' + t('r_pdiet') + '</label><input class="p-dietary" value="' + (data.dietary || '') + '">' +
+'<button type="button" class="remove">' + t('r_remove') + '</button>';
+div.querySelector('.remove').addEventListener('click', function () {
+div.remove();
+});
+peopleList.appendChild(div);
+}
 
-  document.getElementById('addPersonBtn').addEventListener('click', function () {
-    if (peopleList.children.length >= maxGuests) {
-      alert(t('r_over', {n: maxGuests}));
-      return;
-    }
-    addPersonRow();
-  });
+document.getElementById('addPersonBtn').addEventListener('click', function () {
+if (peopleList.children.length >= maxGuests) {
+alert(t('r_over', {n: maxGuests}));
+return;
+}
+addPersonRow();
+});
 
-  attendingSel.addEventListener('change', function () {
-    peopleSection.style.display = attendingSel.value === 'yes' ? '' : 'none';
-  });
+attendingSel.addEventListener('change', function () {
+peopleSection.style.display = attendingSel.value === 'yes' ? '' : 'none';
+});
 
-  lookupBtn.addEventListener('click', function () {
-    var code = document.getElementById('code').value.trim();
-    if (!code) return;
-    lookupBtn.disabled = true;
-    setMsg(lookupMsg, '', '');
-    WED.call('GET', 'findParty', { code: code }).then(function (r) {
-      lookupBtn.disabled = false;
-      if (!r.ok) { setMsg(lookupMsg, t('conn_err'), 'err'); return; }
-      if (!r.data.found) { setMsg(lookupMsg, t('r_notfound'), 'err'); return; }
+lookupBtn.addEventListener('click', function () {
+var code = document.getElementById('code').value.trim();
+if (!code) return;
+lookupBtn.disabled = true;
+setMsg(lookupMsg, '', '');
+WED.call('GET', 'findParty', { code: code }).then(function (r) {
+lookupBtn.disabled = false;
+if (!r.ok) { setMsg(lookupMsg, t('conn_err'), 'err'); return; }
+if (!r.data.found) { setMsg(lookupMsg, t('r_notfound'), 'err'); return; }
 
-      partyId = code;
-      maxGuests = r.data.max_guests;
-      document.getElementById('primaryName').textContent = t('r_hello', {name: r.data.primary_name});
-      document.getElementById('maxGuests').textContent = t('r_seats', {n: maxGuests});
-      peopleList.innerHTML = '';
-      if (r.data.rsvp_status === 'attending' && r.data.people.length) {
-        attendingSel.value = 'yes';
-        r.data.people.forEach(addPersonRow);
-      } else if (r.data.rsvp_status === 'not_attending') {
-        attendingSel.value = 'no';
-        peopleSection.style.display = 'none';
-      } else {
-        attendingSel.value = 'yes';
-        addPersonRow();
-      }
-      formSection.style.display = '';
-    });
-  });
+partyId = code;
+maxGuests = r.data.max_guests;
+document.getElementById('primaryName').textContent = t('r_hello', {name: r.data.primary_name});
+document.getElementById('maxGuests').textContent = t('r_seats', {n: maxGuests});
+peopleList.innerHTML = '';
+if (r.data.rsvp_status === 'attending' && r.data.people.length) {
+attendingSel.value = 'yes';
+r.data.people.forEach(addPersonRow);
+} else if (r.data.rsvp_status === 'not_attending') {
+attendingSel.value = 'no';
+peopleSection.style.display = 'none';
+} else {
+attendingSel.value = 'yes';
+addPersonRow();
+}
+formSection.style.display = '';
+});
+});
 
-  document.getElementById('submitBtn').addEventListener('click', function () {
-    var attending = attendingSel.value;
-    var people = [];
-    if (attending === 'yes') {
-      var rows = peopleList.querySelectorAll('.people-item');
-      for (var i = 0; i < rows.length; i++) {
-        var name = rows[i].querySelector('.p-name').value.trim();
-        if (!name) { alert(t('r_fillall')); return; }
-        people.push({
-          name: name,
-          nickname: rows[i].querySelector('.p-nickname').value.trim(),
-          dietary: rows[i].querySelector('.p-dietary').value.trim()
-        });
-      }
-      if (!people.length) { alert(t('r_needone')); return; }
-    }
-    var btn = document.getElementById('submitBtn');
-    btn.disabled = true;
-    setMsg(document.getElementById('submitMsg'), '', '');
-    WED.call('POST', 'rsvp', {
-      idempotency_key: WED.newKey(),
-      party_code: partyId,
-      attending: attending,
-      phone: document.getElementById('phone').value.trim(),
-      people: people
-    }).then(function (r) {
-      btn.disabled = false;
-      var el = document.getElementById('submitMsg');
-      if (!r.ok) {
-        var msg = r.error === 'rsvp_closed' ? t('r_closed')
-          : r.error === 'exceeds_max_guests' ? t('r_exceeds', {n: r.data && r.data.max_guests})
-          : t('r_fail');
-        setMsg(el, msg, 'err');
-        return;
-      }
-      setMsg(el, t('r_ok'), 'ok');
-    });
-  });
+document.getElementById('submitBtn').addEventListener('click', function () {
+var attending = attendingSel.value;
+var people = [];
+if (attending === 'yes') {
+var rows = peopleList.querySelectorAll('.people-item');
+for (var i = 0; i < rows.length; i++) {
+var name = rows[i].querySelector('.p-name').value.trim();
+if (!name) { alert(t('r_fillall')); return; }
+people.push({
+name: name,
+nickname: rows[i].querySelector('.p-nickname').value.trim(),
+dietary: rows[i].querySelector('.p-dietary').value.trim()
+});
+}
+if (!people.length) { alert(t('r_needone')); return; }
+}
+var btn = document.getElementById('submitBtn');
+btn.disabled = true;
+setMsg(document.getElementById('submitMsg'), '', '');
+WED.call('POST', 'rsvp', {
+idempotency_key: WED.newKey(),
+party_code: partyId,
+attending: attending,
+phone: document.getElementById('phone').value.trim(),
+people: people
+}).then(function (r) {
+btn.disabled = false;
+var el = document.getElementById('submitMsg');
+if (!r.ok) {
+var msg = r.error === 'rsvp_closed' ? t('r_closed')
+: r.error === 'exceeds_max_guests' ? t('r_exceeds', {n: r.data && r.data.max_guests})
+: t('r_fail');
+setMsg(el, msg, 'err');
+return;
+}
+setMsg(el, t('r_ok'), 'ok');
+});
+});
 })();
 </script>
+<script src="extras.js"></script>
 </body>
 </html>

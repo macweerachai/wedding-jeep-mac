@@ -1,0 +1,180 @@
+/* =========================================================
+   extras.css — หน้าเปิดซอง · ปุ่ม RSVP ลอย · RSVP popup · แกลเลอรี
+   ใช้ตัวแปรสีจาก style.css (โหลดหลัง style.css)
+   ========================================================= */
+
+html.lock, html.lock body { overflow: hidden; }
+
+/* ---------- 1) หน้าเปิดซอง ---------- */
+.cover {
+  position: fixed; inset: 0; z-index: 100;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 24px;
+  background:
+    radial-gradient(48rem 32rem at 50% 28%, #fff7f8, transparent 70%),
+    linear-gradient(180deg, #fbeef0, #f3d6dd);
+  text-align: center;
+  transition: opacity .6s var(--ease), transform .6s var(--ease);
+}
+.cover.gone { opacity: 0; transform: translateY(-3%); pointer-events: none; }
+.cv-top { margin: 0; }
+.cv-names {
+  margin: 4px 0 6px;
+  font-family: var(--serif-en); font-weight: 400;
+  font-size: clamp(40px, 12vw, 60px); line-height: 1; color: var(--ink);
+}
+.cv-date { margin: 0 0 28px; font-family: var(--serif-en); font-size: 18px; letter-spacing: .14em; color: var(--soft); }
+
+.cv-env {
+  position: relative;
+  width: min(78vw, 340px); aspect-ratio: 10 / 7;
+  cursor: pointer; perspective: 900px;
+  filter: drop-shadow(0 24px 28px rgba(94, 58, 69, .26));
+  -webkit-tap-highlight-color: transparent;
+}
+.cv-env:focus-visible { outline-offset: 10px; }
+.cv-env > * { position: absolute; display: block; }
+.cv-back  { inset: 0; z-index: 0; background: #e3a9b8; border-radius: 6px; }
+.cv-card  {
+  left: 7%; right: 7%; top: 9%; bottom: 7%; z-index: 1;
+  display: grid; place-items: center; align-content: center; gap: 2px;
+  background: #fffdfb; border-radius: 4px;
+  box-shadow: inset 0 0 0 1px rgba(217, 191, 152, .55);
+  font-family: var(--serif-en); color: var(--ink);
+  transition: transform .9s .35s var(--ease);
+}
+.cv-card b { font-weight: 500; font-size: 22px; letter-spacing: .04em; }
+.cv-card i { font-size: 13px; letter-spacing: .18em; color: var(--gold); font-style: normal; }
+.cv-front {
+  inset: 0; z-index: 2; border-radius: 6px;
+  background: linear-gradient(180deg, #efc4cf, #e8b4c1);
+  clip-path: polygon(0 0, 50% 54%, 100% 0, 100% 100%, 0 100%);
+}
+.cv-flap {
+  left: 0; top: 0; width: 100%; height: 54%; z-index: 3;
+  background: linear-gradient(180deg, #e9afbd, #e29fb0);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top center;
+  transition: transform .7s var(--ease);
+}
+.cv-seal {
+  left: 50%; top: 54%; z-index: 4;
+  width: 64px; height: 64px; margin: -32px 0 0 -32px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff8ea, #ecd9b6 70%, #d9bf98);
+  box-shadow: 0 6px 14px -4px rgba(94, 58, 69, .5), inset 0 0 0 2px rgba(255, 255, 255, .6);
+  transition: opacity .35s, transform .35s;
+}
+.cv-seal img { width: 40px; height: 40px; object-fit: contain; }
+.cv-hint {
+  margin: 34px 0 0;
+  font-family: var(--serif-en); font-style: italic; font-size: 15px;
+  letter-spacing: .28em; text-transform: uppercase; color: var(--soft);
+  animation: cvPulse 2.2s ease-in-out infinite;
+}
+@keyframes cvPulse { 0%, 100% { opacity: .45; } 50% { opacity: 1; } }
+
+.cover.open .cv-flap { transform: rotateX(180deg); z-index: 1; }
+.cover.open .cv-seal { opacity: 0; transform: scale(.7); }
+.cover.open .cv-card { transform: translateY(-52%); }
+.cover.open .cv-hint { opacity: 0; animation: none; transition: opacity .3s; }
+
+/* ---------- 2) ปุ่ม RSVP ลอย ---------- */
+.fab-rsvp {
+  position: fixed; left: 50%; bottom: max(16px, env(safe-area-inset-bottom)); z-index: 40;
+  min-height: 50px; padding: 10px 28px;
+  box-shadow: 0 16px 32px -14px rgba(94, 58, 69, .6);
+  opacity: 0; pointer-events: none;
+  transform: translate(-50%, 24px);
+  transition: opacity .35s var(--ease), transform .35s var(--ease), box-shadow .25s;
+}
+.fab-rsvp:hover { transform: translate(-50%, 24px); }
+.fab-rsvp.show { opacity: 1; pointer-events: auto; transform: translate(-50%, 0); }
+.fab-rsvp.show:hover { transform: translate(-50%, -2px); }
+
+/* ---------- 3) RSVP popup (bottom sheet) ---------- */
+.rs-back {
+  position: fixed; inset: 0; z-index: 90;
+  background: rgba(94, 58, 69, .45); backdrop-filter: blur(3px);
+  opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.rs-sheet {
+  position: fixed; left: 50%; bottom: 0; z-index: 91;
+  width: min(100%, 560px); height: min(92vh, 880px); height: min(92dvh, 880px);
+  background: var(--cream);
+  border-radius: 24px 24px 0 0; overflow: hidden;
+  box-shadow: 0 -20px 60px -20px rgba(94, 58, 69, .5);
+  transform: translate(-50%, 105%);
+  transition: transform .45s var(--ease);
+}
+.rs-sheet iframe { display: block; width: 100%; height: 100%; border: 0; background: var(--cream); }
+html.rs-open .rs-back { opacity: 1; pointer-events: auto; }
+html.rs-open .rs-sheet { transform: translate(-50%, 0); }
+html.rs-open .fab-rsvp { opacity: 0; pointer-events: none; }
+
+.rs-close, .rs-close:hover:not(:disabled) {
+  position: absolute; top: 10px; right: 12px; z-index: 2;
+  width: 40px; min-height: 40px; height: 40px; margin: 0; padding: 0;
+  border: 1px solid var(--line); border-radius: 50%;
+  background: rgba(255, 255, 255, .92); color: var(--ink-2);
+  box-shadow: var(--shadow-sm); transform: none;
+}
+.rs-close svg { width: 18px; height: 18px; }
+
+/* โหมดฝังใน iframe (rsvp.html?embed=1) */
+html.embed body { background: var(--cream); }
+html.embed .lang-switch, html.embed .back-link, html.embed .nav { display: none !important; }
+html.embed .site-shell { padding-top: 24px; padding-bottom: 40px; }
+
+/* ---------- 4) แกลเลอรี ---------- */
+.gal { text-align: center; }
+.gal-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.gal-item, .gal-item:hover:not(:disabled) {
+  position: relative; display: block; width: 100%; min-height: 0; margin: 0; padding: 0;
+  aspect-ratio: 3 / 4; overflow: hidden;
+  border: 1px solid var(--line); border-radius: var(--r-md);
+  background: var(--blush-2); color: var(--rose-2);
+  box-shadow: var(--shadow-sm); transform: none; cursor: zoom-in;
+}
+.gal-grid .gal-item:first-child { grid-column: 1 / -1; aspect-ratio: 4 / 3; }
+.gal-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease); }
+.gal-item:hover img { transform: scale(1.04); }
+.gal-item.ph, .gal-item.ph:hover:not(:disabled) {
+  display: grid; place-items: center; cursor: default;
+  background:
+    repeating-linear-gradient(135deg, rgba(229, 179, 191, .12) 0 12px, transparent 12px 24px),
+    linear-gradient(160deg, var(--blush-2), var(--blush));
+}
+.gal-item.ph svg { width: 34px; height: 34px; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.gal-soon { margin-top: 14px; font-size: 13.5px; color: var(--mute); }
+
+/* แถวเลื่อนแนวนอน (Venue) */
+.gal-row {
+  display: flex; gap: 10px; overflow-x: auto; padding: 4px 2px 12px;
+  scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+}
+.gal-row .gal-item, .gal-row .gal-item:hover:not(:disabled) {
+  flex: 0 0 82%; width: auto; aspect-ratio: 16 / 10; scroll-snap-align: center;
+}
+@media (min-width: 640px) { .gal-row .gal-item, .gal-row .gal-item:hover:not(:disabled) { flex-basis: 62%; } }
+
+/* lightbox */
+.lb {
+  position: fixed; inset: 0; z-index: 110;
+  display: none; align-items: center; justify-content: center;
+  background: rgba(40, 24, 30, .92);
+}
+.lb.on { display: flex; }
+.lb img { max-width: 100%; max-height: 86vh; max-height: 86dvh; object-fit: contain; }
+.lb-btn, .lb-btn:hover:not(:disabled) {
+  position: absolute; z-index: 2;
+  width: 44px; min-height: 44px; height: 44px; margin: 0; padding: 0;
+  border: 1px solid rgba(255, 255, 255, .25); border-radius: 50%;
+  background: rgba(255, 255, 255, .14); color: #fff; box-shadow: none; transform: none;
+}
+.lb-btn svg { width: 20px; height: 20px; }
+.lb-close { top: max(14px, env(safe-area-inset-top)); right: 14px; }
+.lb-prev { left: 12px; top: 50%; margin-top: -22px; }
+.lb-next { right: 12px; top: 50%; margin-top: -22px; }
+.lb-count { position: absolute; bottom: max(16px, env(safe-area-inset-bottom)); left: 0; right: 0; color: rgba(255, 255, 255, .75); font-size: 13.5px; text-align: center; }
