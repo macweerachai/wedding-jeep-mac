@@ -215,3 +215,58 @@ html.embed .site-shell { padding-top: 24px; padding-bottom: 40px; }
 .park-body ul{margin:0 0 10px;padding-left:18px}
 .park-body li{margin-bottom:6px}
 .park-note{margin:0;padding:10px 12px;border-radius:var(--r-sm);background:var(--blush-2);color:var(--ink-2);font-size:13.5px}
+
+/* ================= ตัวอักษรให้ชัดขึ้น ================= */
+:root{--ink:#47282f;--ink-2:#5a343f;--soft:#684650;--mute:#7d5d67;--gold:#946c3a}
+body{font-size:17px;line-height:1.8}
+.muted{font-size:16px;color:var(--soft)}
+.kicker-en{font-size:19px;font-weight:500;color:var(--gold)}
+h2{font-weight:600}
+.hero-th{font-size:19px;color:var(--ink-2)}
+.hero-date{font-size:15.5px;color:var(--ink-2)}
+.hero-venue{font-size:16px;color:var(--ink-2)}
+.countdown span{font-size:13.5px;color:var(--soft)}
+.venue-room,.venue-addr,.park-body,.line-or{font-size:16px}
+.park-note{font-size:15px}
+.timeline .row .muted{color:var(--ink)}
+
+/* ================= รูปหน้าแรกเต็มจอ ================= */
+.hero.has-photo{padding:0 20px 96px;align-items:end;color:#fff}
+.hero.has-photo::before{z-index:-1;background:linear-gradient(180deg,rgba(30,14,20,.28) 0%,rgba(30,14,20,0) 28%,rgba(30,14,20,.12) 48%,rgba(30,14,20,.82) 100%)}
+.hero.has-photo .hero-frame{display:none}
+.hero-bg{position:absolute;inset:0;z-index:-2;background:#2a1a20}
+.hero-bg picture,.hero-bg img{display:block;width:100%;height:100%}
+.hero-bg img{object-fit:cover;object-position:var(--hero-pos,50% 25%)}
+@media (max-width:700px){.hero-bg img{object-position:var(--hero-pos-m,50% 20%)}}
+.hero.has-photo .hero-inner{max-width:520px;text-shadow:0 2px 14px rgba(0,0,0,.55)}
+.hero.has-photo .hero-mono{display:none}
+.hero.has-photo .kicker-en,.hero.has-photo .hero-names,.hero.has-photo .hero-names .amp,.hero.has-photo .hero-th,.hero.has-photo .hero-venue,.hero.has-photo .hero-date,.hero.has-photo .hero-date b{color:#fff}
+.hero.has-photo .hero-names .amp{opacity:.9}
+.hero.has-photo .hero-date{border-color:rgba(255,255,255,.7)}
+.hero.has-photo .countdown div{background:rgba(30,14,20,.42);border-color:rgba(255,255,255,.35);backdrop-filter:blur(8px)}
+.hero.has-photo .countdown b{color:#fff}
+.hero.has-photo .countdown span{color:rgba(255,255,255,.92)}
+.hero.has-photo .scroll-cue{color:#fff}
+@media (min-width:700px){.hero.has-photo{padding:0 20px 84px}}
+
+/* ================= สไลด์รูปเลื่อนอัตโนมัติ (ประหยัดพื้นที่) ================= */
+.gal-slider{position:relative;max-width:640px;margin:0 auto}
+.gal-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;border-radius:var(--r-md);border:1px solid var(--line);box-shadow:var(--shadow-sm);background:var(--blush-2)}
+.gal-track::-webkit-scrollbar{display:none}
+.gal-track .gal-item,.gal-track .gal-item:hover:not(:disabled){flex:0 0 100%;scroll-snap-align:center;aspect-ratio:4/3;max-height:58svh;border:0;border-radius:0;padding:0;margin:0;background:var(--blush-2);box-shadow:none;transform:none;cursor:zoom-in}
+@media (min-width:700px){.gal-track .gal-item,.gal-track .gal-item:hover:not(:disabled){aspect-ratio:16/10}}
+.gal-track .gal-item img{width:100%;height:100%;object-fit:cover}
+.gal-track .gal-item.ph{display:grid;place-items:center;cursor:default}
+.gal-dots{display:flex;justify-content:center;gap:8px;margin-top:12px}
+.gal-dots span{width:8px;height:8px;border-radius:50%;background:var(--rose-2);cursor:pointer;transition:width .25s var(--ease),background .25s}
+.gal-dots span.on{width:22px;border-radius:99px;background:var(--rose)}
+.gal-video{max-width:640px}
+
+/* hero แบบรูปเต็ม: จัดชื่อบรรทัดเดียว ให้กินพื้นที่น้อย เห็นหน้าคู่บ่าวสาวชัด */
+.hero.has-photo .hero-names{font-size:clamp(34px,9.2vw,64px);margin:4px 0 2px;white-space:nowrap}
+.hero.has-photo .hero-names span{display:inline}
+.hero.has-photo .hero-names .amp{font-size:.62em;margin:0 .18em}
+.hero.has-photo .hero-date{margin-top:14px;padding:8px 0}
+.hero.has-photo .countdown{margin-top:18px;max-width:300px;gap:6px}
+.hero.has-photo .countdown b{font-size:22px}
+.hero.has-photo .hero-cta{margin-top:18px;min-height:48px}

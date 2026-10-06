@@ -19,7 +19,7 @@
   };
   var PLACEHOLDER_COUNT = { prewedding: 5, venue: 3 };
   // วิดีโอ: ใส่ลิงก์ YouTube (แนะนำ ตั้งเป็น Unlisted) หรือไฟล์ mp4 ในโฟลเดอร์ photos/ เช่น 'photos/prewed.mp4' (ว่าง = ยังไม่แสดง)
-  var VIDEOS = { prewedding: '', venue: undefined };   // venue: ใส่ '' เพื่อโชว์ช่องวิดีโอเปล่า หรือใส่ลิงก์ได้เลย
+  var VIDEOS = { prewedding: undefined, venue: undefined };   // ใส่ลิงก์ YouTube หรือ 'photos/xxx.mp4' เพื่อแสดงวิดีโอ (undefined = ไม่แสดงช่องวิดีโอ ไม่เปลืองพื้นที่)
   // ลิงก์อัลบั้ม Google Photos (แชร์แบบ "ทุกคนที่มีลิงก์") ไว้ให้กดดูรูป/วิดีโอทั้งหมด (ว่าง = ไม่แสดงปุ่ม)
   var ALBUMS = { prewedding: '', venue: '' };
   // กำหนดการ (พิธีบ่าย เลี้ยงเย็น) — แก้เวลา/ข้อความตรงนี้ได้เลย
@@ -34,6 +34,10 @@
     en: { btn: 'Parking information', lines: ['Parking for 300 cars 🚕🚙', 'Available on floors G, B and B1', '🚙 Drive in, take a ticket at the guard booth and tell security you are here for "Rimtara wedding"', 'If floor G (same floor as the restaurant) is full, security will direct you to B, B1 or other floors and will point out a space.'], note: 'Please bring your parking slip to be stamped at the event. Keep the hard card in your car. Free parking for 8 hours.' },
     ja: { btn: '駐車場のご案内', lines: ['駐車場は300台分 🚕🚙', 'G階・B階・B1階に駐車できます', '🚙 入口でカードを受け取り、警備員に「リムターラ 結婚式」と伝えてください', 'G階（レストランと同じ階）が満車の場合は、警備員がB階・B1階などへご案内します。'], note: '駐車券は会場でスタンプを押してください。ハードカードは車内に置いたままで構いません。8時間まで無料です。' }
   };
+  // รูปหน้าแรกแบบเต็มจอ: อัปโหลดไว้ใน photos/ แล้วใส่ชื่อไฟล์ (ว่าง = ใช้หน้าตาเดิมแบบไม่มีรูป)
+  // img = รูปจอคอม (แนวนอน) · imgMobile = รูปจอมือถือ (แนวตั้ง) ถ้าไม่ใส่ จะใช้ img เดียวกัน
+  // pos / posMobile = จุดโฟกัสของรูปเมื่อถูกครอบ เช่น '50% 20%' (ซ้าย-ขวา  บน-ล่าง) ปรับให้เห็นหน้าคู่บ่าวสาว
+  var HERO = { img: '', imgMobile: '', pos: '50% 25%', posMobile: '50% 20%' };
   var MAP_QUERY = 'ริมธารา Rimtara พระราม 3'; // คำค้นของ Google Maps (ถ้าหมุดเพี้ยน เปลี่ยนเป็นชื่อ/ที่อยู่เต็ม หรือพิกัด เช่น '13.7,100.5')
   /* ======================================================= */
 
@@ -215,27 +219,60 @@
     return w;
   }
 
+  /* สไลด์รูปเลื่อนอัตโนมัติ (ปัดด้วยนิ้วได้, หยุดเมื่อแตะ/เมาส์ชี้, หยุดเมื่ออยู่นอกจอ) */
+  var SLIDE_MS = 4000;
+  function autoSlide(track, dots) {
+    var n = track.children.length, cur = 0, timer = null, hold = false, visible = false;
+    function width() { return track.clientWidth; }
+    function go(i) { cur = (i + n) % n; track.scrollTo({ left: cur * width(), behavior: reduceMotion ? 'auto' : 'smooth' }); }
+    function tick() { if (!hold && visible) go(cur + 1); }
+    track.addEventListener('scroll', function () {
+      var i = Math.round(track.scrollLeft / Math.max(width(), 1));
+      if (i !== cur || !dots.children[i].classList.contains('on')) {
+        cur = i;
+        for (var k = 0; k < dots.children.length; k++) dots.children[k].classList.toggle('on', k === i);
+      }
+    }, { passive: true });
+    Array.prototype.forEach.call(dots.children, function (d, i) { d.addEventListener('click', function () { go(i); }); });
+    ['pointerdown', 'touchstart', 'mouseenter', 'focusin'].forEach(function (ev) { track.addEventListener(ev, function () { hold = true; }, { passive: true }); });
+    ['pointerup', 'touchend', 'mouseleave', 'focusout'].forEach(function (ev) { track.addEventListener(ev, function () { setTimeout(function () { hold = false; }, 2500); }, { passive: true }); });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }, { threshold: .35 }).observe(track);
+    } else visible = true;
+    if (!reduceMotion) timer = setInterval(tick, SLIDE_MS);
+  }
+
   function buildGallery(id, kick, head, list, nPh, rowClass, video, album) {
     var sec = el('section', 'section gal');
     sec.id = id;
     sec.innerHTML = '<div class="section-head"><p class="kicker-en">' + kick + '</p><h2>' + head + '</h2></div>';
     if (video !== undefined) sec.appendChild(buildVideo(video));
-    var grid = el('div', rowClass || 'gal-grid');
-    if (list.length) {
-      list.forEach(function (src, i) {
-        var b = el('button', 'gal-item');
-        b.type = 'button';
+    var slider = el('div', 'gal-slider');
+    var track = el('div', 'gal-track');
+    var dots = el('div', 'gal-dots');
+    var n = list.length || nPh;
+    for (var i = 0; i < n; i++) {
+      var slide;
+      if (list.length) {
+        slide = el('button', 'gal-item');
+        slide.type = 'button';
         var img = el('img');
-        img.src = src; img.alt = ''; img.loading = 'lazy'; img.decoding = 'async';
-        img.addEventListener('error', function () { b.classList.add('ph'); b.innerHTML = ICON_IMG; b.disabled = true; });
-        b.appendChild(img);
-        b.addEventListener('click', function () { openLb(list, i); });
-        grid.appendChild(b);
-      });
-    } else {
-      for (var i = 0; i < nPh; i++) grid.appendChild(el('div', 'gal-item ph', ICON_IMG));
+        img.src = list[i]; img.alt = ''; img.loading = i ? 'lazy' : 'eager'; img.decoding = 'async';
+        (function (b, idx) {
+          img.addEventListener('error', function () { b.classList.add('ph'); b.innerHTML = ICON_IMG; b.disabled = true; });
+          b.addEventListener('click', function () { openLb(list, idx); });
+        })(slide, i);
+        slide.appendChild(img);
+      } else {
+        slide = el('div', 'gal-item ph', ICON_IMG);
+      }
+      track.appendChild(slide);
+      var d = el('span', i ? '' : 'on'); dots.appendChild(d);
     }
-    sec.appendChild(grid);
+    slider.appendChild(track);
+    if (n > 1) slider.appendChild(dots);
+    sec.appendChild(slider);
+    if (list.length > 1) autoSlide(track, dots);
     if (!list.length && !video) sec.appendChild(el('p', 'gal-soon', tx('soon')));
     if (album) {
       var a = el('a', 'btn btn-ghost gal-album');
@@ -293,6 +330,21 @@
       var d = el('div', 'row'); var a = el('span', 'muted'); var b = el('span');
       a.textContent = r[0]; b.textContent = r[1]; d.appendChild(a); d.appendChild(b); schedEl.appendChild(d);
     });
+  }
+
+  /* รูปหน้าแรกเต็มจอ */
+  var heroEl = document.querySelector('.hero');
+  if (heroEl && HERO.img) {
+    var bg = el('div', 'hero-bg');
+    bg.setAttribute('aria-hidden', 'true');
+    var pic = el('picture');
+    if (HERO.imgMobile) { var so = el('source'); so.media = '(max-width: 700px)'; so.srcset = HERO.imgMobile; pic.appendChild(so); }
+    var hi = el('img'); hi.src = HERO.img; hi.alt = ''; hi.decoding = 'async'; hi.fetchPriority = 'high';
+    pic.appendChild(hi); bg.appendChild(pic);
+    heroEl.style.setProperty('--hero-pos', HERO.pos);
+    heroEl.style.setProperty('--hero-pos-m', HERO.posMobile || HERO.pos);
+    heroEl.insertBefore(bg, heroEl.firstChild);
+    heroEl.classList.add('has-photo');
   }
 
   /* ข้อความที่ไม่ได้อยู่ในระบบ i18n เดิม */
