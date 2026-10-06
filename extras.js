@@ -381,7 +381,7 @@
 
   /* ฟอนต์ Jost สำหรับตัวเลขนับถอยหลังในหน้าแรก */
   var fl = document.createElement('link'); fl.rel = 'stylesheet';
-  fl.href = 'https://fonts.googleapis.com/css2?family=Great+Vibes&family=Jost:wght@300;400;500&display=swap';
+  fl.href = 'https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Jost:wght@300;400;500&display=swap';
   document.head.appendChild(fl);
 
   /* ===== เพิ่มลงปฏิทิน: วางท้ายส่วนกำหนดการ ===== */
@@ -410,6 +410,17 @@
     ci.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
     schedSec.appendChild(cal);
   }
+
+  /* หน้าแรก: ใช้เส้นคั่นมีหัวใจตรงกลางแทน & */
+  var heroAmp = document.querySelector('.hero-names .amp');
+  if (heroAmp) {
+    heroAmp.innerHTML = '<svg viewBox="0 0 260 40" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round">' +
+      '<path d="M4 22h96"/><path d="M160 22h96"/><path d="M130 34c-10-7-17-12-17-19 0-5 4-8 8-8 4 0 7 2 9 5 2-3 5-5 9-5 4 0 8 3 8 8 0 7-7 12-17 19z"/></g></svg>' +
+      '<span class="visually-hidden">&amp;</span>';
+    heroAmp.classList.add('amp-heart');
+  }
+  /* ภาษาอังกฤษ/ญี่ปุ่น: ไม่แสดงหัวข้อเล็กภาษาอังกฤษซ้ำเหนือหัวข้อหลัก (แสดงภาษาเดียว) */
+  root.classList.add('lang-' + L);
 
   /* ===== ชื่อบ่าวสาว: ตัวเขียน (Bride / Groom) + ชื่ออังกฤษตัวพิมพ์ใหญ่ + ชื่อเต็ม ===== */
   var NAMES = { bride: { label: 'Bride', en: 'WANPEN' }, groom: { label: 'Groom', en: 'WEERACHAI' } };

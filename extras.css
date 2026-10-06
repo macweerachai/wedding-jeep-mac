@@ -419,3 +419,14 @@ h2{font-weight:600}
 /* ชื่อในการ์ดเชิญ: กลับเป็น Bride/Groom ตัวเขียนสีทอง + WANPEN/WEERACHAI ตัวพิมพ์ใหญ่ (Jost) */
 .p-script{font-size:clamp(34px,9vw,42px);color:var(--gold-s)}
 .p-en{margin:6px 0 0;font-family:'Jost',var(--sans);font-weight:500;font-size:clamp(14.5px,4vw,17px);line-height:1.6;letter-spacing:.18em;color:var(--ink)}
+
+/* ===== ฟอนต์ชื่อ: Pinyon Script (ลายมือ Copperplate อ่านง่าย) + หัวใจแทน & ===== */
+:root{--script:'Pinyon Script','Great Vibes',cursive}
+.hero-names{font-size:clamp(54px,15vw,84px);line-height:1.08}
+.hero-names .amp-heart{display:block;width:min(230px,62vw);margin:4px auto 6px;color:var(--gold-s);line-height:0}
+.hero-names .amp-heart svg{display:block;width:100%;height:auto}
+.hero.has-photo .hero-names .amp-heart{color:#fff;display:inline-block;width:110px;vertical-align:middle;margin:0 .2em}
+.p-script{font-size:clamp(32px,8.6vw,40px)}
+/* EN / JA: แสดงหัวข้อภาษาเดียว */
+html.lang-en .section-head .kicker-en,html.lang-ja .section-head .kicker-en{display:none}
+html.lang-en .sched-time.long{font-size:clamp(11.5px,3.1vw,15px)}
