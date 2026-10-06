@@ -18,15 +18,16 @@
     ]
   };
   var PLACEHOLDER_COUNT = { prewedding: 5, venue: 3 };
+  var MAP_QUERY = 'Rimtara Rama 3 Bangkok'; // คำค้นของ Google Maps (ถ้าหมุดเพี้ยน เปลี่ยนเป็นชื่อ/ที่อยู่เต็ม หรือพิกัด เช่น '13.7,100.5')
   /* ======================================================= */
 
   var L = window.WED_LANG || 'th';
   var S = {
-    th: { tap: 'แตะเพื่อเปิดซอง', kick1: 'Our Moments', h1: 'ความทรงจำของเรา', kick2: 'The Venue', h2: 'บรรยากาศสถานที่',
+    th: { tap: 'แตะเพื่อเปิดซอง', kick1: 'Our Moments', h1: 'ความทรงจำของเรา', kick2: 'Venue Gallery', h2: 'บรรยากาศสถานที่', venueTitle: 'สถานที่จัดงาน', direction: 'นำทาง (DIRECTION)',
           soon: 'รูปภาพกำลังจะมาเร็วๆ นี้', close: 'ปิด', prev: 'ก่อนหน้า', next: 'ถัดไป', rsvp: 'ตอบรับคำเชิญ', top: 'The Wedding of' },
-    en: { tap: 'Tap to open', kick1: 'Our Moments', h1: 'Our Moments', kick2: 'The Venue', h2: 'The Venue',
+    en: { tap: 'Tap to open', kick1: 'Our Moments', h1: 'Our Moments', kick2: 'Venue Gallery', h2: 'Venue Photos', venueTitle: 'The Venue', direction: 'DIRECTION',
           soon: 'Photos coming soon', close: 'Close', prev: 'Previous', next: 'Next', rsvp: 'RSVP', top: 'The Wedding of' },
-    ja: { tap: 'タップして開く', kick1: 'Our Moments', h1: 'ふたりの思い出', kick2: 'The Venue', h2: '会場のご案内',
+    ja: { tap: 'タップして開く', kick1: 'Our Moments', h1: 'ふたりの思い出', kick2: 'Venue Gallery', h2: '会場の雰囲気', venueTitle: '会場', direction: '経路案内 (DIRECTION)',
           soon: '写真は近日公開', close: '閉じる', prev: '前へ', next: '次へ', rsvp: 'ご出欠の回答', top: 'The Wedding of' }
   };
   function tx(k) { return (S[L] && S[L][k]) || S.th[k] || k; }
@@ -211,6 +212,26 @@
   if (where) {
     where.insertAdjacentElement('afterend',
       buildGallery('venue', tx('kick2'), tx('h2'), PHOTOS.venue, PLACEHOLDER_COUNT.venue, 'gal-row'));
+
+    /* ===== The Venue: แผนที่เต็มความกว้าง + ที่อยู่ + ปุ่มนำทาง ===== */
+    var E = (window.WED_CONFIG && WED_CONFIG.EVENT) || {};
+    var q = encodeURIComponent(MAP_QUERY);
+    var ms = el('section', 'section venue-full');
+    ms.id = 'venue-map';
+    ms.innerHTML =
+      '<div class="section-head"><p class="kicker-en">The Venue</p><h2></h2></div>' +
+      '<p class="venue-room"></p>' +
+      '<div class="venue-map"><iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen ' +
+      'src="https://www.google.com/maps?q=' + q + '&hl=' + (L === 'ja' ? 'ja' : (L === 'en' ? 'en' : 'th')) + '&z=16&output=embed"></iframe></div>' +
+      '<p class="venue-addr"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span></span></p>' +
+      '<a class="btn btn-ghost venue-dir" target="_blank" rel="noopener"></a>';
+    ms.querySelector('h2').textContent = E.venueName || '';
+    ms.querySelector('.venue-room').textContent = tx('venueTitle');
+    ms.querySelector('.venue-addr span').textContent = E.venueRoom || '';
+    var dir = ms.querySelector('.venue-dir');
+    dir.textContent = tx('direction');
+    dir.href = 'https://www.google.com/maps/dir/?api=1&destination=' + q;
+    where.insertAdjacentElement('afterend', ms);
   }
 
   /* ================= Esc ปิดชั้นบนสุด ================= */
