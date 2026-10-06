@@ -18,16 +18,20 @@
     ]
   };
   var PLACEHOLDER_COUNT = { prewedding: 5, venue: 3 };
+  // วิดีโอ: ใส่ลิงก์ YouTube (แนะนำ ตั้งเป็น Unlisted) หรือไฟล์ mp4 ในโฟลเดอร์ photos/ เช่น 'photos/prewed.mp4' (ว่าง = ยังไม่แสดง)
+  var VIDEOS = { prewedding: '', venue: undefined };   // venue: ใส่ '' เพื่อโชว์ช่องวิดีโอเปล่า หรือใส่ลิงก์ได้เลย
+  // ลิงก์อัลบั้ม Google Photos (แชร์แบบ "ทุกคนที่มีลิงก์") ไว้ให้กดดูรูป/วิดีโอทั้งหมด (ว่าง = ไม่แสดงปุ่ม)
+  var ALBUMS = { prewedding: '', venue: '' };
   var MAP_QUERY = 'ริมธารา Rimtara พระราม 3'; // คำค้นของ Google Maps (ถ้าหมุดเพี้ยน เปลี่ยนเป็นชื่อ/ที่อยู่เต็ม หรือพิกัด เช่น '13.7,100.5')
   /* ======================================================= */
 
   var L = window.WED_LANG || 'th';
   var S = {
-    th: { tap: 'แตะเพื่อเปิดซอง', kick1: 'Our Moments', h1: 'ความทรงจำของเรา', kick2: 'Venue Gallery', h2: 'บรรยากาศสถานที่', venueTitle: 'สถานที่จัดงาน', direction: 'นำทาง (DIRECTION)',
+    th: { tap: 'แตะเพื่อเปิดซอง', kick1: 'Our Moments', h1: 'ความทรงจำของเรา', kick2: 'Venue Gallery', h2: 'บรรยากาศสถานที่', venueTitle: 'สถานที่จัดงาน', direction: 'นำทาง (DIRECTION)', album: 'ดูทั้งหมดใน Google Photos', scan: 'สแกน QR code หรือกดปุ่ม', tables: 'ดูผังโต๊ะ',
           soon: 'รูปภาพกำลังจะมาเร็วๆ นี้', close: 'ปิด', prev: 'ก่อนหน้า', next: 'ถัดไป', rsvp: 'ตอบรับคำเชิญ', top: 'The Wedding of' },
-    en: { tap: 'Tap to open', kick1: 'Our Moments', h1: 'Our Moments', kick2: 'Venue Gallery', h2: 'Venue Photos', venueTitle: 'The Venue', direction: 'DIRECTION',
+    en: { tap: 'Tap to open', kick1: 'Our Moments', h1: 'Our Moments', kick2: 'Venue Gallery', h2: 'Venue Photos', venueTitle: 'The Venue', direction: 'DIRECTION', album: 'View all in Google Photos', scan: 'Scan the QR code or tap the button', tables: 'Table plan',
           soon: 'Photos coming soon', close: 'Close', prev: 'Previous', next: 'Next', rsvp: 'RSVP', top: 'The Wedding of' },
-    ja: { tap: 'タップして開く', kick1: 'Our Moments', h1: 'ふたりの思い出', kick2: 'Venue Gallery', h2: '会場の雰囲気', venueTitle: '会場', direction: '経路案内 (DIRECTION)',
+    ja: { tap: 'タップして開く', kick1: 'Our Moments', h1: 'ふたりの思い出', kick2: 'Venue Gallery', h2: '会場の雰囲気', venueTitle: '会場', direction: '経路案内 (DIRECTION)', album: 'Googleフォトで全て見る', scan: 'QRコードを読み取るか、ボタンをタップ', tables: 'テーブル配置図',
           soon: '写真は近日公開', close: '閉じる', prev: '前へ', next: '次へ', rsvp: 'ご出欠の回答', top: 'The Wedding of' }
   };
   function tx(k) { return (S[L] && S[L][k]) || S.th[k] || k; }
@@ -44,6 +48,7 @@
   var ICON_X = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
   var ICON_L = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   var ICON_R = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var ICON_PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="m10 8.5 5.5 3.5-5.5 3.5z" fill="currentColor"/></svg>';
   var ICON_IMG = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><circle cx="9" cy="10" r="1.6"/><path d="m5.5 17 4.5-5 3.5 3.5 2-2 3 3.5"/></svg>';
 
   function el(tag, cls, html) {
@@ -178,10 +183,31 @@
     if (!root.classList.contains('rs-open')) root.classList.remove('lock');
   }
 
-  function buildGallery(id, kick, head, list, nPh, rowClass) {
+  function ytId(u) {
+    var m = String(u).match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([A-Za-z0-9_-]{11})/);
+    return m ? m[1] : '';
+  }
+  function buildVideo(url) {
+    var w = el('div', 'gal-video');
+    if (!url) { w.classList.add('ph'); w.innerHTML = ICON_PLAY; return w; }
+    var id = ytId(url);
+    if (id) {
+      w.innerHTML = '<iframe loading="lazy" allowfullscreen title="video" ' +
+        'allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture" ' +
+        'src="https://www.youtube-nocookie.com/embed/' + id + '?rel=0"></iframe>';
+    } else {
+      var v = el('video');
+      v.controls = true; v.playsInline = true; v.preload = 'metadata'; v.src = url;
+      w.appendChild(v);
+    }
+    return w;
+  }
+
+  function buildGallery(id, kick, head, list, nPh, rowClass, video, album) {
     var sec = el('section', 'section gal');
     sec.id = id;
     sec.innerHTML = '<div class="section-head"><p class="kicker-en">' + kick + '</p><h2>' + head + '</h2></div>';
+    if (video !== undefined) sec.appendChild(buildVideo(video));
     var grid = el('div', rowClass || 'gal-grid');
     if (list.length) {
       list.forEach(function (src, i) {
@@ -198,21 +224,23 @@
       for (var i = 0; i < nPh; i++) grid.appendChild(el('div', 'gal-item ph', ICON_IMG));
     }
     sec.appendChild(grid);
-    if (!list.length) sec.appendChild(el('p', 'gal-soon', tx('soon')));
+    if (!list.length && !video) sec.appendChild(el('p', 'gal-soon', tx('soon')));
+    if (album) {
+      var a = el('a', 'btn btn-ghost gal-album');
+      a.href = album; a.target = '_blank'; a.rel = 'noopener noreferrer'; a.textContent = tx('album');
+      sec.appendChild(a);
+    }
     return sec;
   }
 
   var invite = document.getElementById('invite');
   if (invite) {
     invite.insertAdjacentElement('afterend',
-      buildGallery('moments', tx('kick1'), tx('h1'), PHOTOS.prewedding, PLACEHOLDER_COUNT.prewedding));
+      buildGallery('moments', tx('kick1'), tx('h1'), PHOTOS.prewedding, PLACEHOLDER_COUNT.prewedding, '', VIDEOS.prewedding, ALBUMS.prewedding));
   }
-  var mapLink = document.getElementById('mapLink');
-  var where = mapLink && mapLink.closest('section');
+  var schedEl = document.getElementById('schedule');
+  var where = schedEl && schedEl.closest('section');
   if (where) {
-    where.insertAdjacentElement('afterend',
-      buildGallery('venue', tx('kick2'), tx('h2'), PHOTOS.venue, PLACEHOLDER_COUNT.venue, 'gal-row'));
-
     /* ===== The Venue: แผนที่เต็มความกว้าง + ที่อยู่ + ปุ่มนำทาง ===== */
     var E = (window.WED_CONFIG && WED_CONFIG.EVENT) || {};
     var q = encodeURIComponent(MAP_QUERY);
@@ -231,8 +259,15 @@
     var dir = ms.querySelector('.venue-dir');
     dir.textContent = tx('direction');
     dir.href = 'https://www.google.com/maps/dir/?api=1&destination=' + q;
-    where.insertAdjacentElement('afterend', ms);
+    /* แผนที่ก่อน แล้วตามด้วยรูป/วิดีโอบรรยากาศสถานที่ (ทั้งคู่อยู่ก่อนกำหนดการ) */
+    where.insertAdjacentElement('beforebegin', ms);
+    where.insertAdjacentElement('beforebegin',
+      buildGallery('venue', tx('kick2'), tx('h2'), PHOTOS.venue, PLACEHOLDER_COUNT.venue, 'gal-row', VIDEOS.venue, ALBUMS.venue));
   }
+
+  /* ข้อความที่ไม่ได้อยู่ในระบบ i18n เดิม */
+  var scan = document.getElementById('lineScanText'); if (scan) scan.textContent = tx('scan');
+  var tb = document.getElementById('tablesBtnText'); if (tb) tb.textContent = tx('tables');
 
   /* ================= Esc ปิดชั้นบนสุด ================= */
   document.addEventListener('keydown', function (e) {

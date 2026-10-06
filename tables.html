@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ผังโต๊ะ · Jeep & Mac</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="extras.css">
+<style>
+.plan{margin-top:16px;padding:18px 12px 22px}
+.plan svg{display:block;width:100%;height:auto}
+.plan .stage{fill:var(--blush);stroke:var(--rose-2);stroke-width:1.5}
+.plan .stage-t{fill:var(--ink-2);font:500 15px var(--sans);text-anchor:middle}
+.plan .tbl{fill:#fff;stroke:var(--rose);stroke-width:1.6}
+.plan .tbl.vip{fill:var(--blush);stroke:var(--gold)}
+.plan .num{fill:var(--ink);font:600 17px var(--serif-en);text-anchor:middle;dominant-baseline:central}
+.plan .door{fill:none;stroke:var(--gold);stroke-width:1.5;stroke-dasharray:5 4}
+.plan .door-t{fill:var(--soft);font:13px var(--sans);text-anchor:middle}
+.plan-img{width:100%;border-radius:var(--r-md);border:1px solid var(--line)}
+.plan-note{margin-top:14px;text-align:center}
+</style>
+</head>
+<body>
+<main class="site-shell form-page">
+<header class="page-heading compact-heading">
+<a class="back-link" href="index.html" id="back">← กลับหน้าแรก</a>
+<div class="monogram" aria-label="WW"><img src="ww-monogram.png" alt="WW monogram"></div>
+<p class="eyebrow" id="eyebrow">Table Plan</p>
+<h1 id="h1">ผังโต๊ะ</h1>
+<p class="muted" id="venue"></p>
+</header>
+
+<section class="card plan" id="plan" aria-label="Table plan"></section>
+<p class="muted plan-note" id="note">ผังโดยประมาณ ตำแหน่งโต๊ะอาจปรับเปลี่ยนตามหน้างาน</p>
+
+<nav class="nav">
+<a href="index.html" id="n_back">← กลับหน้าแรก</a>
+<a href="rsvp.html" id="n_rsvp">ตอบรับคำเชิญ</a>
+</nav>
+</main>
+
+<script src="config.js"></script>
+<script src="i18n.js"></script>
+<script>
+(function () {
+  /* ====== แก้ตรงนี้ ====== */
+  var FLOORPLAN_IMG = '';   // ถ้ามีรูปผังจริงจากโรงแรม ใส่ path เช่น 'photos/floorplan.jpg' (จะแสดงรูปแทนผังจำลอง)
+  var TABLES = 20;          // จำนวนโต๊ะ
+  var COLS = 4;             // จำนวนโต๊ะต่อแถว
+  var VIP = [1, 2];         // โต๊ะที่ไฮไลต์ (เช่น โต๊ะญาติผู้ใหญ่/โต๊ะหลัก) — ใส่ [] ถ้าไม่ต้องการ
+  /* ======================= */
+
+  var D = {
+    th: { back: '← กลับหน้าแรก', eyebrow: 'Table Plan', h1: 'ผังโต๊ะ', stage: 'เวที / Stage', door: 'ทางเข้า', note: 'ผังโดยประมาณ ตำแหน่งโต๊ะอาจปรับเปลี่ยนตามหน้างาน', rsvp: 'ตอบรับคำเชิญ' },
+    en: { back: '← Back', eyebrow: 'Table Plan', h1: 'Table Plan', stage: 'Stage', door: 'Entrance', note: 'Approximate layout. Positions may change on the day.', rsvp: 'RSVP' },
+    ja: { back: '← 戻る', eyebrow: 'Table Plan', h1: 'テーブル配置図', stage: 'ステージ', door: '入口', note: '目安の配置図です。当日変更になる場合があります。', rsvp: 'ご出欠の回答' }
+  };
+  var T = D[window.WED_LANG] || D.th;
+  var $ = function (id) { return document.getElementById(id); };
+  $('back').textContent = T.back; $('n_back').textContent = T.back; $('n_rsvp').textContent = T.rsvp;
+  $('eyebrow').textContent = T.eyebrow; $('h1').textContent = T.h1; $('note').textContent = T.note;
+  var E = (window.WED_CONFIG && WED_CONFIG.EVENT) || {};
+  $('venue').textContent = (E.venueName || '') + (E.venueRoom ? ' · ' + E.venueRoom : '');
+
+  var plan = $('plan');
+  if (FLOORPLAN_IMG) {
+    var im = document.createElement('img'); im.className = 'plan-img'; im.src = FLOORPLAN_IMG; im.alt = T.h1;
+    plan.appendChild(im); return;
+  }
+  var W = 400, cell = 84, rows = Math.ceil(TABLES / COLS), top = 92, r = 30;
+  var gridW = COLS * cell, x0 = (W - gridW) / 2 + cell / 2;
+  var H = top + rows * cell + 56;
+  var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + T.h1 + '">' +
+    '<rect class="stage" x="80" y="14" width="240" height="46" rx="14"/><text class="stage-t" x="200" y="43">' + T.stage + '</text>';
+  for (var i = 0; i < TABLES; i++) {
+    var c = i % COLS, rw = Math.floor(i / COLS);
+    var cx = x0 + c * cell, cy = top + rw * cell + cell / 2 - 10;
+    var n = i + 1;
+    svg += '<circle class="tbl' + (VIP.indexOf(n) >= 0 ? ' vip' : '') + '" cx="' + cx + '" cy="' + cy + '" r="' + r + '"/>' +
+           '<text class="num" x="' + cx + '" y="' + cy + '">' + n + '</text>';
+  }
+  var dy = H - 32;
+  svg += '<line class="door" x1="130" y1="' + dy + '" x2="270" y2="' + dy + '"/><text class="door-t" x="200" y="' + (dy + 20) + '">' + T.door + '</text></svg>';
+  plan.innerHTML = svg;
+})();
+</script>
+</body>
+</html>
