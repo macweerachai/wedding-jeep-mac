@@ -405,3 +405,8 @@ h2{font-weight:600}
 .p-script{color:var(--gold-s)}
 .venue-dir,.venue-dir:hover{font-family:'Jost',var(--sans);letter-spacing:.04em}
 .sched-time{color:var(--ink-2)}
+
+/* ชื่อในการ์ดเชิญ: ใช้ตัวเขียนเดียวกับ Bride/Groom และชื่อหน้าแรก */
+.p-script{font-size:clamp(24px,6.4vw,30px);color:var(--ink-2)}
+.p-en{margin:2px 0 4px;font-family:var(--script);font-weight:400;font-size:clamp(40px,11vw,52px);line-height:1.05;letter-spacing:0;color:var(--gold-s)}
+.site-footer .ft-date{margin-top:4px}

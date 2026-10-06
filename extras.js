@@ -406,7 +406,7 @@
   }
 
   /* ===== ชื่อบ่าวสาว: ตัวเขียน (Bride / Groom) + ชื่ออังกฤษตัวพิมพ์ใหญ่ + ชื่อเต็ม ===== */
-  var NAMES = { bride: { label: 'Bride', en: 'WANPEN' }, groom: { label: 'Groom', en: 'WEERACHAI' } };
+  var NAMES = { bride: { label: 'Bride', en: 'Wanpen' }, groom: { label: 'Groom', en: 'Weerachai' } };
   var persons = document.querySelectorAll('.couple .person');
   ['bride', 'groom'].forEach(function (k, i) {
     var pp = persons[i]; if (!pp) return;
@@ -418,7 +418,7 @@
   if (couple) couple.classList.add('couple-v2');
   /* ชื่อท้ายหน้าแบบตัวเขียน */
   var ftk = document.querySelector('.site-footer .kicker-en');
-  if (ftk) ftk.innerHTML = '<span class="ft-names">Wanpen<em>&amp;</em>Weerachai</span><span class="ft-date">19 · 02 · 2027</span>';
+  if (ftk) ftk.innerHTML = '<span class="ft-date">19 · 02 · 2027</span>';
 
   /* ข้อความที่ไม่ได้อยู่ในระบบ i18n เดิม */
   var scan = document.getElementById('lineScanText'); if (scan) scan.textContent = tx('scan');
