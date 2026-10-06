@@ -344,11 +344,6 @@
     var SI = SCHED_ICONS;
     var sec2 = schedEl.closest('section');
     sec2.classList.add('sched-block');
-    var head = el('div', 'sched-when');
-    var l1 = el('p', 'sched-date'); l1.textContent = tx('dateLine');
-    var l2 = el('p', 'sched-venue'); l2.textContent = tx('venueLine');
-    head.appendChild(l1); head.appendChild(l2);
-    schedEl.insertAdjacentElement('beforebegin', head);
     schedEl.className = 'sched-icons';
     schedEl.innerHTML = '';
     (SCHEDULE[L] || SCHEDULE.th).forEach(function (r) {
