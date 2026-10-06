@@ -309,7 +309,6 @@ h2{font-weight:600}
 .couple{align-items:start}.couple-amp{align-self:center}
 
 /* ===== Save the Date (นับถอยหลังแบบตัวอย่าง) ===== */
-.hero .countdown{display:none}
 .savedate{padding-top:48px}
 .sd-lead{white-space:pre-line;font-family:'Jost',var(--sans);font-weight:500;font-size:clamp(15px,4.2vw,19px);letter-spacing:.12em;line-height:1.7;color:var(--ink)}
 .sd-date{margin:14px 0 8px;font-family:'Jost',var(--sans);font-weight:300;font-size:clamp(54px,16vw,84px);line-height:1;letter-spacing:.02em;color:var(--ink);white-space:nowrap}
@@ -330,3 +329,23 @@ h2{font-weight:600}
 .sd-cd div+div::before{content:"";position:absolute;left:0;top:10%;bottom:10%;width:1px;background:var(--gold-2)}
 .sd-cd b{font-weight:600;color:var(--ink-2)}
 .sd-cd span{color:var(--gold);font-weight:600}
+
+/* ===== รอบล่าสุด: ไม่มี Save the Date · RSVP ด้านล่างซ่อน · นับถอยหลังหน้าแรกแบบเรียบหรู ===== */
+.savedate{display:none}
+.rsvp-block{display:none}
+.venue-tables{display:flex;width:100%;max-width:420px;margin:14px auto 0}
+.sched-time.long{white-space:nowrap;font-size:clamp(14px,3.9vw,19px);letter-spacing:-.01em}
+.hero .countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:0;max-width:330px;margin:26px auto 0}
+.hero .countdown div{position:relative;padding:2px 0;border:0;border-radius:0;background:none;backdrop-filter:none}
+.hero .countdown div+div::before{content:"";position:absolute;left:0;top:14%;bottom:14%;width:1px;background:var(--gold-2)}
+.hero .countdown b{font-family:'Jost',var(--sans);font-weight:300;font-size:clamp(34px,10vw,44px);line-height:1.05;letter-spacing:.01em;color:var(--ink-2);font-variant-numeric:lining-nums tabular-nums}
+.hero .countdown span{display:block;margin-top:4px;font-size:12.5px;letter-spacing:.06em;color:var(--gold)}
+.hero.has-photo .countdown div{background:none;border:0}
+.hero.has-photo .countdown div+div::before{background:rgba(255,255,255,.55)}
+.hero.has-photo .countdown b{color:#fff;font-size:clamp(30px,9vw,40px)}
+.hero .countdown{max-width:360px}
+.hero .countdown div{padding:2px 4px}
+.hero .countdown b{font-size:clamp(30px,8.6vw,40px)}
+.hero .countdown{grid-template-columns:repeat(4,auto);justify-content:center;column-gap:24px;max-width:none}
+.hero .countdown div{padding:2px 0;min-width:52px}
+.hero .countdown div+div::before{left:-12px}

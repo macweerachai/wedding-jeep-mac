@@ -37,12 +37,9 @@
     dinner: SVGW + '<circle cx="24" cy="26" r="11"/><circle cx="24" cy="26" r="7"/><path d="M22 24.5c0-1.5 2-2 2-.5 0-1.5 2-1 2 .5 0 1.5-2 3-2 3s-2-1.5-2-3z"/><path d="M7 14v7a2.5 2.5 0 0 0 5 0v-7M9.5 14v26"/><path d="M41 14c-2.5 2-3 8-1 11h1v15"/></svg>'
   };
   var SS = {
-    th: { dateLine: 'วันศุกร์ที่ 19 กุมภาพันธ์ 2570', venueLine: 'ณ ห้องริมนที ริมธารา พระราม 3', theme: 'โทนสีการแต่งกาย :',
-          celebrate: 'ร่วมเฉลิมฉลองไปด้วยกัน\nในวันพิเศษของเรา', cd: ['วัน', 'ชั่วโมง', 'นาที', 'วินาที'], cal: 'เพิ่มลงปฏิทิน', calG: 'Google Calendar', calI: 'Apple / Outlook (.ics)' },
-    en: { dateLine: 'Friday, 19 February 2027', venueLine: 'Rim Natee Room · Rimtara, Rama 3', theme: 'Theme :',
-          celebrate: "LET'S CELEBRATE TOGETHER ON\nOUR SPECIAL DAY ON", cd: ['DAYS', 'HOURS', 'MIN', 'SEC'], cal: 'ADD TO CALENDAR', calG: 'Google Calendar', calI: 'Apple / Outlook (.ics)' },
-    ja: { dateLine: '2027年2月19日（金）', venueLine: 'リムターラ（ラマ3世）リムナティ・ルーム', theme: 'ドレスコード :',
-          celebrate: '私たちの特別な日を\n一緒にお祝いしましょう', cd: ['日', '時間', '分', '秒'], cal: 'カレンダーに追加', calG: 'Google カレンダー', calI: 'Apple / Outlook (.ics)' }
+    th: { dateLine: 'วันศุกร์ที่ 19 กุมภาพันธ์ 2570', venueLine: 'ณ ห้องริมนที ริมธารา พระราม 3', theme: 'โทนสีการแต่งกาย :' },
+    en: { dateLine: 'Friday, 19 February 2027', venueLine: 'Rim Natee Room · Rimtara, Rama 3', theme: 'Theme :' },
+    ja: { dateLine: '2027年2月19日（金）', venueLine: 'リムターラ（ラマ3世）リムナティ・ルーム', theme: 'ドレスコード :' }
   };
   // ข้อมูลที่จอดรถ (แสดงเมื่อกดปุ่ม)
   var PARKING = {
@@ -339,10 +336,9 @@
       ms.insertAdjacentElement('afterend',
         buildGallery('venue', tx('kick2'), tx('h2'), PHOTOS.venue, PLACEHOLDER_COUNT.venue, '', VIDEOS.venue, ALBUMS.venue));
     }
-    /* ตอบรับคำเชิญ ขึ้นมาก่อน LINE และแบ่งปันรูป */
-    var rsvpSec = document.querySelector('.rsvp-block');
-    var anchor = document.getElementById('venue') || ms;
-    if (rsvpSec) anchor.insertAdjacentElement('afterend', rsvpSec);
+    /* ปุ่มดูผังโต๊ะ ย้ายมาอยู่ในส่วนสถานที่ (ส่วน RSVP ด้านล่างซ่อนไว้ ใช้ปุ่มหน้าแรก + ปุ่มลอยแทน) */
+    var tbl = document.querySelector('.rsvp-block a[href="tables.html"]');
+    if (tbl) { tbl.classList.add('venue-tables'); ms.appendChild(tbl); }
   }
 
   /* กำหนดการ: แถวไอคอนแนวนอน + วันที่/สถานที่ + โทนสีการแต่งกาย (รวมเป็นส่วนเดียว) */
@@ -362,8 +358,8 @@
       d.innerHTML = '<span class="sched-ic" aria-hidden="true">' + (SI[r[2]] || '') + '</span><span class="sched-dot" aria-hidden="true"></span>';
       var t = el('p', 'sched-time');
       var parts = r[0].split(' – ');
-      t.textContent = parts[0];
-      if (parts[1]) { t.appendChild(document.createElement('br')); t.appendChild(document.createTextNode('– ' + parts[1])); }
+      t.textContent = parts.join('–');
+      if (parts[1]) t.classList.add('long');
       var lb = el('p', 'sched-label'); lb.textContent = r[1];
       d.appendChild(t); d.appendChild(lb);
       schedEl.appendChild(d);
@@ -384,51 +380,10 @@
     }
   }
 
-  /* ===== Save the Date: นับถอยหลังตัวใหญ่ + เพิ่มลงปฏิทิน ===== */
-  var EVT = { start: '2027-02-19T16:00:00+07:00', startUtc: '20270219T090000Z', endUtc: '20270219T150000Z',
-    title: 'งานแต่งงาน จิ๊บ & แม็ค (Jeep & Mac Wedding)', place: 'ห้องริมนที ริมธารา พระราม 3 (Rimtara Rama 3), SV City, Bangkok' };
-  var inviteSec = document.getElementById('invite');
-  if (inviteSec) {
-    var sd = el('section', 'section savedate sd-' + L);
-    sd.id = 'savedate';
-    sd.innerHTML = '<p class="sd-lead"></p><p class="sd-date">19 FEB 27</p>' +
-      '<div class="sd-cd" role="timer"><div><b>0</b><span></span></div><div><b>0</b><span></span></div><div><b>0</b><span></span></div><div><b>0</b><span></span></div></div>' +
-      '<div class="sd-cal"><button type="button" class="sd-btn" aria-expanded="false"></button>' +
-      '<div class="sd-menu" hidden><a target="_blank" rel="noopener" class="sd-g"></a><a class="sd-i"></a></div></div>';
-    sd.querySelector('.sd-lead').textContent = tx('celebrate');
-    var labs = tx('cd'), cells = sd.querySelectorAll('.sd-cd div');
-    for (var ci = 0; ci < 4; ci++) cells[ci].querySelector('span').textContent = labs[ci];
-    var btn = sd.querySelector('.sd-btn'), menu = sd.querySelector('.sd-menu');
-    btn.textContent = tx('cal');
-    btn.addEventListener('click', function (e) { e.stopPropagation(); menu.hidden = !menu.hidden; btn.setAttribute('aria-expanded', String(!menu.hidden)); });
-    document.addEventListener('click', function () { menu.hidden = true; btn.setAttribute('aria-expanded', 'false'); });
-    var site = location.href.split(/[?#]/)[0];
-    var g = sd.querySelector('.sd-g');
-    g.textContent = tx('calG');
-    g.href = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(EVT.title) +
-      '&dates=' + EVT.startUtc + '/' + EVT.endUtc + '&location=' + encodeURIComponent(EVT.place) + '&details=' + encodeURIComponent(site);
-    var ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//JeepMac//Wedding//TH', 'BEGIN:VEVENT', 'UID:jeep-mac-20270219@wedding',
-      'DTSTAMP:20261006T000000Z', 'DTSTART:' + EVT.startUtc, 'DTEND:' + EVT.endUtc, 'SUMMARY:' + EVT.title,
-      'LOCATION:' + EVT.place.replace(/,/g, '\\,'), 'DESCRIPTION:' + site, 'BEGIN:VALARM', 'TRIGGER:-P1D', 'ACTION:DISPLAY', 'DESCRIPTION:' + EVT.title, 'END:VALARM',
-      'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
-    var ia = sd.querySelector('.sd-i');
-    ia.textContent = tx('calI');
-    ia.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
-    ia.download = 'Jeep-Mac-Wedding.ics';
-    inviteSec.insertAdjacentElement('afterend', sd);
-    var target = new Date(EVT.start).getTime(), nums = sd.querySelectorAll('.sd-cd b');
-    var pad = function (v) { return v < 10 ? '0' + v : String(v); };
-    (function tickCd() {
-      var ms = Math.max(0, target - Date.now()), sec = Math.floor(ms / 1000);
-      var v = [Math.floor(sec / 86400), Math.floor(sec % 86400 / 3600), Math.floor(sec % 3600 / 60), sec % 60];
-      nums[0].textContent = v[0]; nums[1].textContent = pad(v[1]); nums[2].textContent = pad(v[2]); nums[3].textContent = pad(v[3]);
-      if (ms > 0) setTimeout(tickCd, 1000);
-    })();
-    /* โหลดฟอนต์ Jost (ตัวเลขทรงเรขาคณิตแบบตัวอย่าง) */
-    var fl = document.createElement('link'); fl.rel = 'stylesheet';
-    fl.href = 'https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap';
-    document.head.appendChild(fl);
-  }
+  /* ฟอนต์ Jost สำหรับตัวเลขนับถอยหลังในหน้าแรก */
+  var fl = document.createElement('link'); fl.rel = 'stylesheet';
+  fl.href = 'https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&display=swap';
+  document.head.appendChild(fl);
 
   /* ข้อความที่ไม่ได้อยู่ในระบบ i18n เดิม */
   var scan = document.getElementById('lineScanText'); if (scan) scan.textContent = tx('scan');
