@@ -349,3 +349,15 @@ h2{font-weight:600}
 .hero .countdown{grid-template-columns:repeat(4,auto);justify-content:center;column-gap:24px;max-width:none}
 .hero .countdown div{padding:2px 0;min-width:52px}
 .hero .countdown div+div::before{left:-12px}
+
+/* ===== ตัวเลข/ตัวอักษรทันสมัย อ่านง่าย (Jost) ===== */
+.hero-date{gap:12px}
+.hero-date b{font-family:'Jost',var(--sans);font-weight:400;font-size:22px;letter-spacing:.14em;color:var(--ink);font-variant-numeric:lining-nums}
+.hero-date span{font-size:15px}
+.sched-time,.sched-time.long{font-family:'Jost',var(--sans);font-weight:400;letter-spacing:.02em}
+.sched-time{font-size:clamp(16px,4.4vw,19px)}
+.sched-time.long{font-size:clamp(13.5px,3.7vw,17px);letter-spacing:0}
+.venue-addr{margin:0 auto 16px}
+.site-footer .kicker-en{font-family:'Jost',var(--sans);font-style:normal;font-weight:400;font-size:14px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-2)}
+.site-footer .kicker-en+p,.site-footer p:last-child{margin-top:6px}
+.sched-time.long{font-size:clamp(12.5px,3.4vw,16px)}

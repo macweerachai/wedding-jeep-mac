@@ -310,9 +310,9 @@
     ms.innerHTML =
       '<div class="section-head"><p class="kicker-en">The Venue</p><h2></h2></div>' +
       '<p class="venue-room"></p>' +
+      '<p class="venue-addr"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span></span></p>' +
       '<div class="venue-map"><iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen ' +
       'src="https://www.google.com/maps?q=' + q + '&hl=' + (L === 'ja' ? 'ja' : (L === 'en' ? 'en' : 'th')) + '&z=17&output=embed"></iframe></div>' +
-      '<p class="venue-addr"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span></span></p>' +
       '<a class="btn btn-ghost venue-dir" target="_blank" rel="noopener"></a>';
     ms.querySelector('h2').textContent = E.venueName || '';
     ms.querySelector('.venue-room').textContent = tx('venueTitle');
