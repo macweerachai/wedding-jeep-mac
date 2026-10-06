@@ -24,9 +24,25 @@
   var ALBUMS = { prewedding: '', venue: '' };
   // กำหนดการ (พิธีบ่าย เลี้ยงเย็น) — แก้เวลา/ข้อความตรงนี้ได้เลย
   var SCHEDULE = {
-    th: [['16:00 น.', 'เจ้าบ่าวเจ้าสาว พร้อมหน้างาน'], ['16:19 น.', 'แห่ขันหมาก · สวมแหวน · รับไหว้'], ['16:40 น.', 'รดน้ำสังข์'], ['18:00 – 22:00 น.', 'งานจัดเลี้ยงเย็น']],
-    en: [['4:00 PM', 'Bride & groom ready at the venue'], ['4:19 PM', 'Khan Maak procession · Ring ceremony · Paying respects'], ['4:40 PM', 'Water blessing ceremony'], ['6:00 – 10:00 PM', 'Evening banquet']],
-    ja: [['16:00', '新郎新婦 会場入り'], ['16:19', 'カンマーク行列・指輪の交換・ご挨拶'], ['16:40', '水かけの儀'], ['18:00 – 22:00', '夕方の披露宴']]
+    th: [['16:00', 'เจ้าบ่าวเจ้าสาว\nพร้อมหน้างาน', 'couple'], ['16:19', 'แห่ขันหมาก\nสวมแหวน\nรับไหว้', 'rings'], ['16:40', 'รดน้ำสังข์', 'conch'], ['18:00 – 22:00', 'งานเลี้ยงฉลอง', 'dinner']],
+    en: [['4:00 PM', 'Bride & groom arrive', 'couple'], ['4:19 PM', 'Khan Maak & ring ceremony', 'rings'], ['4:40 PM', 'Water blessing', 'conch'], ['6:00 – 10:00 PM', 'Wedding reception', 'dinner']],
+    ja: [['16:00', '新郎新婦 会場入り', 'couple'], ['16:19', 'カンマーク・指輪の交換', 'rings'], ['16:40', '水かけの儀', 'conch'], ['18:00 – 22:00', '披露宴', 'dinner']]
+  };
+  // ไอคอนเส้นบางของกำหนดการ (วาดเอง)
+  var SVGW = '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">';
+  var SCHED_ICONS = {
+    couple: SVGW + '<circle cx="17" cy="13" r="4.5"/><path d="M17 17.5c-3.5 0-6 2.5-6.5 6L9 40h16l-1.5-16.5c-.5-3.5-3-6-6.5-6z"/><path d="M12.5 13.5c-1.5 5 1 10-2 14"/><circle cx="31" cy="13" r="4.5"/><path d="M25 40V25c0-3.5 2.5-6 6-6s6 2.5 6 6v15"/><path d="M29 19l2 3 2-3"/><path d="M41 6l1 2.5L44.5 9.5 42 10.5 41 13l-1-2.5-2.5-1 2.5-1z"/></svg>',
+    rings: SVGW + '<circle cx="18" cy="29" r="9.5"/><circle cx="29" cy="29" r="9.5"/><path d="M25.5 13.5l3.5-4 3.5 4-3.5 4.5z"/><path d="M29 18v1.5"/><path d="M38 9l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg>',
+    conch: SVGW + '<path d="M9 30c3 6 13 9 22 6s10-11 6-17c-3.5-5-11-6-15-2-3.5 3.5-2.5 9 1.5 10.5 3 1 5.5-1 5-3.5s-3-3-4.5-1.5"/><path d="M37 19l6-4"/><path d="M9 30l-3 6 7-2"/><path d="M14 8c0 2-2 3-2 5a2 2 0 0 0 4 0c0-2-2-3-2-5z"/><path d="M22 4c0 1.5-1.5 2.3-1.5 3.8a1.5 1.5 0 0 0 3 0c0-1.5-1.5-2.3-1.5-3.8z"/></svg>',
+    dinner: SVGW + '<circle cx="24" cy="26" r="11"/><circle cx="24" cy="26" r="7"/><path d="M22 24.5c0-1.5 2-2 2-.5 0-1.5 2-1 2 .5 0 1.5-2 3-2 3s-2-1.5-2-3z"/><path d="M7 14v7a2.5 2.5 0 0 0 5 0v-7M9.5 14v26"/><path d="M41 14c-2.5 2-3 8-1 11h1v15"/></svg>'
+  };
+  var SS = {
+    th: { dateLine: 'วันศุกร์ที่ 19 กุมภาพันธ์ 2570', venueLine: 'ณ ห้องริมนที ริมธารา พระราม 3', theme: 'โทนสีการแต่งกาย :',
+          celebrate: 'ร่วมเฉลิมฉลองไปด้วยกัน\nในวันพิเศษของเรา', cd: ['วัน', 'ชั่วโมง', 'นาที', 'วินาที'], cal: 'เพิ่มลงปฏิทิน', calG: 'Google Calendar', calI: 'Apple / Outlook (.ics)' },
+    en: { dateLine: 'Friday, 19 February 2027', venueLine: 'Rim Natee Room · Rimtara, Rama 3', theme: 'Theme :',
+          celebrate: "LET'S CELEBRATE TOGETHER ON\nOUR SPECIAL DAY ON", cd: ['DAYS', 'HOURS', 'MIN', 'SEC'], cal: 'ADD TO CALENDAR', calG: 'Google Calendar', calI: 'Apple / Outlook (.ics)' },
+    ja: { dateLine: '2027年2月19日（金）', venueLine: 'リムターラ（ラマ3世）リムナティ・ルーム', theme: 'ドレスコード :',
+          celebrate: '私たちの特別な日を\n一緒にお祝いしましょう', cd: ['日', '時間', '分', '秒'], cal: 'カレンダーに追加', calG: 'Google カレンダー', calI: 'Apple / Outlook (.ics)' }
   };
   // ข้อมูลที่จอดรถ (แสดงเมื่อกดปุ่ม)
   var PARKING = {
@@ -50,7 +66,7 @@
     ja: { tap: 'タップして開く', kick1: 'Our Moments', h1: 'ふたりの思い出', kick2: 'Venue Gallery', h2: '会場の雰囲気', venueTitle: '会場', direction: '経路案内 (DIRECTION)', album: 'Googleフォトで全て見る', scan: 'QRコードを読み取るか、ボタンをタップ', tables: 'テーブル配置図',
           soon: '写真は近日公開', close: '閉じる', prev: '前へ', next: '次へ', rsvp: 'ご出欠の回答', top: 'The Wedding of' }
   };
-  function tx(k) { return (S[L] && S[L][k]) || S.th[k] || k; }
+  function tx(k) { return (S[L] && S[L][k]) || (SS[L] && SS[L][k]) || S.th[k] || SS.th[k] || k; }
 
   var qs = location.search;
   var isEmbed = /[?&]embed=1/.test(qs);
@@ -282,13 +298,12 @@
     return sec;
   }
 
-  var invite = document.getElementById('invite');
-  if (invite) {
-    invite.insertAdjacentElement('afterend',
-      buildGallery('moments', tx('kick1'), tx('h1'), PHOTOS.prewedding, PLACEHOLDER_COUNT.prewedding, '', VIDEOS.prewedding, ALBUMS.prewedding));
-  }
+  /* ลำดับหน้า (กะทัดรัด): หน้าแรก → การ์ดเชิญ → กำหนดการ → ความทรงจำ → สถานที่ → ตอบรับ → LINE → แบ่งปันรูป */
   var schedEl = document.getElementById('schedule');
   var where = schedEl && schedEl.closest('section');
+  var moments = buildGallery('moments', tx('kick1'), tx('h1'), PHOTOS.prewedding, PLACEHOLDER_COUNT.prewedding, '', VIDEOS.prewedding, ALBUMS.prewedding);
+  if (where) where.insertAdjacentElement('afterend', moments);
+  else { var invite = document.getElementById('invite'); if (invite) invite.insertAdjacentElement('afterend', moments); }
   if (where) {
     /* ===== The Venue: แผนที่เต็มความกว้าง + ที่อยู่ + ปุ่มนำทาง ===== */
     var E = (window.WED_CONFIG && WED_CONFIG.EVENT) || {};
@@ -318,33 +333,101 @@
     det.querySelector('.park-note').textContent = pk.note;
     ms.appendChild(det);
     /* แผนที่ก่อน แล้วตามด้วยรูป/วิดีโอบรรยากาศสถานที่ (ทั้งคู่อยู่ก่อนกำหนดการ) */
-    where.insertAdjacentElement('beforebegin', ms);
-    where.insertAdjacentElement('beforebegin',
-      buildGallery('venue', tx('kick2'), tx('h2'), PHOTOS.venue, PLACEHOLDER_COUNT.venue, 'gal-row', VIDEOS.venue, ALBUMS.venue));
+    moments.insertAdjacentElement('afterend', ms);
+    /* รูปบรรยากาศสถานที่: แสดงเฉพาะเมื่อมีรูป/วิดีโอจริง (ไม่เปลืองพื้นที่) */
+    if (PHOTOS.venue.length || VIDEOS.venue) {
+      ms.insertAdjacentElement('afterend',
+        buildGallery('venue', tx('kick2'), tx('h2'), PHOTOS.venue, PLACEHOLDER_COUNT.venue, '', VIDEOS.venue, ALBUMS.venue));
+    }
+    /* ตอบรับคำเชิญ ขึ้นมาก่อน LINE และแบ่งปันรูป */
+    var rsvpSec = document.querySelector('.rsvp-block');
+    var anchor = document.getElementById('venue') || ms;
+    if (rsvpSec) anchor.insertAdjacentElement('afterend', rsvpSec);
   }
 
-  /* กำหนดการ: แทนที่ด้วยข้อมูลใน SCHEDULE ด้านบน */
+  /* กำหนดการ: แถวไอคอนแนวนอน + วันที่/สถานที่ + โทนสีการแต่งกาย (รวมเป็นส่วนเดียว) */
   if (schedEl) {
+    var SI = SCHED_ICONS;
+    var sec2 = schedEl.closest('section');
+    sec2.classList.add('sched-block');
+    var head = el('div', 'sched-when');
+    var l1 = el('p', 'sched-date'); l1.textContent = tx('dateLine');
+    var l2 = el('p', 'sched-venue'); l2.textContent = tx('venueLine');
+    head.appendChild(l1); head.appendChild(l2);
+    schedEl.insertAdjacentElement('beforebegin', head);
+    schedEl.className = 'sched-icons';
     schedEl.innerHTML = '';
     (SCHEDULE[L] || SCHEDULE.th).forEach(function (r) {
-      var d = el('div', 'row'); var a = el('span', 'muted'); var b = el('span');
-      a.textContent = r[0]; b.textContent = r[1]; d.appendChild(a); d.appendChild(b); schedEl.appendChild(d);
+      var d = el('div', 'sched-item');
+      d.innerHTML = '<span class="sched-ic" aria-hidden="true">' + (SI[r[2]] || '') + '</span><span class="sched-dot" aria-hidden="true"></span>';
+      var t = el('p', 'sched-time');
+      var parts = r[0].split(' – ');
+      t.textContent = parts[0];
+      if (parts[1]) { t.appendChild(document.createElement('br')); t.appendChild(document.createTextNode('– ' + parts[1])); }
+      var lb = el('p', 'sched-label'); lb.textContent = r[1];
+      d.appendChild(t); d.appendChild(lb);
+      schedEl.appendChild(d);
     });
+    /* ย้ายโทนสีการแต่งกายมาเป็นบรรทัด THEME ใต้กำหนดการ แล้วซ่อนส่วนเดิม */
+    var sw = document.querySelector('.swatches');
+    if (sw) {
+      var dressSec = sw.closest('section');
+      var th = el('div', 'sched-theme');
+      var lab = el('span', 'sched-theme-l'); lab.textContent = tx('theme');
+      th.appendChild(lab);
+      Array.prototype.forEach.call(sw.querySelectorAll('figure'), function (f) {
+        var dot = el('span', 'sched-sw'); dot.style.cssText = f.querySelector('span').getAttribute('style');
+        dot.title = f.textContent.trim(); th.appendChild(dot);
+      });
+      sec2.appendChild(th);
+      if (dressSec && dressSec !== sec2) dressSec.remove();
+    }
   }
 
-  /* รูปหน้าแรกเต็มจอ */
-  var heroEl = document.querySelector('.hero');
-  if (heroEl && HERO.img) {
-    var bg = el('div', 'hero-bg');
-    bg.setAttribute('aria-hidden', 'true');
-    var pic = el('picture');
-    if (HERO.imgMobile) { var so = el('source'); so.media = '(max-width: 700px)'; so.srcset = HERO.imgMobile; pic.appendChild(so); }
-    var hi = el('img'); hi.src = HERO.img; hi.alt = ''; hi.decoding = 'async'; hi.fetchPriority = 'high';
-    pic.appendChild(hi); bg.appendChild(pic);
-    heroEl.style.setProperty('--hero-pos', HERO.pos);
-    heroEl.style.setProperty('--hero-pos-m', HERO.posMobile || HERO.pos);
-    heroEl.insertBefore(bg, heroEl.firstChild);
-    heroEl.classList.add('has-photo');
+  /* ===== Save the Date: นับถอยหลังตัวใหญ่ + เพิ่มลงปฏิทิน ===== */
+  var EVT = { start: '2027-02-19T16:00:00+07:00', startUtc: '20270219T090000Z', endUtc: '20270219T150000Z',
+    title: 'งานแต่งงาน จิ๊บ & แม็ค (Jeep & Mac Wedding)', place: 'ห้องริมนที ริมธารา พระราม 3 (Rimtara Rama 3), SV City, Bangkok' };
+  var inviteSec = document.getElementById('invite');
+  if (inviteSec) {
+    var sd = el('section', 'section savedate sd-' + L);
+    sd.id = 'savedate';
+    sd.innerHTML = '<p class="sd-lead"></p><p class="sd-date">19 FEB 27</p>' +
+      '<div class="sd-cd" role="timer"><div><b>0</b><span></span></div><div><b>0</b><span></span></div><div><b>0</b><span></span></div><div><b>0</b><span></span></div></div>' +
+      '<div class="sd-cal"><button type="button" class="sd-btn" aria-expanded="false"></button>' +
+      '<div class="sd-menu" hidden><a target="_blank" rel="noopener" class="sd-g"></a><a class="sd-i"></a></div></div>';
+    sd.querySelector('.sd-lead').textContent = tx('celebrate');
+    var labs = tx('cd'), cells = sd.querySelectorAll('.sd-cd div');
+    for (var ci = 0; ci < 4; ci++) cells[ci].querySelector('span').textContent = labs[ci];
+    var btn = sd.querySelector('.sd-btn'), menu = sd.querySelector('.sd-menu');
+    btn.textContent = tx('cal');
+    btn.addEventListener('click', function (e) { e.stopPropagation(); menu.hidden = !menu.hidden; btn.setAttribute('aria-expanded', String(!menu.hidden)); });
+    document.addEventListener('click', function () { menu.hidden = true; btn.setAttribute('aria-expanded', 'false'); });
+    var site = location.href.split(/[?#]/)[0];
+    var g = sd.querySelector('.sd-g');
+    g.textContent = tx('calG');
+    g.href = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(EVT.title) +
+      '&dates=' + EVT.startUtc + '/' + EVT.endUtc + '&location=' + encodeURIComponent(EVT.place) + '&details=' + encodeURIComponent(site);
+    var ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//JeepMac//Wedding//TH', 'BEGIN:VEVENT', 'UID:jeep-mac-20270219@wedding',
+      'DTSTAMP:20261006T000000Z', 'DTSTART:' + EVT.startUtc, 'DTEND:' + EVT.endUtc, 'SUMMARY:' + EVT.title,
+      'LOCATION:' + EVT.place.replace(/,/g, '\\,'), 'DESCRIPTION:' + site, 'BEGIN:VALARM', 'TRIGGER:-P1D', 'ACTION:DISPLAY', 'DESCRIPTION:' + EVT.title, 'END:VALARM',
+      'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+    var ia = sd.querySelector('.sd-i');
+    ia.textContent = tx('calI');
+    ia.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
+    ia.download = 'Jeep-Mac-Wedding.ics';
+    inviteSec.insertAdjacentElement('afterend', sd);
+    var target = new Date(EVT.start).getTime(), nums = sd.querySelectorAll('.sd-cd b');
+    var pad = function (v) { return v < 10 ? '0' + v : String(v); };
+    (function tickCd() {
+      var ms = Math.max(0, target - Date.now()), sec = Math.floor(ms / 1000);
+      var v = [Math.floor(sec / 86400), Math.floor(sec % 86400 / 3600), Math.floor(sec % 3600 / 60), sec % 60];
+      nums[0].textContent = v[0]; nums[1].textContent = pad(v[1]); nums[2].textContent = pad(v[2]); nums[3].textContent = pad(v[3]);
+      if (ms > 0) setTimeout(tickCd, 1000);
+    })();
+    /* โหลดฟอนต์ Jost (ตัวเลขทรงเรขาคณิตแบบตัวอย่าง) */
+    var fl = document.createElement('link'); fl.rel = 'stylesheet';
+    fl.href = 'https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap';
+    document.head.appendChild(fl);
   }
 
   /* ข้อความที่ไม่ได้อยู่ในระบบ i18n เดิม */
