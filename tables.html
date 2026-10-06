@@ -16,8 +16,10 @@
 .plan .num{fill:var(--ink);font:600 17px var(--serif-en);text-anchor:middle;dominant-baseline:central}
 .plan .door{fill:none;stroke:var(--gold);stroke-width:1.5;stroke-dasharray:5 4}
 .plan .door-t{fill:var(--soft);font:13px var(--sans);text-anchor:middle}
-.plan-img{width:100%;border-radius:var(--r-md);border:1px solid var(--line)}
+.plan-img{width:100%;height:auto;border-radius:var(--r-md);border:1px solid var(--line)}
 .plan-note{margin-top:14px;text-align:center}
+.plan-hint{margin:10px 0 0;text-align:center;font-size:13px}
+.plan a{display:block}
 </style>
 </head>
 <body>
@@ -31,7 +33,7 @@
 </header>
 
 <section class="card plan" id="plan" aria-label="Table plan"></section>
-<p class="muted plan-note" id="note">ผังโดยประมาณ ตำแหน่งโต๊ะอาจปรับเปลี่ยนตามหน้างาน</p>
+<p class="muted plan-note" id="note">ห้องริมนที · ผัง 25 โต๊ะ ตำแหน่งอาจปรับเปลี่ยนตามหน้างาน</p>
 
 <nav class="nav">
 <a href="index.html" id="n_back">← กลับหน้าแรก</a>
@@ -44,16 +46,16 @@
 <script>
 (function () {
   /* ====== แก้ตรงนี้ ====== */
-  var FLOORPLAN_IMG = '';   // ถ้ามีรูปผังจริงจากโรงแรม ใส่ path เช่น 'photos/floorplan.jpg' (จะแสดงรูปแทนผังจำลอง)
-  var TABLES = 20;          // จำนวนโต๊ะ
+  var FLOORPLAN_IMG = 'photos/floorplan.png';   // ถ้ามีรูปผังจริงจากโรงแรม ใส่ path เช่น 'photos/floorplan.jpg' (จะแสดงรูปแทนผังจำลอง)
+  var TABLES = 25;          // จำนวนโต๊ะ
   var COLS = 4;             // จำนวนโต๊ะต่อแถว
   var VIP = [1, 2];         // โต๊ะที่ไฮไลต์ (เช่น โต๊ะญาติผู้ใหญ่/โต๊ะหลัก) — ใส่ [] ถ้าไม่ต้องการ
   /* ======================= */
 
   var D = {
-    th: { back: '← กลับหน้าแรก', eyebrow: 'Table Plan', h1: 'ผังโต๊ะ', stage: 'เวที / Stage', door: 'ทางเข้า', note: 'ผังโดยประมาณ ตำแหน่งโต๊ะอาจปรับเปลี่ยนตามหน้างาน', rsvp: 'ตอบรับคำเชิญ' },
-    en: { back: '← Back', eyebrow: 'Table Plan', h1: 'Table Plan', stage: 'Stage', door: 'Entrance', note: 'Approximate layout. Positions may change on the day.', rsvp: 'RSVP' },
-    ja: { back: '← 戻る', eyebrow: 'Table Plan', h1: 'テーブル配置図', stage: 'ステージ', door: '入口', note: '目安の配置図です。当日変更になる場合があります。', rsvp: 'ご出欠の回答' }
+    th: { back: '← กลับหน้าแรก', eyebrow: 'Table Plan', h1: 'ผังโต๊ะ', stage: 'เวที / Stage', door: 'ทางเข้า', note: 'ห้องริมนที · ผัง 25 โต๊ะ ตำแหน่งอาจปรับเปลี่ยนตามหน้างาน', rsvp: 'ตอบรับคำเชิญ', zoom: 'แตะที่ผังเพื่อดูภาพขยาย' },
+    en: { back: '← Back', eyebrow: 'Table Plan', h1: 'Table Plan', stage: 'Stage', door: 'Entrance', note: 'Rim Natee Room · 25 tables. Positions may change on the day.', rsvp: 'RSVP', zoom: 'Tap the plan to enlarge' },
+    ja: { back: '← 戻る', eyebrow: 'Table Plan', h1: 'テーブル配置図', stage: 'ステージ', door: '入口', note: 'リムナティー・ルーム 25テーブル。当日変更になる場合があります。', rsvp: 'ご出欠の回答', zoom: '図をタップすると拡大します' }
   };
   var T = D[window.WED_LANG] || D.th;
   var $ = function (id) { return document.getElementById(id); };
@@ -64,8 +66,10 @@
 
   var plan = $('plan');
   if (FLOORPLAN_IMG) {
-    var im = document.createElement('img'); im.className = 'plan-img'; im.src = FLOORPLAN_IMG; im.alt = T.h1;
-    plan.appendChild(im); return;
+    var ln = document.createElement('a'); ln.href = FLOORPLAN_IMG; ln.target = '_blank'; ln.rel = 'noopener';
+    var im = document.createElement('img'); im.className = 'plan-img'; im.src = FLOORPLAN_IMG; im.alt = T.h1; im.width = 958; im.height = 1004;
+    ln.appendChild(im); plan.appendChild(ln);
+    var hint = document.createElement('p'); hint.className = 'muted plan-hint'; hint.textContent = T.zoom; plan.appendChild(hint); return;
   }
   var W = 400, cell = 84, rows = Math.ceil(TABLES / COLS), top = 92, r = 30;
   var gridW = COLS * cell, x0 = (W - gridW) / 2 + cell / 2;
