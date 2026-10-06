@@ -410,3 +410,7 @@ h2{font-weight:600}
 .p-script{font-size:clamp(24px,6.4vw,30px);color:var(--ink-2)}
 .p-en{margin:2px 0 4px;font-family:var(--script);font-weight:400;font-size:clamp(40px,11vw,52px);line-height:1.05;letter-spacing:0;color:var(--gold-s)}
 .site-footer .ft-date{margin-top:4px}
+
+/* lightbox: รูปเดียว (ผังโต๊ะ) ไม่ต้องมีปุ่มก่อนหน้า/ถัดไป */
+.lb.single .lb-prev,.lb.single .lb-next,.lb.single .lb-count{display:none}
+.lb.plan img{background:#fff;border-radius:12px;padding:6px;max-height:86svh;max-width:94vw;object-fit:contain}

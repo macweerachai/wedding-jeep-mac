@@ -51,6 +51,7 @@
   // img = รูปจอคอม (แนวนอน) · imgMobile = รูปจอมือถือ (แนวตั้ง) ถ้าไม่ใส่ จะใช้ img เดียวกัน
   // pos / posMobile = จุดโฟกัสของรูปเมื่อถูกครอบ เช่น '50% 20%' (ซ้าย-ขวา  บน-ล่าง) ปรับให้เห็นหน้าคู่บ่าวสาว
   var HERO = { img: '', imgMobile: '', pos: '50% 25%', posMobile: '50% 20%' };
+  var FLOORPLAN = 'photos/floorplan.png';   // รูปผังโต๊ะที่เด้งขึ้นมาเมื่อกดปุ่ม "ดูผังโต๊ะ"
   var MAP_QUERY = 'ริมธารา Rimtara พระราม 3'; // คำค้นของ Google Maps (ถ้าหมุดเพี้ยน เปลี่ยนเป็นชื่อ/ที่อยู่เต็ม หรือพิกัด เช่น '13.7,100.5')
   /* ======================================================= */
 
@@ -199,6 +200,7 @@
   function showLb() {
     lbImg.src = lbList[lbIndex];
     lbCount.textContent = (lbIndex + 1) + ' / ' + lbList.length;
+    lb.classList.toggle('single', lbList.length < 2);
   }
   function openLb(list, i) {
     if (!lb) buildLightbox();
@@ -208,7 +210,7 @@
   function stepLb(d) { lbIndex = (lbIndex + d + lbList.length) % lbList.length; showLb(); }
   function closeLb() {
     if (!lb) return;
-    lb.classList.remove('on');
+    lb.classList.remove('on', 'plan');
     if (!root.classList.contains('rs-open')) root.classList.remove('lock');
   }
 
@@ -336,7 +338,11 @@
     }
     /* ปุ่มดูผังโต๊ะ ย้ายมาอยู่ในส่วนสถานที่ (ส่วน RSVP ด้านล่างซ่อนไว้ ใช้ปุ่มหน้าแรก + ปุ่มลอยแทน) */
     var tbl = document.querySelector('.rsvp-block a[href="tables.html"]');
-    if (tbl) { tbl.classList.add('venue-tables'); ms.appendChild(tbl); }
+    if (tbl) {
+      tbl.classList.add('venue-tables'); ms.appendChild(tbl);
+      /* กดแล้วเด้งผังโต๊ะขึ้นมาเป็น popup (ซูม/ปิดได้) แทนการเปิดหน้าใหม่ */
+      tbl.addEventListener('click', function (e) { e.preventDefault(); openLb([FLOORPLAN], 0); lb.classList.add('plan'); });
+    }
   }
 
   /* กำหนดการ: แถวไอคอนแนวนอน + วันที่/สถานที่ + โทนสีการแต่งกาย (รวมเป็นส่วนเดียว) */
