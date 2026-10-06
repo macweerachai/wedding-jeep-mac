@@ -37,9 +37,9 @@
     dinner: SVGW + '<circle cx="24" cy="26" r="11"/><circle cx="24" cy="26" r="7"/><path d="M22 24.5c0-1.5 2-2 2-.5 0-1.5 2-1 2 .5 0 1.5-2 3-2 3s-2-1.5-2-3z"/><path d="M7 14v7a2.5 2.5 0 0 0 5 0v-7M9.5 14v26"/><path d="M41 14c-2.5 2-3 8-1 11h1v15"/></svg>'
   };
   var SS = {
-    th: { dateLine: 'วันศุกร์ที่ 19 กุมภาพันธ์ 2570', venueLine: 'ณ ห้องริมนที ริมธารา พระราม 3', theme: 'โทนสีการแต่งกาย :' },
-    en: { dateLine: 'Friday, 19 February 2027', venueLine: 'Rim Natee Room · Rimtara, Rama 3', theme: 'Theme :' },
-    ja: { dateLine: '2027年2月19日（金）', venueLine: 'リムターラ（ラマ3世）リムナティ・ルーム', theme: 'ドレスコード :' }
+    th: { dateLine: 'วันศุกร์ที่ 19 กุมภาพันธ์ 2570', venueLine: 'ณ ห้องริมนที ริมธารา พระราม 3', theme: 'โทนสีการแต่งกาย :', cal: 'เพิ่มลงปฏิทิน', calG: 'Google Calendar', calI: 'Apple / Outlook (.ics)' },
+    en: { dateLine: 'Friday, 19 February 2027', venueLine: 'Rim Natee Room · Rimtara, Rama 3', theme: 'Theme :', cal: 'ADD TO CALENDAR', calG: 'Google Calendar', calI: 'Apple / Outlook (.ics)' },
+    ja: { dateLine: '2027年2月19日（金）', venueLine: 'リムターラ（ラマ3世）リムナティ・ルーム', theme: 'ドレスコード :', cal: 'カレンダーに追加', calG: 'Google カレンダー', calI: 'Apple / Outlook (.ics)' }
   };
   // ข้อมูลที่จอดรถ (แสดงเมื่อกดปุ่ม)
   var PARKING = {
@@ -309,13 +309,11 @@
     ms.id = 'venue-map';
     ms.innerHTML =
       '<div class="section-head"><p class="kicker-en">The Venue</p><h2></h2></div>' +
-      '<p class="venue-room"></p>' +
       '<p class="venue-addr"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span></span></p>' +
+      '<a class="btn btn-ghost venue-dir" target="_blank" rel="noopener"></a>' +
       '<div class="venue-map"><iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen ' +
-      'src="https://www.google.com/maps?q=' + q + '&hl=' + (L === 'ja' ? 'ja' : (L === 'en' ? 'en' : 'th')) + '&z=17&output=embed"></iframe></div>' +
-      '<a class="btn btn-ghost venue-dir" target="_blank" rel="noopener"></a>';
-    ms.querySelector('h2').textContent = E.venueName || '';
-    ms.querySelector('.venue-room').textContent = tx('venueTitle');
+      'src="https://www.google.com/maps?q=' + q + '&hl=' + (L === 'ja' ? 'ja' : (L === 'en' ? 'en' : 'th')) + '&z=17&output=embed"></iframe></div>';
+    ms.querySelector('h2').textContent = tx('venueTitle');
     ms.querySelector('.venue-addr span').textContent = E.venueRoom || '';
     var dir = ms.querySelector('.venue-dir');
     dir.textContent = tx('direction');
@@ -382,8 +380,50 @@
 
   /* ฟอนต์ Jost สำหรับตัวเลขนับถอยหลังในหน้าแรก */
   var fl = document.createElement('link'); fl.rel = 'stylesheet';
-  fl.href = 'https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&display=swap';
+  fl.href = 'https://fonts.googleapis.com/css2?family=Great+Vibes&family=Jost:wght@300;400;500&display=swap';
   document.head.appendChild(fl);
+
+  /* ===== เพิ่มลงปฏิทิน: วางท้ายส่วนกำหนดการ ===== */
+  var schedSec = document.querySelector('.sched-block');
+  if (schedSec) {
+    var EVT = { s: '20270219T090000Z', e: '20270219T150000Z',
+      title: 'งานแต่งงาน จิ๊บ & แม็ค (Jeep & Mac Wedding)', place: 'ห้องริมนที ริมธารา พระราม 3 (Rimtara Rama 3), SV City, Bangkok' };
+    var site = location.href.split(/[?#]/)[0];
+    var cal = el('div', 'cal-wrap');
+    cal.innerHTML = '<button type="button" class="cal-btn" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M12 13v5M9.5 15.5h5"/></svg><span></span></button>' +
+      '<div class="cal-menu" hidden><a class="cal-g" target="_blank" rel="noopener"></a><a class="cal-i" download="Jeep-Mac-Wedding.ics"></a></div>';
+    var cb = cal.querySelector('.cal-btn'), cm = cal.querySelector('.cal-menu');
+    cb.querySelector('span').textContent = tx('cal');
+    cb.addEventListener('click', function (e) { e.stopPropagation(); cm.hidden = !cm.hidden; cb.setAttribute('aria-expanded', String(!cm.hidden)); });
+    document.addEventListener('click', function () { cm.hidden = true; cb.setAttribute('aria-expanded', 'false'); });
+    var cg = cal.querySelector('.cal-g');
+    cg.textContent = tx('calG');
+    cg.href = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(EVT.title) +
+      '&dates=' + EVT.s + '/' + EVT.e + '&location=' + encodeURIComponent(EVT.place) + '&details=' + encodeURIComponent(site);
+    var ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//JeepMac//Wedding//TH', 'BEGIN:VEVENT', 'UID:jeep-mac-20270219@wedding',
+      'DTSTAMP:20261006T000000Z', 'DTSTART:' + EVT.s, 'DTEND:' + EVT.e, 'SUMMARY:' + EVT.title,
+      'LOCATION:' + EVT.place.replace(/,/g, '\\,'), 'DESCRIPTION:' + site,
+      'BEGIN:VALARM', 'TRIGGER:-P1D', 'ACTION:DISPLAY', 'DESCRIPTION:' + EVT.title, 'END:VALARM', 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+    var ci = cal.querySelector('.cal-i');
+    ci.textContent = tx('calI');
+    ci.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
+    schedSec.appendChild(cal);
+  }
+
+  /* ===== ชื่อบ่าวสาว: ตัวเขียน (Bride / Groom) + ชื่ออังกฤษตัวพิมพ์ใหญ่ + ชื่อเต็ม ===== */
+  var NAMES = { bride: { label: 'Bride', en: 'WANPEN' }, groom: { label: 'Groom', en: 'WEERACHAI' } };
+  var persons = document.querySelectorAll('.couple .person');
+  ['bride', 'groom'].forEach(function (k, i) {
+    var pp = persons[i]; if (!pp) return;
+    var lb = el('p', 'p-script'); lb.textContent = NAMES[k].label;
+    var en = el('p', 'p-en'); en.textContent = NAMES[k].en;
+    pp.insertBefore(en, pp.firstChild); pp.insertBefore(lb, pp.firstChild);
+  });
+  var couple = document.querySelector('.couple');
+  if (couple) couple.classList.add('couple-v2');
+  /* ชื่อท้ายหน้าแบบตัวเขียน */
+  var ftk = document.querySelector('.site-footer .kicker-en');
+  if (ftk) ftk.innerHTML = '<span class="ft-names">Wanpen<em>&amp;</em>Weerachai</span><span class="ft-date">19 · 02 · 2027</span>';
 
   /* ข้อความที่ไม่ได้อยู่ในระบบ i18n เดิม */
   var scan = document.getElementById('lineScanText'); if (scan) scan.textContent = tx('scan');

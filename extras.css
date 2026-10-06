@@ -361,3 +361,34 @@ h2{font-weight:600}
 .site-footer .kicker-en{font-family:'Jost',var(--sans);font-style:normal;font-weight:400;font-size:14px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-2)}
 .site-footer .kicker-en+p,.site-footer p:last-child{margin-top:6px}
 .sched-time.long{font-size:clamp(12.5px,3.4vw,16px)}
+
+/* ===== ชื่อบ่าวสาวแบบตัวเขียน (ทั้งหน้า) ===== */
+:root{--script:'Great Vibes','Pinyon Script',cursive;--gold-s:#b08a4a}
+.hero-names{font-family:var(--script);font-weight:400;font-size:clamp(58px,16vw,92px);line-height:1.02;letter-spacing:0;color:var(--gold-s)}
+.hero-names .amp{font-family:var(--script);font-style:normal;font-size:.5em;color:var(--gold-s);margin:-2px 0 2px}
+.hero.has-photo .hero-names{font-size:clamp(46px,12vw,76px)}
+.couple-v2{grid-template-columns:1fr 1fr;gap:10px;margin-top:22px}
+.couple-v2 .couple-amp{display:none}
+.couple-v2 .person-role,.couple-v2 .person-nick{display:none}
+.p-script{font-family:var(--script);font-size:clamp(34px,9vw,42px);line-height:1;color:var(--ink)}
+.p-en{margin-top:6px;font-family:'Jost',var(--sans);font-weight:500;font-size:clamp(15px,4.2vw,18px);letter-spacing:.14em;color:var(--ink)}
+.couple-v2 .person-name{margin-top:0;font-family:var(--sans);font-weight:500;font-size:clamp(14.5px,3.9vw,17px);color:var(--ink-2)}
+.couple-v2 .person-parent{border-top:0;margin-top:4px;padding-top:0}
+.site-footer .kicker-en{text-transform:none;letter-spacing:0}
+.ft-names{display:block;font-family:var(--script);font-size:clamp(40px,11vw,52px);line-height:1.1;color:var(--gold-s)}
+.ft-date{display:block;margin-top:6px;font-family:'Jost',var(--sans);font-size:14px;letter-spacing:.2em;color:var(--ink-2)}
+
+/* ===== สถานที่: หัวข้อ → ที่อยู่ → ปุ่มนำทาง → แผนที่ ===== */
+.venue-full .venue-addr{margin:0 auto 12px}
+.venue-full .venue-dir{margin:0 auto 18px}
+
+/* ===== ปุ่มเพิ่มลงปฏิทิน (ท้ายกำหนดการ) ===== */
+.cal-wrap{position:relative;display:flex;justify-content:center;margin-top:20px}
+.cal-btn,.cal-btn:hover:not(:disabled){min-height:44px;padding:8px 22px;gap:8px;border:1px solid var(--rose-2);border-radius:999px;background:#fff;color:var(--ink-2);font-size:15px;font-weight:500;box-shadow:none;transform:none}
+.cal-btn:hover:not(:disabled){border-color:var(--rose);background:var(--blush-2)}
+.cal-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.cal-menu{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);z-index:5;min-width:230px;padding:6px;border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:var(--shadow);text-align:left}
+.cal-menu a{display:block;padding:11px 14px;border-radius:10px;font-size:15px;color:var(--ink);text-decoration:none}
+.cal-menu a:hover{background:var(--blush-2)}
+.ft-names{line-height:1}.ft-names em{display:block;font-style:normal;font-size:.55em;margin:2px 0 4px}
+.cal-btn,.cal-btn:hover:not(:disabled){width:auto}
