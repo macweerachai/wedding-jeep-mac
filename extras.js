@@ -57,11 +57,11 @@
 
   var L = window.WED_LANG || 'th';
   var S = {
-    th: { tap: 'แตะเพื่อเปิดซอง', kick1: 'Our Moments', h1: 'ความทรงจำของเรา', kick2: 'Venue Gallery', h2: 'บรรยากาศสถานที่', venueTitle: 'สถานที่จัดงาน', direction: 'นำทาง (DIRECTION)', album: 'ดูทั้งหมดใน Google Photos', scan: 'สแกน QR code หรือกดปุ่ม', tables: 'ดูผังโต๊ะ',
+    th: { tap: 'แตะเพื่อเปิดซอง', kick1: 'Our Moments', h1: 'ความทรงจำของเรา', kick2: 'Venue Gallery', h2: 'บรรยากาศสถานที่', venueTitle: 'สถานที่จัดงาน', direction: 'นำทาง', album: 'ดูทั้งหมดใน Google Photos', scan: 'สแกน QR code หรือกดปุ่ม', tables: 'ดูผังโต๊ะ',
           soon: 'รูปภาพกำลังจะมาเร็วๆ นี้', close: 'ปิด', prev: 'ก่อนหน้า', next: 'ถัดไป', rsvp: 'ตอบรับคำเชิญ', top: 'The Wedding of' },
     en: { tap: 'Tap to open', kick1: 'Our Moments', h1: 'Our Moments', kick2: 'Venue Gallery', h2: 'Venue Photos', venueTitle: 'The Venue', direction: 'DIRECTION', album: 'View all in Google Photos', scan: 'Scan the QR code or tap the button', tables: 'Table plan',
           soon: 'Photos coming soon', close: 'Close', prev: 'Previous', next: 'Next', rsvp: 'RSVP', top: 'The Wedding of' },
-    ja: { tap: 'タップして開く', kick1: 'Our Moments', h1: 'ふたりの思い出', kick2: 'Venue Gallery', h2: '会場の雰囲気', venueTitle: '会場', direction: '経路案内 (DIRECTION)', album: 'Googleフォトで全て見る', scan: 'QRコードを読み取るか、ボタンをタップ', tables: 'テーブル配置図',
+    ja: { tap: 'タップして開く', kick1: 'Our Moments', h1: 'ふたりの思い出', kick2: 'Venue Gallery', h2: '会場の雰囲気', venueTitle: '会場', direction: '経路案内', album: 'Googleフォトで全て見る', scan: 'QRコードを読み取るか、ボタンをタップ', tables: 'テーブル配置図',
           soon: '写真は近日公開', close: '閉じる', prev: '前へ', next: '次へ', rsvp: 'ご出欠の回答', top: 'The Wedding of' }
   };
   function tx(k) { return (S[L] && S[L][k]) || (SS[L] && SS[L][k]) || S.th[k] || SS.th[k] || k; }
@@ -316,7 +316,7 @@
       '<div class="venue-map"><iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen ' +
       'src="https://www.google.com/maps?q=' + q + '&hl=' + (L === 'ja' ? 'ja' : (L === 'en' ? 'en' : 'th')) + '&z=17&output=embed"></iframe></div>';
     ms.querySelector('h2').textContent = tx('venueTitle');
-    ms.querySelector('.venue-addr span').textContent = E.venueRoom || '';
+    ms.querySelector('.venue-addr span').textContent = L === 'th' ? 'ห้องริมนที ชั้น G อาคาร SV City ถนนพระราม 3' : (E.venueRoom || '');
     var dir = ms.querySelector('.venue-dir');
     dir.textContent = tx('direction');
     dir.href = 'https://www.google.com/maps/dir/?api=1&destination=' + q;

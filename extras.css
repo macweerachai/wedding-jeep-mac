@@ -430,3 +430,6 @@ h2{font-weight:600}
 /* EN / JA: แสดงหัวข้อภาษาเดียว */
 html.lang-en .section-head .kicker-en,html.lang-ja .section-head .kicker-en{display:none}
 html.lang-en .sched-time.long{font-size:clamp(11.5px,3.1vw,15px)}
+
+/* แสดงหัวข้อภาษาเดียวทุกภาษา: ซ่อนหัวข้อเล็กภาษาอังกฤษ (Schedule, Our Moments, The Venue ฯลฯ) */
+.section-head .kicker-en{display:none}
