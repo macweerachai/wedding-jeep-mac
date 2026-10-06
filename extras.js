@@ -22,6 +22,18 @@
   var VIDEOS = { prewedding: '', venue: undefined };   // venue: ใส่ '' เพื่อโชว์ช่องวิดีโอเปล่า หรือใส่ลิงก์ได้เลย
   // ลิงก์อัลบั้ม Google Photos (แชร์แบบ "ทุกคนที่มีลิงก์") ไว้ให้กดดูรูป/วิดีโอทั้งหมด (ว่าง = ไม่แสดงปุ่ม)
   var ALBUMS = { prewedding: '', venue: '' };
+  // กำหนดการ (พิธีบ่าย เลี้ยงเย็น) — แก้เวลา/ข้อความตรงนี้ได้เลย
+  var SCHEDULE = {
+    th: [['16:00 น.', 'เจ้าบ่าวเจ้าสาว พร้อมหน้างาน'], ['16:19 น.', 'แห่ขันหมาก · สวมแหวน · รับไหว้'], ['16:40 น.', 'รดน้ำสังข์'], ['18:00 – 22:00 น.', 'งานจัดเลี้ยงเย็น']],
+    en: [['4:00 PM', 'Bride & groom ready at the venue'], ['4:19 PM', 'Khan Maak procession · Ring ceremony · Paying respects'], ['4:40 PM', 'Water blessing ceremony'], ['6:00 – 10:00 PM', 'Evening banquet']],
+    ja: [['16:00', '新郎新婦 会場入り'], ['16:19', 'カンマーク行列・指輪の交換・ご挨拶'], ['16:40', '水かけの儀'], ['18:00 – 22:00', '夕方の披露宴']]
+  };
+  // ข้อมูลที่จอดรถ (แสดงเมื่อกดปุ่ม)
+  var PARKING = {
+    th: { btn: 'ข้อมูลการจอดรถ', lines: ['ที่จอดรถจอดได้ 300 คัน 🚕🚙', 'จอดได้ที่ ชั้น G, B, B1', '🚙 ขับเข้ามา รับบัตรที่ป้อมยาม แจ้ง รปภ. ว่ามา "ริมธารา งานแต่ง"', 'กรณีที่จอดชั้น G เต็ม (ชั้นเดียวกับร้าน) รปภ. จะให้เลี้ยวเข้าจอดชั้น B, B1 และชั้นอื่นๆ โดยช่องจอด รปภ. จะแจ้งให้อีกครั้ง'], note: 'อย่าลืมนำสลิปบัตรจอดมาประทับตราด้วยนะครับ ส่วนบัตรแข็งแนะนำเก็บไว้ที่รถ · จอดฟรี 8 ชม.' },
+    en: { btn: 'Parking information', lines: ['Parking for 300 cars 🚕🚙', 'Available on floors G, B and B1', '🚙 Drive in, take a ticket at the guard booth and tell security you are here for "Rimtara wedding"', 'If floor G (same floor as the restaurant) is full, security will direct you to B, B1 or other floors and will point out a space.'], note: 'Please bring your parking slip to be stamped at the event. Keep the hard card in your car. Free parking for 8 hours.' },
+    ja: { btn: '駐車場のご案内', lines: ['駐車場は300台分 🚕🚙', 'G階・B階・B1階に駐車できます', '🚙 入口でカードを受け取り、警備員に「リムターラ 結婚式」と伝えてください', 'G階（レストランと同じ階）が満車の場合は、警備員がB階・B1階などへご案内します。'], note: '駐車券は会場でスタンプを押してください。ハードカードは車内に置いたままで構いません。8時間まで無料です。' }
+  };
   var MAP_QUERY = 'ริมธารา Rimtara พระราม 3'; // คำค้นของ Google Maps (ถ้าหมุดเพี้ยน เปลี่ยนเป็นชื่อ/ที่อยู่เต็ม หรือพิกัด เช่น '13.7,100.5')
   /* ======================================================= */
 
@@ -259,10 +271,28 @@
     var dir = ms.querySelector('.venue-dir');
     dir.textContent = tx('direction');
     dir.href = 'https://www.google.com/maps/dir/?api=1&destination=' + q;
+    /* ข้อมูลที่จอดรถ: พับเก็บ กดแล้วค่อยแสดง */
+    var pk = PARKING[L] || PARKING.th;
+    var det = el('details', 'venue-park');
+    det.innerHTML = '<summary></summary><div class="park-body"><ul></ul><p class="park-note"></p></div>';
+    det.querySelector('summary').textContent = '🚗 ' + pk.btn;
+    var ul = det.querySelector('ul');
+    pk.lines.forEach(function (t) { var li = document.createElement('li'); li.textContent = t; ul.appendChild(li); });
+    det.querySelector('.park-note').textContent = pk.note;
+    ms.appendChild(det);
     /* แผนที่ก่อน แล้วตามด้วยรูป/วิดีโอบรรยากาศสถานที่ (ทั้งคู่อยู่ก่อนกำหนดการ) */
     where.insertAdjacentElement('beforebegin', ms);
     where.insertAdjacentElement('beforebegin',
       buildGallery('venue', tx('kick2'), tx('h2'), PHOTOS.venue, PLACEHOLDER_COUNT.venue, 'gal-row', VIDEOS.venue, ALBUMS.venue));
+  }
+
+  /* กำหนดการ: แทนที่ด้วยข้อมูลใน SCHEDULE ด้านบน */
+  if (schedEl) {
+    schedEl.innerHTML = '';
+    (SCHEDULE[L] || SCHEDULE.th).forEach(function (r) {
+      var d = el('div', 'row'); var a = el('span', 'muted'); var b = el('span');
+      a.textContent = r[0]; b.textContent = r[1]; d.appendChild(a); d.appendChild(b); schedEl.appendChild(d);
+    });
   }
 
   /* ข้อความที่ไม่ได้อยู่ในระบบ i18n เดิม */
