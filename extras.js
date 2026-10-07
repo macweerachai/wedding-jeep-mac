@@ -10,9 +10,6 @@
   var PHOTOS = {
     prewedding: [
       'photos/prewed-01.jpg',
-      'photos/prewed-02.jpg',
-      'photos/prewed-03.jpg',
-      'photos/prewed-04.jpg',
       'photos/prewed-05.jpg',
       'photos/prewed-06.jpg',
       'photos/prewed-07.jpg',
