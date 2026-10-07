@@ -391,7 +391,7 @@
 
   /* ฟอนต์ Jost สำหรับตัวเลขนับถอยหลังในหน้าแรก */
   var fl = document.createElement('link'); fl.rel = 'stylesheet';
-  fl.href = 'https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Jost:wght@300;400;500&display=swap';
+  fl.href = 'https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Jost:wght@300;400;500&family=DM+Serif+Display&display=swap';
   document.head.appendChild(fl);
 
   /* ===== เพิ่มลงปฏิทิน: วางท้ายส่วนกำหนดการ ===== */
