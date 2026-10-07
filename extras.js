@@ -14,6 +14,9 @@
       'photos/prewed-06.jpg',
       'photos/prewed-07.jpg',
       'photos/prewed-08.jpg',
+      'photos/prewed-09.jpg',
+      'photos/prewed-10.jpg',
+      'photos/prewed-11.jpg',
     ],
     venue: [
       // 'photos/venue-01.jpg',
