@@ -456,3 +456,27 @@ html.lang-en .sched-time.long{font-size:clamp(11.5px,3.1vw,15px)}
 .cta-row{display:flex;justify-content:center;align-items:center;flex-wrap:wrap}
 #galleryUploadBtn{display:inline-flex;align-items:center;justify-content:center;gap:10px;white-space:nowrap;width:auto;margin:0 auto;padding-left:28px;padding-right:28px}
 .gallery-desc,.gallery-note,#gallery .muted{text-align:center}
+
+/* ===== ฉากหลังรูป แบบ "โปร่ง" (light): ม่านขาวครีมให้ข้อความสีเข้มยังอ่านชัด ===== */
+.hero.has-photo.hero-light{color:var(--ink)}
+.hero.has-photo.hero-light::before{background:linear-gradient(180deg,rgba(255,250,246,.50) 0%,rgba(255,250,246,.72) 35%,rgba(255,250,246,.86) 70%,rgba(255,250,246,.94) 100%)}
+.hero.has-photo.hero-light .hero-bg{background:#fbf1f2}
+.hero.has-photo.hero-light .hero-inner{text-shadow:none}
+.hero.has-photo.hero-light .kicker-en,.hero.has-photo.hero-light .hero-th,.hero.has-photo.hero-light .hero-venue,.hero.has-photo.hero-light .hero-date,.hero.has-photo.hero-light .hero-date b{color:var(--ink)}
+.hero.has-photo.hero-light .hero-names,.hero.has-photo.hero-light .hero-names span{color:var(--gold)}
+.hero.has-photo.hero-light .hero-names .amp-heart{color:var(--gold)}
+.hero.has-photo.hero-light .hero-date{border-color:var(--gold-2)}
+.hero.has-photo.hero-light .countdown b{color:var(--ink)}
+.hero.has-photo.hero-light .countdown span{color:var(--soft)}
+.hero.has-photo.hero-light .countdown div+div::before{background:var(--gold-2)}
+.hero.has-photo.hero-light .scroll-cue{color:var(--ink)}
+/* แบบ "ทึบ" (dark): ม่านเข้มด้านล่าง ตัวหนังสือขาว */
+.hero.has-photo.hero-dark::before{background:linear-gradient(180deg,rgba(30,14,20,.35) 0%,rgba(30,14,20,.35) 30%,rgba(30,14,20,.62) 62%,rgba(30,14,20,.88) 100%)}
+
+/* ฉากหลังรูป: ปรับขนาดให้พอดีจอมือถือ (ชื่อ + วันที่อยู่บรรทัดเดียว ไม่ล้น) */
+.hero.has-photo .hero-inner{width:100%;max-width:520px}
+.hero.has-photo .hero-names{font-size:clamp(32px,9.4vw,64px)}
+.hero.has-photo .hero-names .amp-heart{width:min(78px,19vw);margin:0 .12em}
+.hero.has-photo .hero-date{gap:8px;font-size:13px}
+.hero.has-photo .hero-date b{font-size:clamp(18px,5.6vw,26px);letter-spacing:.05em}
+@media (min-width:700px){.hero.has-photo .hero-inner{max-width:680px}}

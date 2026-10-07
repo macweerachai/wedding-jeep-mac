@@ -56,7 +56,7 @@
   // รูปหน้าแรกแบบเต็มจอ: อัปโหลดไว้ใน photos/ แล้วใส่ชื่อไฟล์ (ว่าง = ใช้หน้าตาเดิมแบบไม่มีรูป)
   // img = รูปจอคอม (แนวนอน) · imgMobile = รูปจอมือถือ (แนวตั้ง) ถ้าไม่ใส่ จะใช้ img เดียวกัน
   // pos / posMobile = จุดโฟกัสของรูปเมื่อถูกครอบ เช่น '50% 20%' (ซ้าย-ขวา  บน-ล่าง) ปรับให้เห็นหน้าคู่บ่าวสาว
-  var HERO = { img: '', imgMobile: '', pos: '50% 25%', posMobile: '50% 20%' };
+  var HERO = { img: 'photos/hero.jpg', imgMobile: '', pos: '50% 38%', posMobile: '50% 30%', style: 'light' };   // style: 'light' = ม่านขาวโปร่ง ตัวหนังสือสีเข้ม | 'dark' = ม่านเข้ม ตัวหนังสือขาว
   // เพลงตอนกดเปิดซอง: อัปโหลดไฟล์เพลง (.mp3) ไว้ในโฟลเดอร์ music/ แล้วใส่ชื่อไฟล์ เช่น 'music/until-i-found-you.mp3' (ว่าง = ไม่มีเพลง)
   var MUSIC = { src: 'music/wedding-piano.mp3', volume: 0.55 };
   var FLOORPLAN = 'photos/floorplan.png';   // รูปผังโต๊ะที่เด้งขึ้นมาเมื่อกดปุ่ม "ดูผังโต๊ะ"
@@ -419,6 +419,21 @@
     ci.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
     schedSec.appendChild(cal);
   }
+
+  /* ===== ฉากหลังหน้าแรกเป็นรูปถ่าย ===== */
+  (function () {
+    var hero = document.querySelector('.hero');
+    if (!hero || !HERO.img) return;
+    var q = /[?&]hero=(light|dark)/.exec(location.search);
+    var st = q ? q[1] : (HERO.style || 'light');
+    var bg = document.createElement('div'); bg.className = 'hero-bg';
+    var pic = document.createElement('picture');
+    if (HERO.imgMobile) { var so = document.createElement('source'); so.media = '(max-width:700px)'; so.srcset = HERO.imgMobile; pic.appendChild(so); }
+    var im = document.createElement('img'); im.src = HERO.img; im.alt = ''; im.decoding = 'async'; pic.appendChild(im);
+    bg.appendChild(pic); hero.insertBefore(bg, hero.firstChild);
+    hero.style.setProperty('--hero-pos', HERO.pos); hero.style.setProperty('--hero-pos-m', HERO.posMobile);
+    hero.classList.add('has-photo', 'hero-' + st);
+  })();
 
   /* หน้าแรก: ใช้เส้นคั่นมีหัวใจตรงกลางแทน & */
   var heroAmp = document.querySelector('.hero-names .amp');
