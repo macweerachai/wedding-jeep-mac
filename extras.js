@@ -280,7 +280,8 @@
         slide = el('button', 'gal-item');
         slide.type = 'button';
         var img = el('img');
-        img.addEventListener('load', function () { if (this.naturalHeight > this.naturalWidth) this.classList.add('portrait'); });
+        img.addEventListener('load', function () { if (this.naturalHeight > this.naturalWidth) this.classList.add('portrait');
+          else { var bt = this.parentNode; bt.classList.add('landscape'); bt.style.setProperty('--gbg', 'url("' + this.getAttribute('src') + '")'); } });
         img.src = list[i]; img.alt = ''; img.loading = i ? 'lazy' : 'eager'; img.decoding = 'async';
         (function (b, idx) {
           img.addEventListener('error', function () { b.classList.add('ph'); b.innerHTML = ICON_IMG; b.disabled = true; });

@@ -506,3 +506,9 @@ html.lang-en .sched-time.long{font-size:clamp(11.5px,3.1vw,15px)}
   .hero.has-photo.hero-m .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 70%}
   .hero.has-photo .hero-mono{position:absolute;top:18px;left:20px;width:50px;margin:0}
 }
+
+/* รูปแนวนอนบนมือถือ: แสดงเต็มภาพ (ไม่ตัดหน้า) พื้นหลังเบลอจากรูปเดียวกัน */
+@media (max-width:699px){
+  .gal-track .gal-item.landscape::before{content:"";position:absolute;inset:-20px;background:var(--gbg) center/cover no-repeat;filter:blur(22px) brightness(.92);transform:scale(1.1)}
+  .gal-track .gal-item.landscape img{position:relative;object-fit:contain}
+}
