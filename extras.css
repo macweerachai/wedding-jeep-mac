@@ -448,3 +448,5 @@ html.lang-en .sched-time.long{font-size:clamp(11.5px,3.1vw,15px)}
 .invite .ornament.orn-heart{display:block;width:min(190px,52vw);margin:10px auto;color:var(--gold-s,#b89a5e);line-height:0}
 .invite .ornament.orn-heart svg{display:block;width:100%;height:auto}
 .invite .ornament.orn-heart::before,.invite .ornament.orn-heart::after{display:none!important}
+
+.gal-track .gal-item img.portrait{object-fit:contain}

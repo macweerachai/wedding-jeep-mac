@@ -9,7 +9,7 @@
   /* ====================== แก้ตรงนี้ ====================== */
   var PHOTOS = {
     prewedding: [
-      // 'photos/prewed-01.jpg',
+      'photos/prewed-01.jpg',
       // 'photos/prewed-02.jpg',
     ],
     venue: [
@@ -274,6 +274,7 @@
         slide = el('button', 'gal-item');
         slide.type = 'button';
         var img = el('img');
+        img.addEventListener('load', function () { if (this.naturalHeight > this.naturalWidth) this.classList.add('portrait'); });
         img.src = list[i]; img.alt = ''; img.loading = i ? 'lazy' : 'eager'; img.decoding = 'async';
         (function (b, idx) {
           img.addEventListener('error', function () { b.classList.add('ph'); b.innerHTML = ICON_IMG; b.disabled = true; });
