@@ -443,8 +443,8 @@
   /* หน้าแรก: ใช้เส้นคั่นมีหัวใจตรงกลางแทน & */
   var heroAmp = document.querySelector('.hero-names .amp');
   if (heroAmp) {
-    heroAmp.innerHTML = '<svg viewBox="0 0 260 40" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round">' +
-      '<path d="M4 22h96"/><path d="M160 22h96"/><path d="M130 34c-10-7-17-12-17-19 0-5 4-8 8-8 4 0 7 2 9 5 2-3 5-5 9-5 4 0 8 3 8 8 0 7-7 12-17 19z"/></g></svg>' +
+    heroAmp.innerHTML = '<svg viewBox="0 0 90 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">' +
+      '<line x1="0" y1="17" x2="28" y2="17"/><line x1="62" y1="17" x2="90" y2="17"/><path d="M45 27c-5-4-12-9-12-15a6.5 6.5 0 0113-1.5 6.5 6.5 0 0113 1.5c0 6-7 11-12 15z"/></g></svg>' +
       '<span class="visually-hidden">&amp;</span>';
     heroAmp.classList.add('amp-heart');
   }
@@ -541,6 +541,7 @@
   cover.innerHTML =
     '<p class="kicker-en cv-top">' + tx('top') + '</p>' +
     '<p class="cv-names">Jeep &amp; Mac</p>' +
+    '<div class="cv-line"></div>' +
     '<p class="cv-date">19 · 02 · 2027</p>' +
     '<div class="cv-env" role="button" tabindex="0" aria-label="' + tx('tap') + '">' +
       '<span class="cv-back"></span>' +
