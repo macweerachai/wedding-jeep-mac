@@ -193,7 +193,7 @@ html.embed .site-shell { padding-top: 24px; padding-bottom: 40px; }
 /* ===== LINE: การ์ดสมดุล QR + ปุ่ม ===== */
 /* ===== Thank You block (below LINE) ===== */
 .thanks-block{text-align:center;padding-top:10px;padding-bottom:60px}
-.thanks-block .thanks-logo{display:block;width:48px;height:48px;margin:0 auto 8px;opacity:.85}
+.thanks-block .thanks-logo{display:block;width:72px;height:72px;margin:0 auto 12px;opacity:.85}
 .thanks-block .kicker-en{font-family:'Jost',var(--sans);font-weight:400;font-size:13px;letter-spacing:.1em;color:var(--ink-2);margin:0}
 .thanks-block .footer-th{margin:6px 0 0;font-size:14px;color:var(--soft)}
 
@@ -485,7 +485,7 @@ html.lang-en .sched-time.long{font-size:clamp(11.5px,3.1vw,15px)}
 /* ===== หน้าแรกแบบรูปถ่าย v2: รูปอยู่ด้านบน ไม่ให้ตัวหนังสือบังหน้า / โลโก้กลับมา / ไม่มีเส้นคั่นนับถอยหลัง ===== */
 .hero .countdown div::after{display:none!important;content:none!important}
 .hero.has-photo .countdown div,.hero.has-photo .countdown{backdrop-filter:none;-webkit-backdrop-filter:none;background:none;border:0}
-.hero.has-photo .hero-mono{display:block;width:68px;height:auto;margin:0 auto 8px;opacity:.95}
+.hero.has-photo .hero-mono{display:block;width:88px;height:auto;margin:0 auto 10px;opacity:.95}
 .hero.has-photo .hero-bg{inset:0 0 auto 0;height:66%;background:transparent;-webkit-mask-image:linear-gradient(180deg,#000 62%,transparent 100%);mask-image:linear-gradient(180deg,#000 62%,transparent 100%)}
 .hero.has-photo .hero-bg img{object-position:50% 14%}
 .hero.has-photo.hero-light::before{background:linear-gradient(180deg,rgba(255,250,246,.18) 0%,rgba(255,250,246,.30) 40%,rgba(255,250,246,.78) 62%,rgba(255,250,246,.94) 100%)}
@@ -505,7 +505,7 @@ html.lang-en .sched-time.long{font-size:clamp(11.5px,3.1vw,15px)}
   .hero.has-photo.hero-m .hero-bg{inset:0 0 auto 0;height:58svh;-webkit-mask-image:linear-gradient(180deg,#000 72%,transparent 100%);mask-image:linear-gradient(180deg,#000 72%,transparent 100%)}
   .hero.has-photo.hero-m{min-height:108svh}
   .hero.has-photo.hero-m .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 70%}
-  .hero.has-photo .hero-mono{position:absolute;top:18px;left:20px;width:50px;margin:0}
+  .hero.has-photo .hero-mono{position:absolute;top:18px;left:20px;width:60px;margin:0}
 }
 
 /* รูปแนวนอนบนมือถือ: แสดงเต็มภาพ (ไม่ตัดหน้า) พื้นหลังเบลอจากรูปเดียวกัน */
