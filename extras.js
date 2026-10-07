@@ -421,6 +421,13 @@
       '<span class="visually-hidden">&amp;</span>';
     heroAmp.classList.add('amp-heart');
   }
+  /* การ์ดคำเชิญ: เปลี่ยนเส้นคั่นรูปข้าวหลามตัดเป็นหัวใจเหมือนหน้าแรก */
+  var invOrn = document.querySelector('.invite .ornament');
+  if (invOrn) {
+    invOrn.innerHTML = '<svg viewBox="0 0 260 40" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round">' +
+      '<path d="M4 22h96"/><path d="M160 22h96"/><path d="M130 34c-10-7-17-12-17-19 0-5 4-8 8-8 4 0 7 2 9 5 2-3 5-5 9-5 4 0 8 3 8 8 0 7-7 12-17 19z"/></g></svg>';
+    invOrn.classList.add('orn-heart');
+  }
   /* ภาษาอังกฤษ/ญี่ปุ่น: ไม่แสดงหัวข้อเล็กภาษาอังกฤษซ้ำเหนือหัวข้อหลัก (แสดงภาษาเดียว) */
   root.classList.add('lang-' + L);
 
