@@ -51,6 +51,8 @@
   // img = รูปจอคอม (แนวนอน) · imgMobile = รูปจอมือถือ (แนวตั้ง) ถ้าไม่ใส่ จะใช้ img เดียวกัน
   // pos / posMobile = จุดโฟกัสของรูปเมื่อถูกครอบ เช่น '50% 20%' (ซ้าย-ขวา  บน-ล่าง) ปรับให้เห็นหน้าคู่บ่าวสาว
   var HERO = { img: '', imgMobile: '', pos: '50% 25%', posMobile: '50% 20%' };
+  // เพลงตอนกดเปิดซอง: อัปโหลดไฟล์เพลง (.mp3) ไว้ในโฟลเดอร์ music/ แล้วใส่ชื่อไฟล์ เช่น 'music/until-i-found-you.mp3' (ว่าง = ไม่มีเพลง)
+  var MUSIC = { src: '', volume: 0.55 };
   var FLOORPLAN = 'photos/floorplan.png';   // รูปผังโต๊ะที่เด้งขึ้นมาเมื่อกดปุ่ม "ดูผังโต๊ะ"
   var MAP_QUERY = 'ริมธารา Rimtara พระราม 3'; // คำค้นของ Google Maps (ถ้าหมุดเพี้ยน เปลี่ยนเป็นชื่อ/ที่อยู่เต็ม หรือพิกัด เช่น '13.7,100.5')
   /* ======================================================= */
@@ -429,13 +431,21 @@
     var pp = persons[i]; if (!pp) return;
     var lb = el('p', 'p-script'); lb.textContent = NAMES[k].label;
     var en = el('p', 'p-en'); en.textContent = NAMES[k].en;
-    pp.insertBefore(en, pp.firstChild); pp.insertBefore(lb, pp.firstChild);
+    pp.insertBefore(lb, pp.firstChild);
   });
   var couple = document.querySelector('.couple');
   if (couple) couple.classList.add('couple-v2');
   /* ชื่อท้ายหน้าแบบตัวเขียน */
   var ftk = document.querySelector('.site-footer .kicker-en');
   if (ftk) ftk.innerHTML = '<span class="ft-date">19 · 02 · 2027</span>';
+
+  /* แบ่งปันความทรงจำ: ปุ่มเพิ่มรูปกับปุ่มดูรูปเปิดอัลบั้มเดียวกัน → เหลือปุ่มเดียว */
+  var gUp = document.getElementById('galleryUploadBtn'), gView = document.getElementById('galleryViewBtn');
+  if (gUp && gView) {
+    gView.style.display = 'none';
+    var gl = gUp.querySelector('span');
+    if (gl) gl.textContent = { th: 'เพิ่มรูป / ดูรูปของทุกคน', en: 'Add & view photos', ja: '写真を追加・見る' }[L] || 'เพิ่มรูป / ดูรูปของทุกคน';
+  }
 
   /* ข้อความที่ไม่ได้อยู่ในระบบ i18n เดิม */
   var scan = document.getElementById('lineScanText'); if (scan) scan.textContent = tx('scan');
@@ -453,6 +463,29 @@
   });
 
   /* ================= หน้าเปิดซอง ================= */
+  /* ===== เพลงประกอบ: เล่นเมื่อกดเปิดซอง + ปุ่มเปิด/ปิดเพลงมุมจอ ===== */
+  var bgm = null, bgmBtn = null;
+  function setBgmBtn() { if (bgmBtn) bgmBtn.classList.toggle('on', !!(bgm && !bgm.paused)); }
+  function playBgm() {
+    if (!bgm) return;
+    bgm.volume = 0;
+    var pr = bgm.play();
+    if (pr && pr.catch) pr.catch(function () { setBgmBtn(); });
+    var v = 0, tgt = MUSIC.volume || 0.55;
+    var fi = setInterval(function () { v = Math.min(tgt, v + tgt / 20); bgm.volume = v; if (v >= tgt) clearInterval(fi); }, 100);
+  }
+  if (MUSIC.src) {
+    bgm = new Audio(MUSIC.src);
+    bgm.loop = true; bgm.preload = 'auto';
+    bgm.addEventListener('play', setBgmBtn); bgm.addEventListener('pause', setBgmBtn);
+    bgmBtn = el('button', 'bgm-btn', '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg>');
+    bgmBtn.type = 'button';
+    bgmBtn.setAttribute('aria-label', 'Music on/off');
+    bgmBtn.addEventListener('click', function () { if (bgm.paused) playBgm(); else bgm.pause(); });
+    document.body.appendChild(bgmBtn);
+    document.addEventListener('visibilitychange', function () { if (document.hidden && !bgm.paused) { bgm.pause(); bgm._resume = true; } else if (!document.hidden && bgm._resume) { bgm._resume = false; playBgm(); } });
+  }
+
   var seen = false;
   try { seen = sessionStorage.getItem('wed_cover') === '1'; } catch (e) { /* ใช้ไม่ได้ก็แสดงตามปกติ */ }
   var skip = /[?&]nocover/.test(qs);
@@ -490,6 +523,7 @@
   function openCover() {
     if (opening) return;
     opening = true;
+    playBgm();   // การแตะเปิดซองนับเป็นการกดของผู้ใช้ เบราว์เซอร์จึงยอมให้เล่นเสียง
     try { sessionStorage.setItem('wed_cover', '1'); } catch (e) { /* ข้าม */ }
     cover.classList.add('open');
     setTimeout(function () {

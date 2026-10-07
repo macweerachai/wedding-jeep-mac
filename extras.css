@@ -433,3 +433,14 @@ html.lang-en .sched-time.long{font-size:clamp(11.5px,3.1vw,15px)}
 
 /* แสดงหัวข้อภาษาเดียวทุกภาษา: ซ่อนหัวข้อเล็กภาษาอังกฤษ (Schedule, Our Moments, The Venue ฯลฯ) */
 .section-head .kicker-en{display:none}
+
+/* ไม่แสดงชื่ออังกฤษตัวพิมพ์ใหญ่ซ้ำในการ์ดเชิญ */
+.p-script{margin-bottom:6px}
+/* ปุ่มเปิด/ปิดเพลง (มุมซ้ายล่าง) */
+.bgm-btn,.bgm-btn:hover:not(:disabled){position:fixed;left:16px;bottom:max(18px,env(safe-area-inset-bottom));z-index:40;width:46px;height:46px;min-height:0;padding:0;border-radius:50%;border:1px solid var(--rose-2);background:rgba(255,255,255,.9);color:var(--ink-2);box-shadow:var(--shadow-sm);backdrop-filter:blur(6px);transform:none}
+.bgm-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.bgm-btn:not(.on) svg{opacity:.45}
+.bgm-btn:not(.on)::after{content:"";position:absolute;width:24px;height:1.6px;background:currentColor;transform:rotate(-45deg);opacity:.6}
+.bgm-btn.on svg{animation:bgmspin 3.2s linear infinite}
+@keyframes bgmspin{50%{transform:scale(1.12)}}
+@media (prefers-reduced-motion:reduce){.bgm-btn.on svg{animation:none}}
