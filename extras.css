@@ -451,3 +451,8 @@ html.lang-en .sched-time.long{font-size:clamp(11.5px,3.1vw,15px)}
 
 @media (max-width:699px){.gal-track .gal-item,.gal-track .gal-item:hover:not(:disabled){aspect-ratio:4/5;max-height:none}}
 @media (min-width:700px){.gal-track .gal-item img.portrait{object-fit:contain}}
+
+/* ปุ่มรูปรวม: กึ่งกลาง ไม่ตัดบรรทัด */
+.cta-row{display:flex;justify-content:center;align-items:center;flex-wrap:wrap}
+#galleryUploadBtn{display:inline-flex;align-items:center;justify-content:center;gap:10px;white-space:nowrap;width:auto;margin:0 auto;padding-left:28px;padding-right:28px}
+.gallery-desc,.gallery-note,#gallery .muted{text-align:center}
