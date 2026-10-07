@@ -59,7 +59,7 @@
       invite_lead: 'Two hearts, one story',
       invite_text: 'Together with our families, we joyfully request<br>the honour of your presence at the wedding of',
       bride_role: 'Bride', bride_name: 'Wanpen Kangkla', bride_nick: '"Jeep"', bride_parent: 'Daughter of Mrs. Prem Kangkla',
-      groom_role: 'Groom', groom_name: 'Weerachai Jitsuwantaya', groom_nick: '"Mac"', groom_parent: 'Son of Mrs. Sopha Jitsuwantaya',
+      groom_role: 'Groom', groom_name: 'Weerachai Jitsuwantaya', groom_nick: '"Mac"', groom_parent: 'Son of Mrs. Sopa Jitsuwantaya',
       when_h: 'Date & Venue', date_label: 'Date', venue_label: 'Venue', map_btn: 'Open in Google Maps',
       sched_h: 'Schedule',
       dress_h: 'Dress Code Colours', c_pink: 'Blush pink', c_cream: 'Cream', c_brown: 'Brown', c_gold: 'Gold',
