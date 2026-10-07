@@ -433,6 +433,10 @@
     bg.appendChild(pic); hero.insertBefore(bg, hero.firstChild);
     hero.style.setProperty('--hero-pos', HERO.pos); hero.style.setProperty('--hero-pos-m', HERO.posMobile);
     hero.classList.add('has-photo', 'hero-' + st);
+    if (window.matchMedia('(max-width:899px)').matches) {
+      hero.classList.add('hero-m');   // มือถือ: รูปอยู่ด้านบน ข้อความอยู่ใต้รูป ไม่ทับหน้า / โลโก้มุมซ้ายบน
+      var mono = hero.querySelector('.hero-mono'); if (mono) hero.insertBefore(mono, hero.firstChild);
+    }
   })();
 
   /* หน้าแรก: ใช้เส้นคั่นมีหัวใจตรงกลางแทน & */
