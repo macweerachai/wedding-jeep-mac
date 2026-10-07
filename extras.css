@@ -501,7 +501,8 @@ html.lang-en .sched-time.long{font-size:clamp(11.5px,3.1vw,15px)}
 
 /* ===== มือถือ: โลโก้มุมซ้ายบน + รูปอยู่ด้านบน ข้อความอยู่ใต้รูป ===== */
 @media (max-width:899px){
-  .hero.has-photo.hero-m .hero-bg{inset:0 0 auto 0;height:62svh;-webkit-mask-image:linear-gradient(180deg,#000 66%,transparent 100%);mask-image:linear-gradient(180deg,#000 66%,transparent 100%)}
-  .hero.has-photo.hero-m .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 62%}
+  .hero.has-photo.hero-m .hero-bg{inset:0 0 auto 0;height:58svh;-webkit-mask-image:linear-gradient(180deg,#000 72%,transparent 100%);mask-image:linear-gradient(180deg,#000 72%,transparent 100%)}
+  .hero.has-photo.hero-m{min-height:108svh}
+  .hero.has-photo.hero-m .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 70%}
   .hero.has-photo .hero-mono{position:absolute;top:18px;left:20px;width:50px;margin:0}
 }
