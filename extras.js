@@ -58,7 +58,7 @@
   // pos / posMobile = จุดโฟกัสของรูปเมื่อถูกครอบ เช่น '50% 20%' (ซ้าย-ขวา  บน-ล่าง) ปรับให้เห็นหน้าคู่บ่าวสาว
   var HERO = { img: 'photos/hero.jpg', imgMobile: '', pos: '50% 38%', posMobile: '50% 30%', style: 'light' };   // style: 'light' = ม่านขาวโปร่ง ตัวหนังสือสีเข้ม | 'dark' = ม่านเข้ม ตัวหนังสือขาว
   // เพลงตอนกดเปิดซอง: อัปโหลดไฟล์เพลง (.mp3) ไว้ในโฟลเดอร์ music/ แล้วใส่ชื่อไฟล์ เช่น 'music/until-i-found-you.mp3' (ว่าง = ไม่มีเพลง)
-  var MUSIC = { src: 'music/wedding-piano.mp3', volume: 0.55 };
+  var MUSIC = { src: 'music/jeep-mac-song.mp3', volume: 0.55 };
   var FLOORPLAN = 'photos/floorplan.png';   // รูปผังโต๊ะที่เด้งขึ้นมาเมื่อกดปุ่ม "ดูผังโต๊ะ"
   var MAP_QUERY = 'ริมธารา Rimtara พระราม 3'; // คำค้นของ Google Maps (ถ้าหมุดเพี้ยน เปลี่ยนเป็นชื่อ/ที่อยู่เต็ม หรือพิกัด เช่น '13.7,100.5')
   /* ======================================================= */
