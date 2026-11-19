@@ -546,9 +546,12 @@
     '<div class="cv-env" role="button" tabindex="0" aria-label="' + tx('tap') + '">' +
       '<span class="cv-back"></span>' +
       '<span class="cv-card"><b>Jeep &amp; Mac</b><i>19.02.2027</i></span>' +
+      '<span class="cv-photo"><img src="photos/studio-1.jpg" alt=""></span>' +
       '<span class="cv-front"></span>' +
       '<span class="cv-flap"></span>' +
       '<span class="cv-seal"><img src="ww-monogram.png" alt=""></span>' +
+      '<span class="cv-vinyl" aria-hidden="true"><i></i></span>' +
+      '<span class="cv-tag" aria-hidden="true"><b>Save the Date</b><small>19 · 02 · 2027</small></span>' +
     '</div>' +
     '<p class="cv-hint">' + tx('tap') + '</p>';
   document.body.appendChild(cover);
@@ -568,7 +571,7 @@
         root.classList.remove('lock');
         afterCover();
       }, reduceMotion ? 20 : 600);
-    }, reduceMotion ? 30 : 1700);
+    }, reduceMotion ? 30 : 3400);
   }
   var env = cover.querySelector('.cv-env');
   cover.addEventListener('click', openCover);

@@ -1,0 +1,200 @@
+/* =========================================================
+   v2.css — ลูกเล่นชุดใหม่ (แรงบันดาลใจจากการ์ดออนไลน์แบบเลื่อนดู)
+   โหลดหลัง style.css + extras.css · ใช้ตัวแปรสีเดิมของเว็บ
+   ========================================================= */
+:root {
+  --v2-blush: #f8e3e7;
+  --v2-butter: #fbf3d9;
+  --v2-cream: #fffaf6;
+  --v2-gold: #b08a4a;
+  --v2-gold-2: #d9bf98;
+  --v2-frame: linear-gradient(135deg, #e9d3a8, #b08a4a 45%, #f3e3c0 60%, #a07b3e);
+}
+
+/* ---------- 1) หน้าเปิดซอง: รูปเด้งออก + แผ่นเสียง + ป้าย Save the Date ---------- */
+.cv-photo {
+  left: 12%; right: 12%; top: 6%; bottom: 10%; z-index: 1;
+  overflow: hidden; border-radius: 3px;
+  background: #fff; padding: 6px 6px 18px;
+  box-shadow: 0 10px 22px -10px rgba(94, 58, 69, .45);
+  transform: translateY(0) rotate(0);
+  transition: transform 1s .45s cubic-bezier(.2, .9, .25, 1.15);
+}
+.cv-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; border-radius: 2px; }
+.cover.open .cv-photo { transform: translateY(-78%) rotate(-5deg); z-index: 5; }
+.cover.open .cv-card { opacity: 0; }
+
+.cv-vinyl {
+  right: -10%; bottom: -16%; z-index: 6;
+  width: 38%; aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, #e9afbd 0 17%, #2b2326 18% 20%, transparent 21%),
+    repeating-radial-gradient(circle, #1d1719 0 2px, #2c2427 2px 4px);
+  box-shadow: 0 10px 20px -8px rgba(0, 0, 0, .55);
+  opacity: 0; transform: scale(.4) rotate(-40deg);
+  transition: opacity .5s 1.1s, transform .8s 1.1s cubic-bezier(.2, .9, .25, 1.2);
+}
+.cv-vinyl i {
+  position: absolute; inset: 0; margin: auto; width: 7%; height: 7%; border-radius: 50%; background: #fffaf6;
+}
+.cover.open .cv-vinyl { opacity: 1; transform: scale(1); animation: v2spin 4s linear 1.9s infinite; }
+
+.cv-tag {
+  left: -8%; bottom: -14%; z-index: 6;
+  display: grid; justify-items: center; gap: 2px;
+  padding: 10px 16px 9px;
+  background: #fffdfb; border-radius: 4px 18px 4px 18px;
+  box-shadow: 0 10px 18px -10px rgba(94, 58, 69, .5), inset 0 0 0 1px rgba(217, 191, 152, .7);
+  font-family: var(--script); color: var(--gold-s);
+  opacity: 0; transform: translateY(16px) rotate(-8deg);
+  transition: opacity .5s 1.4s, transform .7s 1.4s var(--ease);
+}
+.cv-tag b { font-weight: 400; font-size: 21px; line-height: 1; }
+.cv-tag small { font-family: 'Jost', var(--sans); font-size: 10px; letter-spacing: .2em; color: var(--soft); }
+.cover.open .cv-tag { opacity: 1; transform: rotate(-6deg); }
+
+@keyframes v2spin { to { transform: rotate(360deg); } }
+
+/* ---------- 2) ปุ่มเพลง: เป็นแผ่นเสียงหมุน ---------- */
+.bgm-btn, .bgm-btn:hover:not(:disabled) {
+  border: 0;
+  background:
+    radial-gradient(circle, #e9afbd 0 20%, #2b2326 21% 23%, transparent 24%),
+    repeating-radial-gradient(circle, #1d1719 0 2px, #2c2427 2px 4px);
+  box-shadow: 0 8px 18px -8px rgba(0, 0, 0, .55);
+}
+.bgm-btn svg { display: none; }
+.bgm-btn::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #fffaf6; }
+.bgm-btn.on { animation: v2spin 4s linear infinite; }
+.bgm-btn:not(.on)::after { background: #fffaf6; opacity: .9; }
+
+/* ---------- 3) แถบสีเต็มความกว้าง + เส้นโค้งคั่น ---------- */
+.v2-band {
+  position: relative;
+  margin-inline: calc(50% - 50vw);
+  padding: 64px max(16px, env(safe-area-inset-right, 0px)) 56px max(16px, env(safe-area-inset-left, 0px));
+  text-align: center;
+}
+.v2-band > .v2-in { width: min(100%, 620px); margin: 0 auto; }
+.v2-band.blush { background: var(--v2-blush); }
+.v2-band.butter { background: var(--v2-butter); }
+.v2-band.cream { background: var(--v2-cream); }
+.v2-band::before {
+  content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 34px;
+  background: var(--cream);
+  -webkit-mask: radial-gradient(60% 34px at 50% 0, #000 98%, transparent 100%);
+          mask: radial-gradient(60% 34px at 50% 0, #000 98%, transparent 100%);
+}
+.v2-script { font-family: var(--script); font-weight: 400; color: var(--v2-gold); font-size: clamp(40px, 11vw, 54px); line-height: 1.1; }
+.v2-sub { margin-top: 6px; font-family: 'Jost', var(--sans); font-size: 11.5px; letter-spacing: .26em; text-transform: uppercase; color: var(--soft); }
+.v2-note { margin-top: 14px; font-size: 14.5px; color: var(--soft); }
+
+/* ค่อยๆ ลอยขึ้นเมื่อเลื่อนถึง (มองเห็นได้เสมอถ้าไม่มี JS) */
+.v2-pop { transition: opacity .9s var(--ease), transform .9s var(--ease); transition-delay: var(--d, 0s); }
+.js-v2 .v2-pop:not(.in) { opacity: 0; transform: translateY(26px) scale(.97); }
+
+/* ---------- 4) รูปวงกลมบ่าวสาว ---------- */
+.p-photo {
+  width: min(118px, 30vw); aspect-ratio: 1; margin: 0 auto 10px;
+  border-radius: 50%; padding: 4px; background: var(--v2-frame);
+  box-shadow: 0 12px 24px -14px rgba(94, 58, 69, .55);
+}
+.p-photo img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 3px solid #fffaf6; }
+
+/* ---------- 5) ปฏิทิน ---------- */
+.v2-cal {
+  width: min(100%, 360px); margin: 22px auto 0;
+  padding: 22px 18px 18px; border-radius: 22px;
+  background: #fffdf6; box-shadow: var(--shadow-sm), inset 0 0 0 1px rgba(217, 191, 152, .55);
+}
+.v2-cal-h { font-family: var(--script); font-size: 34px; color: var(--v2-gold); line-height: 1; }
+.v2-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px 2px; margin-top: 14px; font-family: 'Jost', var(--sans); font-size: 14px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.v2-cal-grid .dw { font-size: 11px; letter-spacing: .08em; color: var(--mute); text-transform: uppercase; }
+.v2-cal-grid span { display: grid; place-items: center; height: 34px; position: relative; }
+.v2-cal-grid .day19 { color: #fff; font-weight: 500; z-index: 0; }
+.v2-cal-grid .day19::before {
+  content: ""; position: absolute; width: 36px; height: 34px; z-index: -1;
+  background: var(--rose);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 22'%3E%3Cpath d='M12 21 10.5 19.6C5.2 14.8 1.8 11.7 1.8 7.9 1.8 4.8 4.2 2.5 7.2 2.5c1.7 0 3.4.8 4.8 2.1 1.4-1.3 3.1-2.1 4.8-2.1 3 0 5.4 2.3 5.4 5.4 0 3.8-3.4 6.9-8.7 11.7z'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 22'%3E%3Cpath d='M12 21 10.5 19.6C5.2 14.8 1.8 11.7 1.8 7.9 1.8 4.8 4.2 2.5 7.2 2.5c1.7 0 3.4.8 4.8 2.1 1.4-1.3 3.1-2.1 4.8-2.1 3 0 5.4 2.3 5.4 5.4 0 3.8-3.4 6.9-8.7 11.7z'/%3E%3C/svg%3E") center / contain no-repeat;
+  animation: v2beat 1.6s ease-in-out infinite;
+}
+@keyframes v2beat { 0%, 100% { transform: scale(1); } 45% { transform: scale(1.14); } }
+.v2-cal-foot { margin-top: 12px; font-size: 14px; color: var(--soft); }
+
+/* ---------- 6) กรอบวงรีลายวินเทจ ---------- */
+.v2-oval {
+  position: relative; width: min(78vw, 300px); aspect-ratio: 3 / 4; margin: 22px auto 0;
+  border-radius: 50%; padding: 12px; background: var(--v2-frame);
+  box-shadow: 0 26px 40px -24px rgba(94, 58, 69, .6);
+}
+.v2-oval::before { content: ""; position: absolute; inset: 5px; border-radius: 50%; border: 1.5px dashed rgba(255, 250, 240, .8); pointer-events: none; z-index: 1; }
+.v2-oval img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; object-position: 50% 20%; border: 4px solid #fffaf6; background: #faf0ec; }
+
+/* ---------- 7) Dress code หัวใจ ---------- */
+.v2-hearts { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 18px; margin-top: 22px; }
+.v2-hearts figure { margin: 0; display: grid; justify-items: center; gap: 6px; font-size: 13px; color: var(--soft); }
+.v2-hearts i {
+  width: 56px; height: 52px; background: var(--c);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 22'%3E%3Cpath d='M12 21 10.5 19.6C5.2 14.8 1.8 11.7 1.8 7.9 1.8 4.8 4.2 2.5 7.2 2.5c1.7 0 3.4.8 4.8 2.1 1.4-1.3 3.1-2.1 4.8-2.1 3 0 5.4 2.3 5.4 5.4 0 3.8-3.4 6.9-8.7 11.7z'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 22'%3E%3Cpath d='M12 21 10.5 19.6C5.2 14.8 1.8 11.7 1.8 7.9 1.8 4.8 4.2 2.5 7.2 2.5c1.7 0 3.4.8 4.8 2.1 1.4-1.3 3.1-2.1 4.8-2.1 3 0 5.4 2.3 5.4 5.4 0 3.8-3.4 6.9-8.7 11.7z'/%3E%3C/svg%3E") center / contain no-repeat;
+  filter: drop-shadow(0 6px 8px rgba(94, 58, 69, .2));
+}
+
+/* ---------- 8) แกลเลอรีคอลลาจ ---------- */
+.v2-collage { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-top: 24px; }
+.v2-ph { position: relative; padding: 0; border: 0; min-height: 0; background: none; cursor: zoom-in; border-radius: 0; box-shadow: none; }
+.v2-ph:hover:not(:disabled) { transform: none; background: none; box-shadow: none; }
+.v2-ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.v2-ph.frame { padding: 7px; background: var(--v2-frame); border-radius: 4px; box-shadow: 0 16px 26px -18px rgba(94, 58, 69, .65); }
+.v2-ph.frame img { border: 3px solid #fffaf6; }
+.v2-ph.circle { border-radius: 50%; overflow: hidden; aspect-ratio: 1; box-shadow: 0 16px 26px -18px rgba(94, 58, 69, .65); }
+.v2-ph.circle img { border-radius: 50%; }
+.v2-ph.rect { border-radius: 6px; overflow: hidden; box-shadow: 0 12px 22px -16px rgba(94, 58, 69, .6); }
+.v2-ph.big { grid-column: 1 / -1; aspect-ratio: 4 / 3; }
+.v2-ph.half { grid-column: span 3; aspect-ratio: 3 / 4; }
+.v2-ph.third { grid-column: span 2; aspect-ratio: 3 / 4; }
+.v2-ph.c4 { grid-column: 2 / span 4; }
+.v2-ph.tilt-l { transform: rotate(-2.5deg); }
+.v2-ph.tilt-r { transform: rotate(2deg); }
+.js-v2 .v2-ph.v2-pop:not(.in) { transform: translateY(26px) scale(.95); }
+.v2-tagline { margin-top: 22px; font-family: 'Jost', var(--sans); font-size: 12px; letter-spacing: .3em; color: var(--v2-gold); }
+
+/* lightbox ของ v2 */
+.v2-lb { position: fixed; inset: 0; z-index: 120; display: grid; place-items: center; padding: max(16px, env(safe-area-inset-top, 0px)) 16px; background: rgba(40, 26, 30, .9); }
+.v2-lb[hidden] { display: none; }
+.v2-lb img { max-width: 100%; max-height: 86svh; border-radius: 6px; box-shadow: 0 30px 60px -20px #000; }
+.v2-lb button, .v2-lb button:hover:not(:disabled) { position: absolute; top: max(14px, env(safe-area-inset-top, 0px)); right: max(14px, env(safe-area-inset-right, 0px)); width: 44px; height: 44px; min-height: 0; padding: 0; border-radius: 50%; border: 0; background: rgba(255, 255, 255, .9); color: var(--ink); font-size: 22px; line-height: 1; transform: none; }
+
+/* ---------- 9) เรื่องของเรา: The moment I said YES ---------- */
+.v2-story { display: grid; gap: 16px; margin-top: 22px; }
+.v2-arch {
+  width: min(80vw, 320px); margin: 0 auto; aspect-ratio: 4 / 5;
+  padding: 10px; background: #fffdfb; border-radius: 160px 160px 10px 10px;
+  box-shadow: 0 24px 40px -24px rgba(94, 58, 69, .6), inset 0 0 0 1px rgba(217, 191, 152, .7);
+}
+.v2-arch img { width: 100%; height: 100%; object-fit: cover; border-radius: 150px 150px 4px 4px; }
+.v2-quote { max-width: 30em; margin: 4px auto 0; font-family: var(--serif-en); font-style: italic; font-size: 18px; line-height: 1.6; color: var(--ink-2); }
+
+/* ---------- 10) ของขวัญ: ป้าย QR ห้อยพู่ ---------- */
+.v2-gift { position: relative; width: 210px; margin: 26px auto 0; padding-top: 36px; }
+.v2-gift::before { content: ""; position: absolute; left: 50%; top: 0; width: 1.5px; height: 40px; background: var(--v2-gold); }
+.v2-gift-tag {
+  position: relative; padding: 26px 18px 18px;
+  background: #fffdfb;
+  clip-path: polygon(50% 0, 100% 14%, 100% 100%, 0 100%, 0 14%);
+  box-shadow: inset 0 0 0 1px rgba(217, 191, 152, .7);
+  animation: v2sway 4.5s ease-in-out infinite; transform-origin: 50% -36px;
+}
+.v2-gift-tag::before { content: ""; position: absolute; left: 50%; top: 12px; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%; border: 1.5px solid var(--v2-gold); }
+.v2-gift-tag img { width: 100%; aspect-ratio: 1; object-fit: contain; image-rendering: pixelated; margin-top: 8px; }
+.v2-gift-tag p { margin-top: 8px; font-size: 13px; color: var(--soft); }
+.v2-tassel { display: block; width: 26px; margin: -2px auto 0; animation: v2sway 4.5s ease-in-out infinite; transform-origin: 50% -200px; }
+@keyframes v2sway { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .cover.open .cv-vinyl, .bgm-btn.on, .v2-cal-grid .day19::before, .v2-gift-tag, .v2-tassel { animation: none; }
+  .js-v2 .v2-pop:not(.in) { opacity: 1; transform: none; }
+}
+.v2-ph.circle.third { aspect-ratio: 1; align-self: center; }
